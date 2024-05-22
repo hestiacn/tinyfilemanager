@@ -55,7 +55,7 @@ Tinyfilemanager 的详细文档可以在 [中文文档网](https://fm.hestiamb.o
 - :zap: 文件备份和 IP 黑名单及白名单
 - :mag_right: 搜索 - 使用 `datatable js` 搜索和过滤文件
 - :file_folder: 从列表中排除文件夹和文件
-- :globe_with_meridians: 支持多语言（超过 32 种），翻译需要 `translation.json` 文件
+- :globe_with_meridians: 支持多语言（超过 32 种），翻译语言需要 `translation.json` 文件
 - :bangbang: 更多功能...
 
 ## 通过Docker部署
