@@ -1,27 +1,27 @@
-# Security Policy
+# 安全策略
 
-## Reporting a Vulnerability
+## 报告漏洞
 
-The team takes security bugs seriously. We appreciate your efforts to responsibly disclose your findings, and will make every effort to acknowledge your contributions.
+该团队认真对待安全漏洞。 我们感谢您负责任地披露您的发现的努力，并将尽一切努力感谢您的贡献。
 
-To report a security issue, email ccpprogrammers[at]gmail.com and include the word "SECURITY" in the subject line.
+要报告安全问题，请向 ccpprogrammers[at]gmail.com 发送电子邮件，并在主题行中包含“安全”一词。
 
-The team will send a response indicating the next steps in handling your report. After the initial reply to your report you will be kept informed of the progress towards a fix and full announcement.
+该团队将发送回复，指示处理您的报告的后续步骤。 在对您的报告进行初步答复后，您将随时了解修复进度和完整公告。
 
-Report security bugs in third-party modules to the person or team maintaining the module.
+向维护该模块的人员或团队报告第三方模块中的安全错误。
 
-## Disclosure Policy
+## 披露政策
 
-When the security team receives a security bug report, they will assign it to a
-primary handler. This person will coordinate the fix and release process,
-involving the following steps:
+当安全团队收到安全错误报告时，他们会将其分配给
+主要处理程序。 此人将协调修复和发布过程，
+涉及以下步骤：
 
-  * Confirm the problem and determine the affected versions.
-  * Audit code to find any potential similar problems.
-  * Prepare fixes for all releases still under maintenance. These fixes will be
-    released as fast as possible to npm.
+   * 确认问题并确定受影响的版本。
+   * 审核代码以发现任何潜在的类似问题。
+   * 为仍在维护中的所有版本准备修复程序。 这些修复将
+     尽快发布到 npm。
 
-## Comments on this Policy
+## 对本政策的评论
 
-If you have suggestions on how this process could be improved please submit a
-pull request.
+如果您对如何改进此流程有建议，请提交
+拉取请求。
