@@ -1,7 +1,7 @@
 services:
   tinyfilemanager:
     build: .                                            # Uncomment if you want to build locally instead of pulling
-#    image: tinyfilemanager/tinyfilemanager:latest      ###  If you want to run a Docker container on an image from Docker Hub, comment on the upper line 'build: .'
+    #image: tinyfilemanager/tinyfilemanager:latest      ###  If you want to run a Docker container on an image from Docker Hub, comment on the upper line 'build: .'
     container_name: tinyfilemanager
     restart: unless-stopped
     ports:
@@ -12,6 +12,7 @@ services:
    
     environment:
       TZ: UTC
+      PHP_OPCACHE_ENABLE: 1
 
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/"]

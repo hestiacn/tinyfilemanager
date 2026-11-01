@@ -1,0 +1,216 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+  actions: write
+  
+jobs:
+  build:
+    name: Build Release Archive
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v7
+
+      - name: Install Dependencies
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Prepare Release Directories
+        run: |
+          TAG_NAME=${GITHUB_REF#refs/tags/}
+          
+          mkdir -p "tinyfilemanager-${TAG_NAME}-cdn"
+          cp tinyfilemanager.php "tinyfilemanager-${TAG_NAME}-cdn/index.php"
+          cp translation.json "tinyfilemanager-${TAG_NAME}-cdn/" 2>/dev/null || true
+          mkdir -p "tinyfilemanager-${TAG_NAME}-cdn/root/user" "tinyfilemanager-${TAG_NAME}-cdn/root/guest"
+          touch "tinyfilemanager-${TAG_NAME}-cdn/root/user/.gitkeep" "tinyfilemanager-${TAG_NAME}-cdn/root/guest/.gitkeep"
+
+          mkdir -p "tinyfilemanager-${TAG_NAME}-offline"
+          cp tinyfilemanager.php "tinyfilemanager-${TAG_NAME}-offline/index.php"
+          cp translation.json "tinyfilemanager-${TAG_NAME}-offline/" 2>/dev/null || true
+          cp -r assets "tinyfilemanager-${TAG_NAME}-offline/"
+          mkdir -p "tinyfilemanager-${TAG_NAME}-offline/root/user" "tinyfilemanager-${TAG_NAME}-offline/root/guest"
+          touch "tinyfilemanager-${TAG_NAME}-offline/root/user/.gitkeep" "tinyfilemanager-${TAG_NAME}-offline/root/guest/.gitkeep"
+
+          cd "tinyfilemanager-${TAG_NAME}-offline"
+          mkdir -p assets/ruffle
+          
+          echo "==> 正在从 NPM 下载 Ruffle..."
+          REGISTRY="https://registry.npmjs.org"
+          PKG="@ruffle-rs/ruffle"
+          META="$(curl -sL "$REGISTRY/$PKG/latest")"
+          TARBALL="$(echo "$META" | jq -r '.dist.tarball')"
+          curl -fL --retry 3 -o ruffle.tgz "$TARBALL"
+          tar -xzf ruffle.tgz -C assets/ruffle --strip-components=1 --touch 2>/dev/null || tar -xzf ruffle.tgz -C assets/ruffle --strip-components=1
+          rm ruffle.tgz
+
+          echo "==> 正在修改离线版路径..."
+          
+          cat > /tmp/patch_offline.php << 'EOF'
+          <?php
+          $file = 'index.php';
+          $content = file_get_contents($file);
+          
+          $local_external = <<<'EOT'
+          $external = array(
+              'css-bootstrap' => '<link href="/assets/css/' . ($is_rtl ? 'bootstrap.rtl.min.css' : 'bootstrap.min.css') . '" rel="stylesheet">',
+              'css-dropzone' => '<link href="/assets/css/dropzone.min.css" rel="stylesheet">',
+              'css-font-awesome' => '<link rel="stylesheet" href="/assets/css/font-awesome.min.css" crossorigin="anonymous">',
+              'css-highlightjs' => '<link rel="stylesheet" href="/assets/css/' . $highlightjs_style . '.min.css">',
+              'js-ace' => '<script src="/assets/js/ace.js"></script>',
+              'js-bootstrap' => '<script src="/assets/js/bootstrap.bundle.min.js"></script>',
+              'js-dropzone' => '<script src="/assets/js/dropzone.min.js"></script>',
+              'js-jquery' => '<script src="/assets/js/jquery-3.6.1.min.js"></script>',
+              'js-jquery-datatables' => '<script src="/assets/js/datatables.min.js"></script>',
+              'js-highlightjs' => '<script src="/assets/js/highlight.min.js"></script>',
+              'pre-jsdelivr' => '',
+              'pre-cloudflare' => '',
+          );
+          EOT;
+
+          $content = preg_replace('/\$external\s*=\s*array\s*\(.*?\);/s', trim($local_external), $content);
+          $content = str_replace('https://unpkg.com/@ruffle-rs/ruffle@latest/ruffle.js', '/assets/ruffle/ruffle.js', $content);
+          file_put_contents($file, $content);
+          EOF
+
+          php /tmp/patch_offline.php
+          rm /tmp/patch_offline.php
+          sed -i "s|https://cdn.jsdelivr.net/gh/hestiacn/tinyfilemanager@master/assets/icons/logo.svg|/assets/icons/logo.svg|g" index.php
+          sed -i "s|https://cdn.jsdelivr.net/gh/hestiacn/tinyfilemanager@master/assets/icons/favicon.png|/assets/icons/favicon.png|g" index.php
+          cd ..
+
+      - name: Create Archives (.tar.gz)
+        run: |
+          TAG_NAME=${GITHUB_REF#refs/tags/}
+          tar -czf "tinyfilemanager-${TAG_NAME}-cdn.tar.gz" "tinyfilemanager-${TAG_NAME}-cdn"
+          tar -czf "tinyfilemanager-${TAG_NAME}-offline.tar.gz" "tinyfilemanager-${TAG_NAME}-offline"
+
+      - name: Generate Release Body
+        id: generate_body
+        run: |
+          TAG_NAME=${GITHUB_REF#refs/tags/}
+          {
+            echo 'RELEASE_BODY<<RELEASE_BODY_EOF'
+            echo "📦 **Please choose the download according to your use case:**"
+            echo ""
+            echo "* 🚀 **Direct Deployment Packages (Recommended)**"
+            echo "  * **CDN Version** (\`*-cdn.tar.gz\`): Lightweight, relies on external CDNs."
+            echo "  * **Offline Version** (\`*-offline.tar.gz\`): Includes all local CSS/JS and Ruffle dependencies, completely offline-ready."
+            echo "  *(Note: Required directories \`root/user\` and \`root/guest\` have been automatically created. Simply extract and place it in your Web root)*"
+            echo ""
+            echo "* 🐳 **Docker Deployment**"
+            echo "  ### Pull the image"
+            echo "  \`\`\`bash"
+            echo "  docker pull ghcr.io/${{ github.repository_owner }}/tinyfilemanager:latest"
+            echo "  \`\`\`"
+            echo ""
+            echo "  ### Run the container"
+            echo "  \`\`\`bash"
+            echo "  docker run -d -p 8080:80 --name tinyfilemanager --restart unless-stopped ghcr.io/${{ github.repository_owner }}/tinyfilemanager:latest"
+            echo "  \`\`\`"
+            echo "  *(Access at \`http://localhost:8080\`)*"
+            echo "  * 👉 [View all Docker image versions on GitHub Packages](https://github.com/users/${{ github.repository_owner }}/packages/container/tinyfilemanager/versions)"
+            echo ""
+            echo "* 🛠️ **Source Code**"
+            echo "  * For development and debugging, please download the \`Source code (zip/tar.gz)\` at the bottom of the page. You will need to manually create folders and configure your local environment."
+            echo ""
+            echo "**One-liner download & extraction command (Linux):**"
+            echo "*⚠️ Important: Make sure to \`cd\` into your web root directory before running the commands below.*"
+            echo ""
+            echo "**CDN Version:**"
+            echo "\`\`\`bash"
+            echo "wget -qO- https://github.com/${{ github.repository_owner }}/tinyfilemanager/releases/download/${TAG_NAME}/tinyfilemanager-${TAG_NAME}-cdn.tar.gz | tar -zxv --strip-components=1"
+            echo "\`\`\`"
+            echo ""
+            echo "**Offline Version:**"
+            echo "\`\`\`bash"
+            echo "wget -qO- https://github.com/${{ github.repository_owner }}/tinyfilemanager/releases/download/${TAG_NAME}/tinyfilemanager-${TAG_NAME}-offline.tar.gz | tar -zxv --strip-components=1"
+            echo "\`\`\`"
+            echo ""
+            echo "**⚠️ Permissions:**"
+            echo "Make sure your web server user (e.g., \`www-data\`, \`nginx\`, \`www\`, or \`web\`) owns the folder. / 请确保目录归属您的 Web 运行用户："
+            echo "\`\`\`bash"
+            echo "chown -R <your-user>:<your-user> /var/www/html"
+            echo "\`\`\`"
+            echo ""
+            echo "---"
+            echo ""
+            echo "📦 **请根据您的使用场景选择下载：**"
+            echo ""
+            echo "* 🚀 **直接部署包（推荐）**"
+            echo "  * **CDN 版本**（\`*-cdn.tar.gz\`）：轻量，依赖外部 CDN 加速。"
+            echo "  * **离线版本**（\`*-offline.tar.gz\`）：包含本地 CSS/JS 及 Ruffle 等全部依赖，完全脱离外网环境。"
+            echo "  *(注：已自动帮您创建好 \`root/user\` 和 \`root/guest\` 目录，解压放置于 Web 根目录即可使用)*"
+            echo ""
+            echo "* 🐳 **Docker 部署**"
+            echo "  ### 拉取镜像"
+            echo "  \`\`\`bash"
+            echo "  docker pull ghcr.io/${{ github.repository_owner }}/tinyfilemanager:latest"
+            echo "  \`\`\`"
+            echo ""
+            echo "  ### 运行容器"
+            echo "  \`\`\`bash"
+            echo "  docker run -d -p 8080:80 --name tinyfilemanager --restart unless-stopped ghcr.io/${{ github.repository_owner }}/tinyfilemanager:latest"
+            echo "  \`\`\`"
+            echo "  *(部署后访问 \`http://localhost:8080\`)*"
+            echo "  * 👉 [在 GitHub Packages 查看所有镜像版本](https://github.com/users/${{ github.repository_owner }}/packages/container/tinyfilemanager/versions)"
+            echo ""
+            echo "* 🛠️ **源码开发包**"
+            echo "  * 如果您需要二次开发调试，请下载页面底部的源码包 \`Source code (zip/tar.gz)\`。下载后需手动创建对应文件夹。"
+            echo ""
+            echo "**一键下载并解压命令 (Linux):**"
+            echo "*⚠️ 重要提示：执行下方命令前，请务必先在终端里 \`cd\` 切换到您的 Web 站点根目录！*"
+            echo ""
+            echo "**CDN 版本:**"
+            echo "\`\`\`bash"
+            echo "wget -qO- https://github.com/${{ github.repository_owner }}/tinyfilemanager/releases/download/${TAG_NAME}/tinyfilemanager-${TAG_NAME}-cdn.tar.gz | tar -zxv --strip-components=1"
+            echo "\`\`\`"
+            echo ""
+            echo "**离线版本:**"
+            echo "\`\`\`bash"
+            echo "wget -qO- https://github.com/${{ github.repository_owner }}/tinyfilemanager/releases/download/${TAG_NAME}/tinyfilemanager-${TAG_NAME}-offline.tar.gz | tar -zxv --strip-components=1"
+            echo "\`\`\`"
+            echo ""
+            echo "**⚠️ 权限设置 (Permissions):**"
+            echo "确保您的 Web 服务器运行用户（**请勿盲目复制 \`www-data\`，请根据您的实际环境选择**，如 \`www\`、\`web\`、\`nginx\` 等）具有该目录的读写权限："
+            echo "\`\`\`bash"
+            echo "chown -R <your-user>:<your-user> /var/www/html"
+            echo "\`\`\`"
+            echo ""
+            echo "RELEASE_BODY_EOF"
+          } >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v3
+        with:
+          name: Release ${{ github.ref_name }}
+          body: ${{ steps.generate_body.outputs.RELEASE_BODY }}
+          draft: false
+          prerelease: false
+          files: |
+            tinyfilemanager-*.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Delete old runs
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Cleaning up old workflow runs (keeping only the latest 2)..."
+          gh run list --repo ${{ github.repository }} \
+            --workflow "${{ github.workflow }}" \
+            --limit 200 \
+            --json databaseId \
+            | jq -r '.[].databaseId' \
+            | tail -n +3 \
+            | while read id; do
+                echo "[INFO] Deleting run: $id"
+                gh run delete "$id" --repo ${{ github.repository }} || true
+              done
