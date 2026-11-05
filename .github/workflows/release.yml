@@ -50,6 +50,26 @@ jobs:
           tar -xzf ruffle.tgz -C assets/ruffle --strip-components=1 --touch 2>/dev/null || tar -xzf ruffle.tgz -C assets/ruffle --strip-components=1
           rm ruffle.tgz
 
+          echo "==> 正在从 NPM 下载 Ace Editor 全套文件..."
+          mkdir -p assets/js/ace
+          ACE_VERSION=$(curl -s "https://data.jsdelivr.com/v1/package/npm/ace-builds" | jq -r '.tags.latest')
+          if [ -z "$ACE_VERSION" ] || [ "$ACE_VERSION" == "null" ]; then
+            echo "错误：无法获取 Ace 最新版本号"
+            exit 1
+          fi
+          
+          ACE_FILES=$(curl -s "https://data.jsdelivr.com/v1/package/npm/ace-builds@${ACE_VERSION}/flat" | jq -r '.files[] | select(.name | test("^/src-min-noconflict/(ace\\.js|(theme|mode|worker|ext)-.*\\.js)$")) | .name')
+          
+          ACE_COUNT=0
+          for FILE_PATH in $ACE_FILES; do
+              FILENAME=$(basename "$FILE_PATH")
+              echo "    下载 Ace 文件: $FILENAME ..."
+              curl -s -o "assets/js/ace/${FILENAME}" "https://cdn.jsdelivr.net/npm/ace-builds@${ACE_VERSION}/src-min-noconflict/${FILENAME}"
+              ACE_COUNT=$((ACE_COUNT+1))
+          done
+          
+          echo "==> Ace 文件下载完成，共下载了 $ACE_COUNT 个文件。"
+
           echo "==> 正在修改离线版路径..."
           
           cat > /tmp/patch_offline.php << 'EOF'
@@ -61,13 +81,14 @@ jobs:
           $external = array(
               'css-bootstrap' => '<link href="/assets/css/' . ($is_rtl ? 'bootstrap.rtl.min.css' : 'bootstrap.min.css') . '" rel="stylesheet">',
               'css-dropzone' => '<link href="/assets/css/dropzone.min.css" rel="stylesheet">',
-              'css-font-awesome' => '<link rel="stylesheet" href="/assets/css/font-awesome.min.css" crossorigin="anonymous">',
+              'css-font-awesome' => '<link rel="stylesheet" href="/assets/css/all.min.css" crossorigin="anonymous">',
               'css-highlightjs' => '<link rel="stylesheet" href="/assets/css/' . $highlightjs_style . '.min.css">',
-              'js-ace' => '<script src="/assets/js/ace.js"></script>',
+              'js-ace' => '<script src="/assets/js/ace/ace.js"></script>',
               'js-bootstrap' => '<script src="/assets/js/bootstrap.bundle.min.js"></script>',
-              'js-dropzone' => '<script src="/assets/js/dropzone.min.js"></script>',
+              'js-dropzone' => '<script src="/assets/js/dropzone-min.js"></script>',
               'js-jquery' => '<script src="/assets/js/jquery-3.6.1.min.js"></script>',
-              'js-jquery-datatables' => '<script src="/assets/js/datatables.min.js"></script>',
+              'js-jquery-datatables' => '<script src="/assets/js/jquery.dataTables.min.js"></script>',
+              'js-marked' => '<script src="/assets/js/marked.umd.min.js"></script>',
               'js-highlightjs' => '<script src="/assets/js/highlight.min.js"></script>',
               'pre-jsdelivr' => '',
               'pre-cloudflare' => '',
@@ -95,6 +116,7 @@ jobs:
         id: generate_body
         run: |
           TAG_NAME=${GITHUB_REF#refs/tags/}
+          REPO_URL="https://github.com/${{ github.repository }}"
           {
             echo 'RELEASE_BODY<<RELEASE_BODY_EOF'
             echo "📦 **Please choose the download according to your use case:**"
@@ -119,6 +141,7 @@ jobs:
             echo ""
             echo "* 🛠️ **Source Code**"
             echo "  * For development and debugging, please download the \`Source code (zip/tar.gz)\` at the bottom of the page. You will need to manually create folders and configure your local environment."
+            echo "  * 📖 [View Update Log (English)](https://github.com/${{ github.repository }}/blob/master/CHANGELOG.md)"
             echo ""
             echo "**One-liner download & extraction command (Linux):**"
             echo "*⚠️ Important: Make sure to \`cd\` into your web root directory before running the commands below.*"
@@ -163,6 +186,7 @@ jobs:
             echo ""
             echo "* 🛠️ **源码开发包**"
             echo "  * 如果您需要二次开发调试，请下载页面底部的源码包 \`Source code (zip/tar.gz)\`。下载后需手动创建对应文件夹。"
+            echo "  * 📖 [查看更新日志 (中文)](https://github.com/${{ github.repository }}/blob/master/CHANGELOG.zh-CN.md)"
             echo ""
             echo "**一键下载并解压命令 (Linux):**"
             echo "*⚠️ 重要提示：执行下方命令前，请务必先在终端里 \`cd\` 切换到您的 Web 站点根目录！*"

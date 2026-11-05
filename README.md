@@ -72,7 +72,39 @@ To enable/disable authentication set `$use_auth` to true or false.
 - :globe_with_meridians: **Multi-language Support:** Translations available in 35+ languages with `translation.json`.
 - :bangbang: **And Much More!**
 
-### [Deploy by Docker](https://github.com/prasathmani/tinyfilemanager/wiki/Deploy-by-Docker)
+### [Deploy by Docker](https://github.com/users/hestiacn/packages/container/package/tinyfilemanager)
+
+### 🗑️ Trash (Recycle Bin) Functionality
+
+When you delete a file, the system automatically moves it to a hidden `.trash` directory to prevent accidental data loss.
+
+### 🔄 How to restore files?
+
+**1. Using a Virtual Host or FTP/SFTP Tools**
+*   Enable the **"Show Hidden Files"** option in your file management tool.
+*   Navigate to the `.trash` folder in your site's root directory.
+*   Locate the file you need to restore and **move (or cut)** it back to its original directory.
+*   *Tip: If the filename has a timestamp prefix (e.g., `20261103_xxx.txt`), please manually rename it back to its original filename.*
+
+**2. Using a Server Terminal (SSH)**
+*   Navigate to your site's root directory and run the following command to view the trash contents:
+```bash
+ls -la .trash/
+```
+*   Execute the restore (move the file out and rename it):
+```bash
+mv .trash/20261103_xxx.txt ./xxx.txt
+```
+
+### 🧹 Periodically Empty the Trash
+
+The `.trash` directory is not cleaned up automatically, so files will keep accumulating. You can clear it periodically with `rm`.
+
+```bash
+rm -rf .trash/*
+```
+
+> **⚠️ Note**: Files in the trash **will not be automatically cleaned up**. If you confirm you no longer need them, please manually delete old files in `.trash` periodically to avoid large files or long-term accumulation increasing server disk storage.
 
 ### <a name=license></a>License, Credit
 

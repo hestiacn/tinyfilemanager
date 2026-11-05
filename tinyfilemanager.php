@@ -1,6 +1,6 @@
 <?php
 //Default Configuration
-$CONFIG = '{"error_reporting":false,"show_hidden":false,"hide_Cols":true,"enable_paging":false,"show_beian":false,"site_title":"","icp":"","police":"","logo_path":"","favicon_path":""}';
+$CONFIG = '{"error_reporting":false,"show_hidden":false,"hide_Cols":true,"enable_paging":false,"show_beian":false,"site_title":"","icp":"","police":"","logo_path":"","favicon_path":"","footer_start_year":"2017"}';
 
 /**
  * H3K ~ Tiny File Manager V2.6
@@ -99,7 +99,7 @@ $allowed_file_extensions = '';
 
 // Allowed file extensions for upload files
 // e.g. 'gif,png,jpg,html,txt'
-$allowed_upload_extensions = 'gif,png,jpg,jpeg,webp,txt,pdf,zip,rar,tar,tgz,gz,mp3,mp4,swf,doc,docx,xls,xlsx,ppt,pptx';
+$allowed_upload_extensions = 'gif,ico,png,jpg,jpeg,webp,txt,pdf,zip,rar,tar,tgz,gz,md,mp3,mp4,swf,doc,docx,xls,xlsx,ppt,pptx';
 
 // Favicon path. This can be either a full url to an .PNG image, or a path based on the document root.
 // full path, e.g http://example.com/favicon.png
@@ -195,16 +195,17 @@ $lang = $lang ?? 'en';
 $is_rtl = in_array(strtolower($lang), ['ar', 'he', 'fa', 'ur']);
 
 $external = array(
-    'css-bootstrap' => '<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/' . ($is_rtl ? 'bootstrap.rtl.min.css' : 'bootstrap.min.css') . '" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">',
-    'css-dropzone' => '<link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.css" rel="stylesheet">',
-    'css-font-awesome' => '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" crossorigin="anonymous">',
-    'css-highlightjs' => '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/' . $highlightjs_style . '.min.css">',
-    'js-ace' => '<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.32.2/ace.js"></script>',
-    'js-bootstrap' => '<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>',
-    'js-dropzone' => '<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.js"></script>',
+    'css-bootstrap' => '<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/' . ($is_rtl ? 'bootstrap.rtl.min.css' : 'bootstrap.min.css') . '" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">',
+    'css-dropzone' => '<link href="https://cdn.jsdelivr.net/npm/dropzone@6.3.5/dist/dropzone.min.css" rel="stylesheet">',
+    'css-font-awesome' => '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css" crossorigin="anonymous">',
+    'css-highlightjs' => '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.12.0/styles/' . $highlightjs_style . '.min.css">',
+    'js-ace' => '<script src="https://cdn.jsdelivr.net/npm/ace-builds@1.45.2/src-min-noconflict/ace.js"></script>',
+    'js-bootstrap' => '<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>',
+    'js-dropzone' => '<script src="https://cdn.jsdelivr.net/npm/dropzone@6.3.5/dist/dropzone-min.js"></script>',
     'js-jquery' => '<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>',
     'js-jquery-datatables' => '<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js" crossorigin="anonymous" defer></script>',
-    'js-highlightjs' => '<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>',
+    'js-marked' => '<script src="https://cdn.jsdelivr.net/npm/marked/lib/marked.umd.min.js"></script>',
+    'js-highlightjs' => '<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.12.0/highlight.min.js"></script>',
     'pre-jsdelivr' => '<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"/>',
     'pre-cloudflare' => '<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin/><link rel="dns-prefetch" href="https://cdnjs.cloudflare.com"/>'
 );
@@ -225,13 +226,17 @@ if (!defined('FM_SESSION_ID')) {
 // Configuration
 $cfg = new FM_Config();
 
-// 语言别名映射
+// Browser language alias mapping
 $lang_aliases = [
+    'sr-rs'   => 'sr',
+    'sr-latn' => 'sr',
+    'hr-hr'   => 'hr',
+    'bs'      => 'hr', 
     'gr'      => 'el',
     'en-us'   => 'en',
     'en-gb'   => 'en',
     'en-au'   => 'en',
-    'en-ca'   => 'en',
+    'en-ca'   => 'en-CA', 
     'en-nz'   => 'en',
     'en-ie'   => 'en',
     'en-in'   => 'en',
@@ -243,6 +248,9 @@ $lang_aliases = [
     'pt-pt'   => 'pt-PT',
     'pt_br'   => 'pt-BR',
     'pt_pt'   => 'pt-PT',
+    'tl'      => 'fil',
+    'tl-ph'   => 'fil',
+    'fil-ph'  => 'fil',
     'mn'      => 'mn-MN',
     'mn_mn'   => 'mn-MN',
     'zh'      => 'zh-CN',
@@ -253,6 +261,14 @@ $lang_aliases = [
     'zh-hant' => 'zh-TW',
     'zh-hk'   => 'zh-TW',
     'zh-mo'   => 'zh-TW',
+    'en_us'   => 'en',
+    'en_gb'   => 'en',
+    'en_ca'   => 'en-CA',
+    'zh_cn'   => 'zh-CN',
+    'zh_tw'   => 'zh-TW',
+    'zh_hk'   => 'zh-TW',
+    'pt_br'   => 'pt-BR',
+    'pt_pt'   => 'pt-PT',
 ];
 
 // Default language
@@ -631,17 +647,19 @@ if ((isset($_SESSION[FM_SESSION_ID]['logged'], $auth_users[$_SESSION[FM_SESSION_
             $relativeDirPath = fm_clean_path($_POST['path']);
             $fullPath .= "{$relativeDirPath}/";
         }
-        $date = date("dMy-His");
+        $timestamp = time();
+        $date = date("dMy-His", $timestamp);
         $newFileName = "{$fileName}-{$date}.bak";
         $fullyQualifiedFileName = $fullPath . $fileName;
+        $display_date = date(lng('DateTimeFormat'), $timestamp);
         try {
             if (!file_exists($fullyQualifiedFileName)) {
-                throw new Exception("File {$fileName} not found");
+                throw new Exception(sprintf(lng('File not found name'), '<b>' . fm_enc($fileName) . '</b>'));
             }
             if (copy($fullyQualifiedFileName, $fullPath . $newFileName)) {
-                echo "Backup {$newFileName} created";
+                echo sprintf(lng('Backup created'), '<b>' . fm_enc($newFileName) . '</b>', $display_date);
             } else {
-                throw new Exception("Could not copy file {$fileName}");
+                throw new Exception(sprintf(lng('Could not copy file'), '<b>' . fm_enc($fileName) . '</b>'));
             }
         } catch (Exception $e) {
             echo $e->getMessage();
@@ -710,6 +728,14 @@ if ((isset($_SESSION[FM_SESSION_ID]['logged'], $auth_users[$_SESSION[FM_SESSION_
                 $cfg->data['police'] = $police;
             }
         }
+        if (isset($_POST['js-footer-start-year'])) {
+            $footerStartYear = trim($_POST['js-footer-start-year']);
+            if ($footerStartYear === 'none' || ctype_digit($footerStartYear) || $footerStartYear === '') {
+                if (!isset($cfg->data['footer_start_year']) || $cfg->data['footer_start_year'] !== $footerStartYear) {
+                    $cfg->data['footer_start_year'] = $footerStartYear;
+                }
+            }
+        }
         if (isset($_POST['js-timezone']) && $_POST['js-timezone'] !== '') {
             $tz = $_POST['js-timezone'];
             if (in_array($tz, timezone_identifiers_list())) {
@@ -741,12 +767,6 @@ if ((isset($_SESSION[FM_SESSION_ID]['logged'], $auth_users[$_SESSION[FM_SESSION_
             echo json_encode($message);
         }
 
-        function get_file_path()
-        {
-            global $path, $fileinfo, $temp_file;
-            return $path . "/" . basename($fileinfo->name);
-        }
-
         $url = !empty($_REQUEST["uploadurl"]) && preg_match("|^http(s)?://.+$|", stripslashes($_REQUEST["uploadurl"])) ? stripslashes($_REQUEST["uploadurl"]) : null;
 
         //prevent 127.* domain and known ports
@@ -755,7 +775,7 @@ if ((isset($_SESSION[FM_SESSION_ID]['logged'], $auth_users[$_SESSION[FM_SESSION_
         $knownPorts = [22, 23, 25, 3306];
 
         if (preg_match("/^localhost$|^127(?:\.[0-9]+){0,2}\.[0-9]+$|^(?:0*\:)*?:?0*1$/i", $domain) || in_array($port, $knownPorts)) {
-            $err = array("message" => "URL is not allowed");
+            $err = array("message" => lng('URL is not allowed'));
             event_callback(array("fail" => $err));
             exit();
         }
@@ -763,16 +783,25 @@ if ((isset($_SESSION[FM_SESSION_ID]['logged'], $auth_users[$_SESSION[FM_SESSION_
         $use_curl = false;
         $temp_file = tempnam(sys_get_temp_dir(), "upload-");
         $fileinfo = new stdClass();
-        $fileinfo->name = trim(urldecode(basename($url)), ".\x00..\x20");
+        $clean_url = strtok($url, '?#');
+        $fileinfo->name = trim(urldecode(basename($clean_url)), ".\x00..\x20");
 
         $allowed = (FM_UPLOAD_EXTENSION) ? explode(',', FM_UPLOAD_EXTENSION) : false;
+        if (empty($allowed)) {
+            $err = array("message" => lng('Upload extension config missing'));
+            event_callback(array("fail" => $err));
+            exit();
+        }
+
         $ext = strtolower(pathinfo($fileinfo->name, PATHINFO_EXTENSION));
-        $isFileAllowed = ($allowed) ? in_array($ext, $allowed) : true;
+        $isFileAllowed = in_array($ext, $allowed);
 
         $err = false;
 
         if (!$isFileAllowed) {
-            $err = array("message" => "File extension is not allowed");
+            $allowed_exts = implode(', ', $allowed);
+            $err_msg = sprintf(lng('File extension is not allowed'), $allowed_exts);
+            $err = array("message" => $err_msg);
             event_callback(array("fail" => $err));
             exit();
         }
@@ -780,30 +809,41 @@ if ((isset($_SESSION[FM_SESSION_ID]['logged'], $auth_users[$_SESSION[FM_SESSION_
         if (!$url) {
             $success = false;
         } else if ($use_curl) {
-            @$fp = fopen($temp_file, "w");
-            @$ch = curl_init($url);
+            $fp = fopen($temp_file, "w");
+            $ch = curl_init($url);
             curl_setopt($ch, CURLOPT_NOPROGRESS, false);
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
             curl_setopt($ch, CURLOPT_FILE, $fp);
-            @$success = curl_exec($ch);
+            $success = curl_exec($ch);
             $curl_info = curl_getinfo($ch);
             if (!$success) {
                 $err = array("message" => curl_error($ch));
             }
-            @curl_close($ch);
+            curl_close($ch);
             fclose($fp);
             $fileinfo->size = $curl_info["size_download"];
             $fileinfo->type = $curl_info["content_type"];
         } else {
-            $ctx = stream_context_create();
-            @$success = copy($url, $temp_file, $ctx);
+            $ctx = stream_context_create([
+                'http' => [
+                    'timeout' => 120,
+                    'follow_location' => 1,
+                    'user_agent' => 'Mozilla/5.0'
+                ]
+            ]);
+            $success = copy($url, $temp_file, $ctx);
             if (!$success) {
                 $err = error_get_last();
             }
         }
 
         if ($success) {
-            $success = rename($temp_file, strtok(get_file_path(), '?'));
+            $target_file = $path . '/' . $fileinfo->name;
+            $success = rename($temp_file, $target_file);
+            
+            if ($success) {
+                chmod($target_file, 0644);
+            }
         }
 
         if ($success) {
@@ -811,7 +851,7 @@ if ((isset($_SESSION[FM_SESSION_ID]['logged'], $auth_users[$_SESSION[FM_SESSION_
         } else {
             unlink($temp_file);
             if (!$err) {
-                $err = array("message" => "Invalid url parameter");
+                $err = array("message" => lng('Invalid url parameter'));
             }
             event_callback(array("fail" => $err));
         }
@@ -1224,10 +1264,36 @@ if (!empty($_FILES) && !FM_READONLY) {
                     } else {
                         $fullPathTarget = $fullPath;
                     }
+                    if ($ext === 'md' || $ext === 'markdown') {
+                        $md_content = file_get_contents("{$fullPath}.part");
+                        if (!fm_is_safe_markdown($md_content)) {
+                            @unlink("{$fullPath}.part");
+                            $response = array(
+                                'status' => 'error',
+                                'info'   => 'Error: The Markdown file contains dangerous instructions.'
+                            );
+                            echo json_encode($response);
+                            exit();
+                        }
+                    }
                     rename("{$fullPath}.part", $fullPathTarget);
                     fm_write_log('Upload', "Uploaded chunked file '{$fullPathInput}' to path '" . FM_PATH . "'");
                 }
             } else if (move_uploaded_file($tmp_name, $fullPath)) {
+                
+                if ($ext === 'md' || $ext === 'markdown') {
+                    $md_content = file_get_contents($fullPath);
+                    if (!fm_is_safe_markdown($md_content)) {
+                        @unlink($fullPath);
+                        $response = array(
+                            'status' => 'error',
+                            'info'   => 'Error: The Markdown file contains dangerous instructions.'
+                        );
+                        echo json_encode($response);
+                        exit();
+                    }
+                }
+
                 // Be sure that the file has been uploaded
                 if (file_exists($fullPath)) {
                     $response = array(
@@ -1487,6 +1553,36 @@ if (isset($_POST['chmod'], $_POST['token']) && !FM_READONLY && !FM_IS_WIN) {
     fm_redirect(FM_SELF_URL . '?p=' . urlencode($FM_PATH));
 }
 
+//raw markdown
+if (isset($_GET['raw'])) {
+    $file = $_GET['raw'];
+    $file = fm_clean_path($file, false);
+    $file = str_replace('/', '', $file);
+
+    $rawPath = FM_ROOT_PATH . (FM_PATH != '' ? '/' . FM_PATH : '') . '/' . $file;
+
+    if ($file === '' || !is_file($rawPath)) {
+        http_response_code(404);
+        exit('File not found');
+    }
+
+    $ext = strtolower(pathinfo($rawPath, PATHINFO_EXTENSION));
+    if ($ext === 'md' || $ext === 'markdown') {
+        header('Content-Type: text/markdown; charset=utf-8');
+    } elseif ($ext === 'json') {
+        header('Content-Type: application/json; charset=utf-8');
+    } elseif ($ext === 'js') {
+        header('Content-Type: application/javascript; charset=utf-8');
+    } elseif ($ext === 'css') {
+        header('Content-Type: text/css; charset=utf-8');
+    } else {
+        header('Content-Type: text/plain; charset=utf-8');
+    }
+    header('X-Content-Type-Options: nosniff');
+    readfile($rawPath);
+    exit;
+}
+
 /*************************** ACTIONS ***************************/
 
 // get current path
@@ -1555,16 +1651,16 @@ if (isset($_GET['upload']) && !FM_READONLY) {
             <div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#fileUploader" data-target="#fileUploader"><i class="fa fa-arrow-circle-o-up"></i> <?php echo lng('UploadingFiles') ?></a>
+                        <a class="nav-link active" href="#fileUploader" data-target="#fileUploader"><i class="fa-solid fa-circle-up"></i> <?php echo lng('UploadingFiles') ?></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#urlUploader" class="js-url-upload" data-target="#urlUploader"><i class="fa fa-link"></i> <?php echo lng('Upload from URL') ?></a>
+                        <a class="nav-link" href="#urlUploader" class="js-url-upload" data-target="#urlUploader"><?php echo fm_link_icon(); ?> <?php echo lng('Upload from URL') ?></a>
                     </li>
                 </ul>
             </div>
             <div class="card-body">
                 <p class="card-text">
-                    <a href="?p=<?php echo FM_PATH ?>" class="float-right"><i class="fa fa-chevron-circle-left go-back"></i> <?php echo lng('Back') ?></a>
+                    <a href="?p=<?php echo FM_PATH ?>" class="float-right"><i class="fa-solid fa-circle-arrow-left go-back"></i> <?php echo lng('Back') ?></a>
                     <strong><?php echo lng('DestinationFolder') ?></strong>: <?php echo fm_enc(fm_convert_win(FM_PATH)) ?>
                 </p>
 
@@ -1596,7 +1692,7 @@ if (isset($_GET['upload']) && !FM_READONLY) {
     </div>
     <?php print_external('js-dropzone'); ?>
     <script>
-        Dropzone.options.fileUploader = {
+        new Dropzone("#fileUploader", {
             chunking: true,
             chunkSize: <?php echo UPLOAD_CHUNK_SIZE; ?>,
             forceChunking: true,
@@ -1619,6 +1715,7 @@ if (isset($_GET['upload']) && !FM_READONLY) {
             dictRemoveFile: "<?php echo lng('DropzoneRemoveFile'); ?>",
             dictRemoveFileConfirmation: null,
             dictMaxFilesExceeded: "<?php echo lng('DropzoneMaxFilesExceeded'); ?>",
+            dictThumbnailError: "<?php echo lng('DropzoneThumbnailError'); ?>",
             init: function() {
                 this.on("sending", function(file, xhr, formData) {
                     let _path = (file.fullPath) ? file.fullPath : file.name;
@@ -1640,7 +1737,7 @@ if (isset($_GET['upload']) && !FM_READONLY) {
                     toast(response);
                 });
             }
-        }
+        });
     </script>
 <?php
     fm_show_footer();
@@ -1694,15 +1791,15 @@ if (isset($_POST['copy']) && !FM_READONLY) {
                             <input type="checkbox" name="move" value="1" id="js-move-files" class="form-check-input">
                             <label for="js-move-files" class="form-check-label fw-bold"><?php echo lng('Move') ?></label>
                             <div class="form-text small text-muted mt-1">
-                                <i class="fa fa-info-circle"></i> <?php echo lng('MoveTip'); ?>
+                                <i class="fa-solid fa-circle-info"></i> <?php echo lng('MoveTip'); ?>
                             </div>
                         </div>
                     </div>
                     
                     <div>
-                        <a href="?p=<?php echo urlencode(FM_PATH) ?>" class="btn btn-outline-danger"><i class="fa fa-times-circle"></i> <?php echo lng('Cancel') ?></a>
+                        <a href="?p=<?php echo urlencode(FM_PATH) ?>" class="btn btn-outline-danger"><i class="fa-solid fa-circle-xmark"></i> <?php echo lng('Cancel') ?></a>
                         <input type="hidden" name="token" value="<?php echo $_SESSION['token']; ?>">
-                        <button type="submit" class="btn btn-success" id="js-action-btn"><i class="fa fa-check-circle"></i> <span id="js-action-text"><?php echo lng('Copy') ?></span></button>
+                        <button type="submit" class="btn btn-success" id="js-action-btn"><i class="fa-solid fa-circle-check"></i> <span id="js-action-text"><?php echo lng('Copy') ?></span></button>
                     </div>
                 </form>
             </div>
@@ -1733,27 +1830,37 @@ if (isset($_GET['copy']) && !isset($_GET['finish']) && !FM_READONLY) {
             <strong><?php echo lng('DestinationFolder'); ?>:</strong> <span dir="ltr" style="display: inline-block;"><?php echo fm_enc(fm_convert_win(FM_ROOT_PATH . '/' . FM_PATH)) ?></span>
         </p>
         <p>
-            <b><a href="?p=<?php echo urlencode(FM_PATH) ?>&amp;copy=<?php echo urlencode($copy) ?>&amp;finish=1"><i class="fa fa-check-circle"></i> <?php echo lng('Copy') ?></a></b> &nbsp;
-            <b><a href="?p=<?php echo urlencode(FM_PATH) ?>&amp;copy=<?php echo urlencode($copy) ?>&amp;finish=1&amp;move=1"><i class="fa fa-check-circle"></i> <?php echo lng('Move') ?></a></b> &nbsp;
-            <b><a href="?p=<?php echo urlencode(FM_PATH) ?>" class="text-danger"><i class="fa fa-times-circle"></i> <?php echo lng('Cancel') ?></a></b>
+            <b><a href="?p=<?php echo urlencode(FM_PATH) ?>&amp;copy=<?php echo urlencode($copy) ?>&amp;finish=1"><i class="fa-solid fa-circle-check"></i> <?php echo lng('Copy') ?></a></b> &nbsp;
+            <b><a href="?p=<?php echo urlencode(FM_PATH) ?>&amp;copy=<?php echo urlencode($copy) ?>&amp;finish=1&amp;move=1"><i class="fa-solid fa-circle-check"></i> <?php echo lng('Move') ?></a></b> &nbsp;
+            <b><a href="?p=<?php echo urlencode(FM_PATH) ?>" class="text-danger"><i class="fa-solid fa-circle-xmark"></i> <?php echo lng('Cancel') ?></a></b>
         </p>
         <p><i><?php echo lng('Select folder') ?></i></p>
-        <ul class="folders break-word">
-            <?php
-            if ($parent !== false) {
-            ?>
-                <li><a href="?p=<?php echo urlencode($parent) ?>&amp;copy=<?php echo urlencode($copy) ?>"><i class="fa fa-chevron-circle-left"></i> ..</a></li>
-            <?php
-            }
-            foreach ($folders as $f) {
-            ?>
-                <li>
-                    <a href="?p=<?php echo urlencode(trim(FM_PATH . '/' . $f, '/')) ?>&amp;copy=<?php echo urlencode($copy) ?>"><i class="fa fa-folder-o"></i> <?php echo fm_convert_win($f) ?></a>
-                </li>
-            <?php
-            }
-            ?>
-        </ul>
+        <div class="d-flex mb-4">
+            <ul class="list-group shadow-sm" style="width: max-content; max-width: 100%;">
+                <?php
+                if ($parent !== false) {
+                ?>
+                    <li class="list-group-item list-group-item-action p-0 border-0 mb-1" style="border-radius: 8px; overflow: hidden;">
+                        <a href="?p=<?php echo urlencode($parent) ?>&amp;copy=<?php echo urlencode($copy) ?>" class="d-flex align-items-center text-decoration-none p-3 text-body hover-bg">
+                            <i class="fa-solid fa-circle-arrow-left fa-lg text-primary me-3"></i>
+                            <span class="fw-bold"><?php echo lng('Back') ?></span>
+                        </a>
+                    </li>
+                <?php
+                }
+                foreach ($folders as $f) {
+                ?>
+                    <li class="list-group-item list-group-item-action p-0 border-0 mb-1" style="border-radius: 8px; overflow: hidden;">
+                        <a href="?p=<?php echo urlencode(trim(FM_PATH . '/' . $f, '/')) ?>&amp;copy=<?php echo urlencode($copy) ?>" class="d-flex align-items-center text-decoration-none p-3 text-body hover-bg">
+                            <i class="fa-regular fa-folder text-warning fa-lg me-3"></i>
+                            <span class="text-break"><?php echo fm_convert_win($f) ?></span>
+                        </a>
+                    </li>
+                <?php
+                }
+                ?>
+            </ul>
+        </div>
     </div>
 <?php
     fm_show_footer();
@@ -1769,7 +1876,7 @@ if (isset($_GET['settings']) && !FM_READONLY) {
     <div class="col-md-8 offset-md-2 pt-3">
         <div class="card mb-2" data-bs-theme="<?php echo FM_THEME; ?>">
             <h6 class="card-header d-flex justify-content-between">
-                <span><i class="fa fa-cog"></i> <?php echo lng('Settings') ?></span>
+                <span><i class="fa-solid fa-gear"></i> <?php echo lng('Settings') ?></span>
             </h6>
             <div class="card-body">
                 <form id="js-settings-form" action="" method="post" data-type="ajax" onsubmit="return save_settings(this)">
@@ -1809,7 +1916,7 @@ if (isset($_GET['settings']) && !FM_READONLY) {
                                 <input class="form-check-input" type="checkbox" role="switch" id="js-enable-paging" name="js-enable-paging" value="true" <?php echo !empty($cfg->data['enable_paging']) ? 'checked' : ''; ?> />
                             </div>
                             <div class="form-text small text-muted mt-1" style="max-width: 500px;">
-                                <i class="fa fa-info-circle"></i> <?php echo lng('PagingInfoHelp'); ?>
+                                <i class="fa-solid fa-circle-info"></i> <?php echo lng('PagingInfoHelp'); ?>
                             </div>
                         </div>
                     </div>
@@ -1817,10 +1924,10 @@ if (isset($_GET['settings']) && !FM_READONLY) {
                     <div class="mb-3 row">
                         <div class="col-sm-10 d-flex gap-3">
                             <button type="submit" class="btn btn-success">
-                                <i class="fa fa-check-circle"></i> <?php echo lng('Save'); ?>
+                                <i class="fa-solid fa-circle-check"></i> <?php echo lng('Save'); ?>
                             </button>
                             <button type="button" class="btn btn-primary" onclick="window.location.href='?p='">
-                                <i class="fa fa-reply-all"></i> <?php echo lng('Back'); ?>
+                                <i class="fa-solid fa-reply-all"></i> <?php echo lng('Back'); ?>
                             </button>
                         </div>
                     </div>
@@ -1843,12 +1950,12 @@ if (isset($_GET['sitesettings']) && !FM_READONLY) {
     <div class="col-md-8 offset-md-2 pt-3">
         <div class="card mb-2" data-bs-theme="<?php echo FM_THEME; ?>">
             <h6 class="card-header d-flex justify-content-between">
-                <span><i class="fa fa-id-card"></i> <?php echo lng('SiteIdentity') ?></span>
+                <span><i class="fa-solid fa-id-card"></i> <?php echo lng('SiteIdentity') ?></span>
             </h6>
             <div class="card-body">
                 <div class="alert alert-info small mb-3 d-inline-flex align-items-start" role="alert">
-                    <i class="fa fa-info-circle me-2 mt-1 flex-shrink-0"></i>
-                    <div><?php echo lng('SiteIdentityHelp') ?></div>
+                    <i class="fa-solid fa-circle-info me-2 mt-1 flex-shrink-0"></i>
+                    <div><?php echo sprintf(lng('SiteIdentityHelp'), 'svg/png/jpg/gif/webp/ico/avif'); ?></div>
                 </div>
                 <form id="js-sitesettings-form" action="" method="post" onsubmit="return save_settings(this)">
                     <input type="hidden" name="type" value="settings">
@@ -1869,7 +1976,7 @@ if (isset($_GET['sitesettings']) && !FM_READONLY) {
                             <?php $exampleFaviconUrl = $scheme . '://' . $host . '/favicon.ico'; ?>
                             <input type="text" class="form-control" id="js-favicon-path" name="js-favicon-path" style="max-width: 600px;"
                                 value="<?php echo fm_enc($cfg->data['favicon_path'] ?? ''); ?>"
-                                placeholder="<?php echo str_replace('{url}', fm_enc($exampleFaviconUrl), lng('FaviconPathPlaceholder')); ?>">
+                                placeholder="<?php echo str_replace('{url}', fm_enc($exampleFaviconUrl), sprintf(lng('FaviconPathPlaceholder'), '/assets/icons/favicon.svg')); ?>">
                         </div>
                     </div>
                     <div class="mb-3 row">
@@ -1878,7 +1985,18 @@ if (isset($_GET['sitesettings']) && !FM_READONLY) {
                             <?php $exampleLogoUrl = $scheme . '://' . $host . '/logo.png'; ?>
                             <input type="text" class="form-control" id="js-logo-path" name="js-logo-path" style="max-width: 600px;"
                                 value="<?php echo fm_enc($cfg->data['logo_path'] ?? ''); ?>"
-                                placeholder="<?php echo str_replace('{url}', fm_enc($exampleLogoUrl), lng('LogoPathPlaceholder')); ?>">
+                                placeholder="<?php echo str_replace('{url}', fm_enc($exampleLogoUrl), sprintf(lng('LogoPathPlaceholder'), '/assets/icons/logo.svg')); ?>">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="js-footer-start-year" class="col-sm-3 col-form-label"><?php echo lng('FooterStartYear') ?></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="js-footer-start-year" name="js-footer-start-year" style="max-width: 600px;"
+                                value="<?php echo fm_enc($cfg->data['footer_start_year'] ?? '2017'); ?>"
+                                placeholder="<?php echo lng('FooterStartYearPlaceholder') ?>">
+                            <div class="form-text small text-muted mt-1">
+                                <?php echo sprintf(lng('FooterStartYearHelp'), '<code>none</code>'); ?>
+                            </div>
                         </div>
                     </div>
                     <div class="mb-3 row">
@@ -1912,10 +2030,10 @@ if (isset($_GET['sitesettings']) && !FM_READONLY) {
                     <div class="mb-3 row">
                         <div class="col-sm-10 d-flex gap-3">
                             <button type="submit" class="btn btn-success">
-                                <i class="fa fa-check-circle"></i> <?php echo lng('Save'); ?>
+                                <i class="fa-solid fa-circle-check"></i> <?php echo lng('Save'); ?>
                             </button>
                             <a href="?p=" class="btn btn-primary">
-                                <i class="fa fa-reply-all"></i> <?php echo lng('Back'); ?>
+                                <i class="fa-solid fa-reply-all"></i> <?php echo lng('Back'); ?>
                             </a>
                         </div>
                     </div>
@@ -1937,7 +2055,7 @@ if (isset($_GET['help'])) {
     <div class="col-md-8 offset-md-2 pt-3">
         <div class="card mb-2" data-bs-theme="<?php echo FM_THEME; ?>">
             <h6 class="card-header d-flex justify-content-between">
-                <span><i class="fa fa-exclamation-circle"></i> <?php echo lng('Help') ?></span>
+                <span><i class="fa-solid fa-circle-exclamation"></i> <?php echo lng('Help') ?></span>
             </h6>
             <div class="card-body">
                 <div class="row">
@@ -1951,10 +2069,10 @@ if (isset($_GET['help'])) {
                     <div class="col-xs-12 col-sm-6">
                         <div class="card">
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item"><a href="https://github.com/prasathmani/tinyfilemanager/wiki" target="_blank"><i class="fa fa-question-circle"></i> <?php echo lng('Help Documents') ?> </a> </li>
-                                <li class="list-group-item"><a href="https://github.com/prasathmani/tinyfilemanager/issues" target="_blank"><i class="fa fa-bug"></i> <?php echo lng('Report Issue') ?></a></li>
+                                <li class="list-group-item"><a href="https://github.com/prasathmani/tinyfilemanager/wiki" target="_blank"><i class="fa-solid fa-circle-question"></i> <?php echo lng('Help Documents') ?> </a> </li>
+                                <li class="list-group-item"><a href="https://github.com/prasathmani/tinyfilemanager/issues" target="_blank"><i class="fa-solid fa-bug"></i> <?php echo lng('Report Issue') ?></a></li>
                                 <?php if (!FM_READONLY) { ?>
-                                    <li class="list-group-item"><a href="javascript:show_new_pwd();"><i class="fa fa-lock"></i> <?php echo lng('Generate new password hash') ?></a></li>
+                                    <li class="list-group-item"><a href="javascript:show_new_pwd();"><i class="fa-solid fa-lock"></i> <?php echo lng('Generate new password hash') ?></a></li>
                                 <?php } ?>
                             </ul>
                         </div>
@@ -2015,7 +2133,7 @@ if (isset($_GET['help'])) {
 
                 <div class="mt-3">
                     <a href="?p=<?php echo urlencode(FM_PATH) ?>" class="btn btn-primary">
-                        <i class="fa fa-reply-all"></i> <?php echo lng('Back'); ?>
+                        <i class="fa-solid fa-reply-all"></i> <?php echo lng('Back'); ?>
                     </a>
                 </div>
             </div>
@@ -2065,7 +2183,18 @@ if (isset($_GET['view'])) {
     $filenames = false; // for zip
     $content = ''; // for text
     $online_viewer = strtolower(FM_DOC_VIEWER);
-
+    $isRawView = in_array($ext, ['md', 'markdown', 'sh', 'bash', 'txt', 'log', 'json', 'css', 'js', 'py']);
+    if (!$isRawView && is_file($file_path)) {
+        $fh = @fopen($file_path, 'r');
+        if ($fh) {
+            $first_line = fgets($fh, 30);
+            if (preg_match('/^\s*#!\s*\/bin\/(bash|sh)/i', $first_line)) {
+                $isRawView = true;
+            }
+            fclose($fh);
+        }
+    }
+    $openHref = $isRawView ? '?p=' . urlencode(FM_PATH) . '&raw=' . urlencode($file) : fm_enc($file_url);
     if ($online_viewer && $online_viewer !== 'false' && in_array($ext, fm_get_onlineViewer_exts())) {
         $is_onlineViewer = true;
     } elseif ($ext == 'zip' || $ext == 'tar') {
@@ -2153,17 +2282,17 @@ if (isset($_GET['view'])) {
             <div class="btn-group btn-group-sm flex-wrap" role="group">
                 <form method="post" class="d-inline mb-0 btn btn-outline-primary" action="?p=<?php echo urlencode(FM_PATH) ?>&amp;dl=<?php echo urlencode($file) ?>">
                     <input type="hidden" name="token" value="<?php echo $_SESSION['token']; ?>">
-                    <button type="submit" class="btn btn-link btn-sm text-decoration-none fw-bold p-0"><i class="fa fa-cloud-download"></i> <?php echo lng('Download') ?></button>
+                    <button type="submit" class="btn btn-link btn-sm text-decoration-none fw-bold p-0"><i class="fa-solid fa-cloud-arrow-down"></i> <?php echo lng('Download') ?></button>
                 </form>
                 <?php if (!FM_READONLY): ?>
-                    <a class="fw-bold btn btn-outline-primary" title="<?php echo lng('Delete') ?>" href="?p=<?php echo urlencode(FM_PATH) ?>&amp;del=<?php echo urlencode($file) ?>" onclick="confirmDialog(event, 1209, '<?php echo lng('Delete') . ' ' . lng('File'); ?>','<?php echo urlencode($file); ?>', this.href);"> <i class="fa fa-trash"></i> <?php echo lng('Delete') ?></a>
+                    <a class="fw-bold btn btn-outline-primary" title="<?php echo lng('Delete') ?>" href="?p=<?php echo urlencode(FM_PATH) ?>&amp;del=<?php echo urlencode($file) ?>" onclick="confirmDialog(event, 1209, '<?php echo lng('Delete') . ' ' . lng('File'); ?>','<?php echo urlencode($file); ?>', this.href);"> <i class="fa-solid fa-trash-can"></i> <?php echo lng('Delete') ?></a>
                 <?php endif; ?>
                 <?php if ($is_swf): ?>
                     <a class="fw-bold btn btn-outline-primary" href="?p=<?php echo urlencode(FM_PATH) ?>&amp;view=<?php echo urlencode($file) ?>" target="_blank">
-                        <i class="fa fa-play-circle"></i> <?php echo lng('Open') ?>
+                        <i class="fa-solid fa-square-up-right"></i> <?php echo lng('Open') ?>
                     </a>
                 <?php else: ?>
-                    <a class="fw-bold btn btn-outline-primary" href="<?php echo fm_enc($file_url) ?>" target="_blank"><i class="fa fa-external-link-square"></i> <?php echo lng('Open') ?></a>
+                    <a class="fw-bold btn btn-outline-primary" href="<?php echo $openHref ?>" target="_blank"><i class="fa-solid fa-square-up-right"></i> <?php echo lng('Open') ?></a>
                 <?php endif; ?>
                 <?php
                 // ZIP actions
@@ -2173,26 +2302,26 @@ if (isset($_GET['view'])) {
                     <form method="post" class="d-inline btn btn-outline-primary mb-0">
                         <input type="hidden" name="token" value="<?php echo $_SESSION['token']; ?>">
                         <input type="hidden" name="unzip" value="<?php echo urlencode($file); ?>">
-                        <button type="submit" class="btn btn-link text-decoration-none fw-bold p-0 border-0" style="font-size: 14px;"><i class="fa fa-check-circle"></i> <?php echo lng('UnZip') ?></button>
+                        <button type="submit" class="btn btn-link text-decoration-none fw-bold p-0 border-0" style="font-size: 14px;"><i class="fa-solid fa-circle-check"></i> <?php echo lng('UnZip') ?></button>
                     </form>
                     <form method="post" class="d-inline btn btn-outline-primary mb-0">
                         <input type="hidden" name="token" value="<?php echo $_SESSION['token']; ?>">
                         <input type="hidden" name="unzip" value="<?php echo urlencode($file); ?>">
                         <input type="hidden" name="tofolder" value="1">
-                        <button type="submit" class="btn btn-link text-decoration-none fw-bold p-0" style="font-size: 14px;" title="<?php echo lng('UnZipToFolder') ?> <?php echo fm_enc($zip_name) ?>"><i class="fa fa-check-circle"></i> <?php echo lng('UnZipToFolder') ?></button>
+                        <button type="submit" class="btn btn-link text-decoration-none fw-bold p-0" style="font-size: 14px;" title="<?php echo lng('UnZipToFolder') ?> <?php echo fm_enc($zip_name) ?>"><i class="fa-solid fa-circle-check"></i> <?php echo lng('UnZipToFolder') ?></button>
                     </form>
                 <?php
                 }
                 if (($is_text || $ext === 'svg') && !FM_READONLY) {
                 ?>
                     <a class="fw-bold btn btn-outline-primary edit-file" href="?p=<?php echo urlencode(trim(FM_PATH)) ?>&amp;edit=<?php echo urlencode($file) ?>">
-                        <i class="fa fa-pencil-square"></i> <?php echo lng('Edit') ?>
+                        <i class="fa-solid fa-file-lines"></i> <?php echo lng('Edit') ?>
                     </a>
                     <a class="fw-bold btn btn-outline-primary edit-file" href="?p=<?php echo urlencode(trim(FM_PATH)) ?>&amp;edit=<?php echo urlencode($file) ?>&amp;env=ace">
-                        <i class="fa fa-pencil-square"></i> <?php echo lng('AdvancedEditor') ?>
+                        <i class="fa-solid fa-file-code"></i> <?php echo lng('AdvancedEditor') ?>
                     </a>
                 <?php } ?>
-                <a class="fw-bold btn btn-outline-primary" href="?p=<?php echo urlencode(FM_PATH) ?>"><i class="fa fa-chevron-circle-left go-back"></i> <?php echo lng('Back') ?></a>
+                <a class="fw-bold btn btn-outline-primary" href="?p=<?php echo urlencode(FM_PATH) ?>"><i class="fa-solid fa-circle-arrow-left go-back"></i> <?php echo lng('Back') ?></a>
             </div>
             <div class="row mt-3">
                 <?php
@@ -2240,16 +2369,16 @@ if (isset($_GET['view'])) {
                     echo '  </div>';
                     
                     echo '  <div class="audio-controls mt-2">';
-                    echo '      <button type="button" class="btn btn-sm btn-primary" id="audioToggle"><i class="fa fa-play"></i></button>';
+                    echo '      <button type="button" class="btn btn-sm btn-primary" id="audioToggle"><i class="fa-solid fa-circle-play"></i></button>';
                     echo '      <span class="audio-time" id="audioTime">00:00 / 00:00</span>';
                     echo '      <input type="range" id="audioSeek" value="0" min="0" max="100" step="0.1" class="audio-seek">';
                     echo '  </div>';
                     echo '</div>';
                 } elseif ($is_swf) {
-                    echo '<div class="text-center mt-3" style="max-width:800px;margin:0 auto 24px; position: relative;">';
-                    echo '  <div id="ruffle-container" style="width:100%;background:transparent; min-height: 400px;"></div>';
+                    echo '<div class="text-center mt-3" style="width:100%; max-width:800px; margin:0 auto 24px; position: relative;">';
+                    echo '  <div id="ruffle-container" style="width:100%; height: 60vh; max-height: 600px; background: #000; overflow: hidden; border-radius: 8px; position: relative;"></div>';
                     echo '  <div id="swfLoadingMask" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10; border-radius: 8px;">';
-                    echo '      <i class="fa fa-spinner fa-spin fa-2x mb-3"></i>';
+                    echo '      <i class="fa-solid fa-compact-disc fa-spin fa-2x mb-3"></i>';
                     echo '      <span>' . lng('SwfLoading') . '<span class="loading-dots"></span></span>';
                     echo '  </div>';
                     echo '</div>';
@@ -2257,25 +2386,34 @@ if (isset($_GET['view'])) {
                 } elseif ($is_video) {
                     echo '<div class="preview-video"><video src="' . fm_enc($file_url) . '" width="640" height="360" controls preload="metadata"></video></div>';
                 } elseif ($is_text) {
-                    if (FM_USE_HIGHLIGHTJS) {
-                        $hljs_classes = array(
-                            'shtml' => 'xml',
-                            'htaccess' => 'apache',
-                            'phtml' => 'php',
-                            'lock' => 'json',
-                            'svg' => 'xml',
-                        );
-                        $hljs_class = isset($hljs_classes[$ext]) ? 'lang-' . $hljs_classes[$ext] : 'lang-' . $ext;
-                        if (empty($ext) || in_array(strtolower($file), fm_get_text_names()) || preg_match('#\.min\.(css|js)$#i', $file)) {
-                            $hljs_class = 'nohighlight';
-                        }
-                        $content = '<pre class="with-hljs"><code class="' . $hljs_class . '">' . fm_enc($content) . '</code></pre>';
-                    } elseif (in_array($ext, array('php', 'php4', 'php5', 'phtml', 'phps'))) {
-                        $content = highlight_string($content, true);
+                    if ($ext === 'md' || $ext === 'markdown') {
+                        $mdSource = str_replace(array("\r\n", "\r"), "\n", $content);
+                        $mdContent = preg_replace_callback('/^\|.*\|$/m', function ($m) {
+                            return preg_replace('/(?<=[^\s*|])\*(?=[^\s*|])/', '\\*', $m[0]);
+                        }, $mdSource);
+                        echo '<div id="markdown-content" class="card p-4" style="background-color: #fff; border-radius: 8px;"></div>';
+                        echo '<script>window.rawMarkdown = ' . json_encode($mdContent, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) . ';</script>';
                     } else {
-                        $content = '<pre>' . fm_enc($content) . '</pre>';
+                        if (FM_USE_HIGHLIGHTJS) {
+                            $hljs_classes = array(
+                                'shtml' => 'xml',
+                                'htaccess' => 'apache',
+                                'phtml' => 'php',
+                                'lock' => 'json',
+                                'svg' => 'xml',
+                            );
+                            $hljs_class = isset($hljs_classes[$ext]) ? 'lang-' . $hljs_classes[$ext] : 'lang-' . $ext;
+                            if (empty($ext) || in_array(strtolower($file), fm_get_text_names()) || preg_match('#\.min\.(css|js)$#i', $file)) {
+                                $hljs_class = 'nohighlight';
+                            }
+                            $content = '<pre class="with-hljs"><code class="' . $hljs_class . '">' . fm_enc($content) . '</code></pre>';
+                        } elseif (in_array($ext, array('php', 'php4', 'php5', 'phtml', 'phps'))) {
+                            $content = highlight_string($content, true);
+                        } else {
+                            $content = '<pre>' . fm_enc($content) . '</pre>';
+                        }
+                        echo $content;
                     }
-                    echo $content;
                 }
                 ?>
             </div>
@@ -2355,11 +2493,11 @@ if (isset($_GET['edit']) && !FM_READONLY) {
                 <div class="btn-toolbar" role="toolbar">
                     <?php if (!$isNormalEditor) { ?>
                         <div class="btn-group js-ace-toolbar">
-                            <button data-cmd="none" data-option="fullscreen" class="btn btn-sm btn-outline-secondary" id="js-ace-fullscreen" title="<?php echo lng('Fullscreen') ?>"><i class="fa fa-expand" title="<?php echo lng('Fullscreen') ?>"></i></button>
-                            <button data-cmd="find" class="btn btn-sm btn-outline-secondary" id="js-ace-search" title="<?php echo lng('Search') ?>"><i class="fa fa-search" title="<?php echo lng('Search') ?>"></i></button>
-                            <button data-cmd="undo" class="btn btn-sm btn-outline-secondary" id="js-ace-undo" title="<?php echo lng('Undo') ?>"><i class="fa fa-undo" title="<?php echo lng('Undo') ?>"></i></button>
-                            <button data-cmd="redo" class="btn btn-sm btn-outline-secondary" id="js-ace-redo" title="<?php echo lng('Redo') ?>"><i class="fa fa-repeat" title="<?php echo lng('Redo') ?>"></i></button>
-                            <button data-cmd="none" data-option="wrap" class="btn btn-sm btn-outline-secondary" id="js-ace-wordWrap" title="<?php echo lng('Word Wrap') ?>"><i class="fa fa-text-width" title="<?php echo lng('Word Wrap') ?>"></i></button>
+                            <button data-cmd="none" data-option="fullscreen" class="btn btn-sm btn-outline-secondary" id="js-ace-fullscreen" title="<?php echo lng('Fullscreen') ?>"><i class="fa-solid fa-up-right-and-down-left-from-center" title="<?php echo lng('Fullscreen') ?>"></i></button>
+                            <button data-cmd="find" class="btn btn-sm btn-outline-secondary" id="js-ace-search" title="<?php echo lng('Search') ?>"><i class="fa-solid fa-magnifying-glass" title="<?php echo lng('Search') ?>"></i></button>
+                            <button data-cmd="undo" class="btn btn-sm btn-outline-secondary" id="js-ace-undo" title="<?php echo lng('Undo') ?>"><i class="fa-solid fa-rotate-left" title="<?php echo lng('Undo') ?>"></i></button>
+                            <button data-cmd="redo" class="btn btn-sm btn-outline-secondary" id="js-ace-redo" title="<?php echo lng('Redo') ?>"><i class="fa-solid fa-rotate-right" title="<?php echo lng('Redo') ?>"></i></button>
+                            <button data-cmd="none" data-option="wrap" class="btn btn-sm btn-outline-secondary" id="js-ace-wordWrap" title="<?php echo lng('Word Wrap') ?>"><i class="fa-solid fa-text-width" title="<?php echo lng('Word Wrap') ?>"></i></button>
                             <select id="js-ace-mode" data-type="mode" title="<?php echo lng('Select Document Type') ?>" class="btn-outline-secondary border-start-0 d-none d-md-block">
                                 <option>-- <?php echo lng('Select Mode') ?> --</option>
                             </select>
@@ -2375,16 +2513,16 @@ if (isset($_GET['edit']) && !FM_READONLY) {
             </div>
             <div class="edit-file-actions col-xs-12 col-sm-7 col-lg-6 text-end pt-1">
                 <div class="btn-group">
-                    <a title=" <?php echo lng('Back') ?>" class="btn btn-sm btn-outline-primary" href="?p=<?php echo urlencode(trim(FM_PATH)) ?>&amp;view=<?php echo urlencode($file) ?>"><i class="fa fa-reply-all"></i> <?php echo lng('Back') ?></a>
-                    <a title="<?php echo lng('BackUp') ?>" class="btn btn-sm btn-outline-primary" href="javascript:void(0);" onclick="backup('<?php echo urlencode(trim(FM_PATH)) ?>','<?php echo urlencode($file) ?>')"><i class="fa fa-database"></i> <?php echo lng('BackUp') ?></a>
+                    <a title=" <?php echo lng('Back') ?>" class="btn btn-sm btn-outline-primary" href="?p=<?php echo urlencode(trim(FM_PATH)) ?>&amp;view=<?php echo urlencode($file) ?>"><i class="fa-solid fa-reply-all"></i> <?php echo lng('Back') ?></a>
+                    <a title="<?php echo lng('BackUp') ?>" class="btn btn-sm btn-outline-primary" href="javascript:void(0);" onclick="backup('<?php echo urlencode(trim(FM_PATH)) ?>','<?php echo urlencode($file) ?>')"><i class="fa-solid fa-database"></i> <?php echo lng('BackUp') ?></a>
                     <?php if ($is_text) { ?>
                         <?php if ($isNormalEditor) { ?>
-                            <a title="Advanced" class="btn btn-sm btn-outline-primary" href="?p=<?php echo urlencode(trim(FM_PATH)) ?>&amp;edit=<?php echo urlencode($file) ?>&amp;env=ace"><i class="fa fa-pencil-square-o"></i> <?php echo lng('AdvancedEditor') ?></a>
-                            <button type="button" class="btn btn-sm btn-success" name="Save" data-url="<?php echo fm_enc($file_url) ?>" onclick="edit_save(this,'nrl')"><i class="fa fa-floppy-o"></i> <?php echo lng('Save') ?>
+                            <a title="Advanced" class="btn btn-sm btn-outline-primary" href="?p=<?php echo urlencode(trim(FM_PATH)) ?>&amp;edit=<?php echo urlencode($file) ?>&amp;env=ace"><i class="fa-solid fa-pen-to-square"></i> <?php echo lng('AdvancedEditor') ?></a>
+                            <button type="button" class="btn btn-sm btn-success" name="Save" data-url="<?php echo fm_enc($file_url) ?>" onclick="edit_save(this,'nrl')"><i class="fa-solid fa-floppy-disk"></i> <?php echo lng('Save') ?>
                             </button>
                         <?php } else { ?>
-                            <a title="Plain Editor" class="btn btn-sm btn-outline-primary" href="?p=<?php echo urlencode(trim(FM_PATH)) ?>&amp;edit=<?php echo urlencode($file) ?>"><i class="fa fa-text-height"></i> <?php echo lng('NormalEditor') ?></a>
-                            <button type="button" class="btn btn-sm btn-success" name="Save" data-url="<?php echo fm_enc($file_url) ?>" onclick="edit_save(this,'ace')"><i class="fa fa-floppy-o"></i> <?php echo lng('Save') ?>
+                            <a title="Plain Editor" class="btn btn-sm btn-outline-primary" href="?p=<?php echo urlencode(trim(FM_PATH)) ?>&amp;edit=<?php echo urlencode($file) ?>"><i class="fa-solid fa-text-height"></i> <?php echo lng('NormalEditor') ?></a>
+                            <button type="button" class="btn btn-sm btn-success" name="Save" data-url="<?php echo fm_enc($file_url) ?>" onclick="edit_save(this,'ace')"><i class="fa-solid fa-floppy-disk"></i> <?php echo lng('Save') ?>
                             </button>
                         <?php } ?>
                     <?php } ?>
@@ -2393,7 +2531,7 @@ if (isset($_GET['edit']) && !FM_READONLY) {
         </div>
         <?php
         if ($is_text && $isNormalEditor) {
-            echo '<textarea class="mt-2" id="normal-editor" rows="33" cols="120" style="width: 99.5%;">' . htmlspecialchars($content) . '</textarea>';
+            echo '<textarea class="mt-2" id="normal-editor" rows="33" cols="120" style="width: 99.5%; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; line-height: 1.6; padding: 12px; border-radius: 6px; border: 1px solid #d0d7de; outline: none;">' . htmlspecialchars($content) . '</textarea>';
             echo '<script>document.addEventListener("keydown", function(e) {if ((window.navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)  && e.keyCode == 83) { e.preventDefault();edit_save(this,"nrl");}}, false);</script>';
         } elseif ($is_text) {
             echo '<div id="editor" contenteditable="true">' . htmlspecialchars($content) . '</div>';
@@ -2469,8 +2607,8 @@ if (isset($_GET['chmod']) && !FM_READONLY && !FM_IS_WIN) {
 
                     <p>
                         <input type="hidden" name="token" value="<?php echo $_SESSION['token']; ?>">
-                        <b><a href="?p=<?php echo urlencode(FM_PATH) ?>" class="btn btn-outline-primary"><i class="fa fa-times-circle"></i> <?php echo lng('Cancel') ?></a></b>&nbsp;
-                        <button type="submit" class="btn btn-success"><i class="fa fa-check-circle"></i> <?php echo lng('Change') ?></button>
+                        <b><a href="?p=<?php echo urlencode(FM_PATH) ?>" class="btn btn-outline-primary"><i class="fa-solid fa-circle-xmark"></i> <?php echo lng('Cancel') ?></a></b>&nbsp;
+                        <button type="submit" class="btn btn-success"><i class="fa-solid fa-circle-check"></i> <?php echo lng('Change') ?></button>
                     </p>
                 </form>
             </div>
@@ -2522,7 +2660,7 @@ $all_files_size = 0;
             ?>
                 <tr><?php if (!FM_READONLY): ?>
                     <td class="nosort"></td><?php endif; ?>
-                    <td class="border-0" data-sort><a href="?p=<?php echo urlencode($parent) ?>"><i class="fa fa-chevron-circle-left go-back"></i> <?php echo lng('ParentDirectory') ?></a></td>
+                    <td class="border-0" data-sort><a href="?p=<?php echo urlencode($parent) ?>"><i class="fa-solid fa-circle-arrow-left go-back"></i> <?php echo lng('ParentDirectory') ?></a></td>
                     <td class="border-0" data-order></td>
                     <td class="border-0" data-order></td>
                     <td class="border-0"></td>
@@ -2536,7 +2674,7 @@ $all_files_size = 0;
             $ii = 3399;
             foreach ($folders as $f) {
                 $is_link = is_link($path . '/' . $f);
-                $img = $is_link ? 'icon-link_folder' : 'fa fa-folder-o';
+                $img = $is_link ? 'icon-link_folder' : 'fa-regular fa-folder';
                 $modif_raw = filemtime($path . '/' . $f);
                 $modif = date(FM_DATETIME_FORMAT, $modif_raw);
                 $date_sorting = strtotime(date("F d Y H:i:s.", $modif_raw));
@@ -2592,11 +2730,11 @@ $all_files_size = 0;
                         </td>
                     <?php endif; ?>
                     <td class="inline-actions"><?php if (!FM_READONLY): ?>
-                            <a title="<?php echo lng('Delete') ?>" href="?p=<?php echo urlencode(FM_PATH) ?>&amp;del=<?php echo urlencode($f) ?>" onclick="confirmDialog(event, '1028','<?php echo lng('Delete') . ' ' . lng('Folder'); ?>','<?php echo urlencode($f) ?>', this.href);"> <i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                            <a title="<?php echo lng('Rename') ?>" href="#" onclick="rename('<?php echo fm_enc(addslashes(FM_PATH)) ?>', '<?php echo fm_enc(addslashes($f)) ?>');return false;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                            <a title="<?php echo lng('CopyTo') ?>..." href="?p=&amp;copy=<?php echo urlencode(trim(FM_PATH . '/' . $f, '/')) ?>"><i class="fa fa-files-o" aria-hidden="true"></i></a>
+                            <a class="action-delete" title="<?php echo lng('Delete') ?>" href="?p=<?php echo urlencode(FM_PATH) ?>&amp;del=<?php echo urlencode($f) ?>" onclick="confirmDialog(event, '1028','<?php echo lng('Delete') . ' ' . lng('Folder'); ?>','<?php echo urlencode($f) ?>', this.href);"> <i class="fa-solid fa-trash-can" aria-hidden="true"></i></a>
+                            <a class="action-rename" title="<?php echo lng('Rename') ?>" href="#" onclick="rename('<?php echo fm_enc(addslashes(FM_PATH)) ?>', '<?php echo fm_enc(addslashes($f)) ?>');return false;"><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i></a>
+                            <a class="action-copy" title="<?php echo lng('CopyTo') ?>..." href="?p=&amp;copy=<?php echo urlencode(trim(FM_PATH . '/' . $f, '/')) ?>"><i class="fa-regular fa-copy" aria-hidden="true"></i></a>
                         <?php endif; ?>
-                        <a title="<?php echo lng('DirectLink') ?>" href="<?php echo fm_enc(FM_ROOT_URL . (FM_PATH != '' ? '/' . FM_PATH : '') . '/' . $f . '/') ?>" target="_blank"><i class="fa fa-link" aria-hidden="true"></i></a>
+                        <a class="action-link" title="<?php echo lng('DirectLink') ?>" href="<?php echo fm_enc(FM_ROOT_URL . (FM_PATH != '' ? '/' . FM_PATH : '') . '/' . $f . '/') ?>" target="_blank"><?php echo fm_link_icon(); ?></a>
                     </td>
                 </tr>
             <?php
@@ -2606,7 +2744,7 @@ $all_files_size = 0;
             $ik = 8002;
             foreach ($files as $f) {
                 $is_link = is_link($path . '/' . $f);
-                $img = $is_link ? 'fa fa-file-text-o' : fm_get_file_icon_class($path . '/' . $f);
+                $img = $is_link ? 'fa-regular fa-file-lines' : fm_get_file_icon_class($path . '/' . $f);
                 $modif_raw = filemtime($path . '/' . $f);
                 $modif = date(FM_DATETIME_FORMAT, $modif_raw);
                 $date_sorting = strtotime(date("F d Y H:i:s.", $modif_raw));
@@ -2669,14 +2807,13 @@ $all_files_size = 0;
                     <?php endif; ?>
                     <td class="inline-actions">
                         <?php if (!FM_READONLY): ?>
-                            <a title="<?php echo lng('Delete') ?>" href="?p=<?php echo urlencode(FM_PATH) ?>&amp;del=<?php echo urlencode($f) ?>" onclick="confirmDialog(event, 1209, '<?php echo lng('Delete') . ' ' . lng('File'); ?>','<?php echo urlencode($f); ?>', this.href);"> <i class="fa fa-trash-o"></i></a>
-                            <a title="<?php echo lng('Rename') ?>" href="#" onclick="rename('<?php echo fm_enc(addslashes(FM_PATH)) ?>', '<?php echo fm_enc(addslashes($f)) ?>');return false;"><i class="fa fa-pencil-square-o"></i></a>
-                            <a title="<?php echo lng('CopyTo') ?>..."
-                                href="?p=<?php echo urlencode(FM_PATH) ?>&amp;copy=<?php echo urlencode(trim(FM_PATH . '/' . $f, '/')) ?>"><i class="fa fa-files-o"></i></a>
+                            <a class="action-delete" title="<?php echo lng('Delete') ?>" href="?p=<?php echo urlencode(FM_PATH) ?>&amp;del=<?php echo urlencode($f) ?>" onclick="confirmDialog(event, 1209, '<?php echo lng('Delete') . ' ' . lng('File'); ?>','<?php echo urlencode($f); ?>', this.href);"> <i class="fa-solid fa-trash-can"></i></a>
+                            <a class="action-rename" title="<?php echo lng('Rename') ?>" href="#" onclick="rename('<?php echo fm_enc(addslashes(FM_PATH)) ?>', '<?php echo fm_enc(addslashes($f)) ?>');return false;"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <a class="action-copy" title="<?php echo lng('CopyTo') ?>..." href="?p=<?php echo urlencode(FM_PATH) ?>&amp;copy=<?php echo urlencode(trim(FM_PATH . '/' . $f, '/')) ?>"><i class="fa-regular fa-copy"></i></a>
                         <?php endif; ?>
                         <?php $isSwfFile = strtolower(pathinfo($f, PATHINFO_EXTENSION)) === 'swf'; ?>
-                        <a title="<?php echo lng('DirectLink') ?>" href="<?php echo $isSwfFile ? '?p=' . urlencode(FM_PATH) . '&amp;view=' . urlencode($f) : fm_enc(FM_ROOT_URL . (FM_PATH != '' ? '/' . FM_PATH : '') . '/' . $f) ?>" target="_blank"><i class="fa fa-link"></i></a>
-                        <a title="<?php echo lng('Download') ?>" href="?p=<?php echo urlencode(FM_PATH) ?>&amp;dl=<?php echo urlencode($f) ?>" onclick="confirmDialog(event, 1211, '<?php echo lng('Download'); ?>','<?php echo urlencode($f); ?>', this.href);"><i class="fa fa-download"></i></a>
+                        <a class="action-link" title="<?php echo lng('DirectLink') ?>" href="<?php echo $isSwfFile ? '?p=' . urlencode(FM_PATH) . '&amp;view=' . urlencode($f) : fm_enc(FM_ROOT_URL . (FM_PATH != '' ? '/' . FM_PATH : '') . '/' . $f) ?>" target="_blank"><?php echo fm_link_icon(); ?></a>
+                        <a class="action-download" title="<?php echo lng('Download') ?>" href="?p=<?php echo urlencode(FM_PATH) ?>&amp;dl=<?php echo urlencode($f) ?>" onclick="confirmDialog(event, 1211, '<?php echo lng('Download'); ?>','<?php echo urlencode($f); ?>', this.href);"><i class="fa-solid fa-download"></i></a>
                     </td>
                 </tr>
             <?php
@@ -2710,17 +2847,17 @@ $all_files_size = 0;
         <?php if (!FM_READONLY): ?>
             <div class="col-xs-12 col-sm-9">
                 <div class="btn-group flex-wrap" data-toggle="buttons" role="toolbar">
-                    <a href="#/select-all" class="btn btn-small btn-outline-primary btn-2" onclick="select_all();return false;"><i class="fa fa-check-square"></i> <?php echo lng('SelectAll') ?> </a>
-                    <a href="#/unselect-all" class="btn btn-small btn-outline-primary btn-2" onclick="unselect_all();return false;"><i class="fa fa-window-close"></i> <?php echo lng('UnSelectAll') ?> </a>
-                    <a href="#/invert-all" class="btn btn-small btn-outline-primary btn-2" onclick="invert_all();return false;"><i class="fa fa-th-list"></i> <?php echo lng('InvertSelection') ?> </a>
+                    <a href="#/select-all" class="btn btn-small btn-outline-primary btn-2" onclick="select_all();return false;"><i class="fa-solid fa-square-check"></i> <?php echo lng('SelectAll') ?> </a>
+                    <a href="#/unselect-all" class="btn btn-small btn-outline-primary btn-2" onclick="unselect_all();return false;"><i class="fa-solid fa-square-xmark"></i> <?php echo lng('UnSelectAll') ?> </a>
+                    <a href="#/invert-all" class="btn btn-small btn-outline-primary btn-2" onclick="invert_all();return false;"><i class="fa-solid fa-list-check"></i> <?php echo lng('InvertSelection') ?> </a>
                     <input type="submit" class="hidden" name="delete" id="a-delete" value="Delete" onclick="return confirm('<?php echo lng('Delete selected files and folders?'); ?>')">
-                    <a href="javascript:document.getElementById('a-delete').click();" class="btn btn-small btn-outline-primary btn-2"><i class="fa fa-trash"></i> <?php echo lng('Delete') ?> </a>
+                    <a href="javascript:document.getElementById('a-delete').click();" class="btn btn-small btn-outline-primary btn-2"><i class="fa-solid fa-trash-can"></i> <?php echo lng('Delete') ?> </a>
                     <input type="submit" class="hidden" name="zip" id="a-zip" value="zip" onclick="return confirm('<?php echo lng('Create archive?'); ?>')">
-                    <a href="javascript:document.getElementById('a-zip').click();" class="btn btn-small btn-outline-primary btn-2"><i class="fa fa-file-archive-o"></i> <?php echo lng('Zip') ?> </a>
+                    <a href="javascript:document.getElementById('a-zip').click();" class="btn btn-small btn-outline-primary btn-2"><i class="fa-solid fa-file-zipper"></i> <?php echo lng('Zip') ?> </a>
                     <input type="submit" class="hidden" name="tar" id="a-tar" value="tar" onclick="return confirm('<?php echo lng('Create archive?'); ?>')">
-                    <a href="javascript:document.getElementById('a-tar').click();" class="btn btn-small btn-outline-primary btn-2"><i class="fa fa-file-archive-o"></i> <?php echo lng('Tar') ?> </a>
+                    <a href="javascript:document.getElementById('a-tar').click();" class="btn btn-small btn-outline-primary btn-2"><i class="fa-solid fa-file-zipper"></i> <?php echo lng('Tar') ?> </a>
                     <input type="submit" class="hidden" name="copy" id="a-copy" value="Copy">
-                    <a href="javascript:document.getElementById('a-copy').click();" class="btn btn-small btn-outline-primary btn-2"><i class="fa fa-files-o"></i> <?php echo lng('Copy') ?> </a>
+                    <a href="javascript:document.getElementById('a-copy').click();" class="btn btn-small btn-outline-primary btn-2"><i class="fa-regular fa-copy"></i> <?php echo lng('Copy') ?> </a>
                 </div>
             </div>
             <div class="col-3 d-none d-sm-block"><a href="https://tinyfilemanager.github.io" target="_blank" class="float-right text-muted"><?php echo lng('AppTitle')." ".VERSION; ?></a></div>
@@ -3380,7 +3517,7 @@ function fm_get_file_icon_class($path)
         case 'webp':
         case 'avif':
         case 'svg':
-            $img = 'fa fa-picture-o';
+            $img = 'fa-regular fa-image';
             break;
         case 'passwd':
         case 'ftpquota':
@@ -3408,7 +3545,7 @@ function fm_get_file_icon_class($path)
         case 'lock':
         case 'dtd':
         case 'ps1':
-            $img = 'fa fa-file-code-o';
+            $img = 'fa-solid fa-file-code';
             break;
         case 'txt':
         case 'ini':
@@ -3425,13 +3562,13 @@ function fm_get_file_icon_class($path)
         case 'bak':
         case 'htpasswd':
         case 'pl':
-            $img = 'fa fa-file-text-o';
+            $img = 'fa-regular fa-file-lines';
             break;
         case 'css':
         case 'less':
         case 'sass':
         case 'scss':
-            $img = 'fa fa-css3';
+            $img = 'fa-brands fa-css3-alt';
             break;
         case 'bz2':
         case 'tbz2':
@@ -3446,24 +3583,24 @@ function fm_get_file_icon_class($path)
         case 'txz':
         case 'zst':
         case 'tzst':
-            $img = 'fa fa-file-archive-o';
+            $img = 'fa-solid fa-file-zipper';
             break;
         case 'php':
         case 'php4':
         case 'php5':
         case 'phps':
         case 'phtml':
-            $img = 'fa fa-code';
+            $img = 'fa-solid fa-code';
             break;
         case 'htm':
         case 'html':
         case 'shtml':
         case 'xhtml':
-            $img = 'fa fa-html5';
+            $img = 'fa-brands fa-html5';
             break;
         case 'xml':
         case 'xsl':
-            $img = 'fa fa-file-excel-o';
+            $img = 'fa-regular fa-file-excel';
             break;
         case 'wav':
         case 'mp3':
@@ -3477,14 +3614,14 @@ function fm_get_file_icon_class($path)
         case 'flac':
         case 'ac3':
         case 'tds':
-            $img = 'fa fa-music';
+            $img = 'fa-solid fa-music';
             break;
         case 'm3u':
         case 'm3u8':
         case 'pls':
         case 'cue':
         case 'xspf':
-            $img = 'fa fa-headphones';
+            $img = 'fa-solid fa-headphones';
             break;
         case 'avi':
         case 'mpg':
@@ -3501,32 +3638,32 @@ function fm_get_file_icon_class($path)
         case 'asf':
         case 'wmv':
         case 'webm':
-            $img = 'fa fa-file-video-o';
+            $img = 'fa-regular fa-file-video';
             break;
         case 'eml':
         case 'msg':
-            $img = 'fa fa-envelope-o';
+            $img = 'fa-solid fa-envelope-open-text';
             break;
         case 'xls':
         case 'xlsx':
         case 'ods':
-            $img = 'fa fa-file-excel-o';
+            $img = 'fa-regular fa-file-excel';
             break;
         case 'csv':
-            $img = 'fa fa-file-text-o';
+            $img = 'fa-solid fa-file-csv';
             break;
         case 'bak':
         case 'swp':
-            $img = 'fa fa-clipboard';
+            $img = 'fa-solid fa-paste';
             break;
         case 'doc':
         case 'docx':
         case 'odt':
-            $img = 'fa fa-file-word-o';
+            $img = 'fa-regular fa-file-word';
             break;
         case 'ppt':
         case 'pptx':
-            $img = 'fa fa-file-powerpoint-o';
+            $img = 'fa-regular fa-file-powerpoint';
             break;
         case 'ttf':
         case 'ttc':
@@ -3535,27 +3672,27 @@ function fm_get_file_icon_class($path)
         case 'woff2':
         case 'eot':
         case 'fon':
-            $img = 'fa fa-font';
+            $img = 'fa-solid fa-font';
             break;
         case 'pdf':
-            $img = 'fa fa-file-pdf-o';
+            $img = 'fa-regular fa-file-pdf';
             break;
         case 'psd':
         case 'ai':
         case 'eps':
         case 'fla':
         case 'swf':
-            $img = 'fa fa-file-video-o';
+            $img = 'fa-regular fa-file-video';
             break;
         case 'exe':
         case 'msi':
-            $img = 'fa fa-file-o';
+            $img = 'fa-solid fa-laptop-code';
             break;
         case 'bat':
-            $img = 'fa fa-terminal';
+            $img = 'fa-solid fa-terminal';
             break;
         default:
-            $img = 'fa fa-info-circle';
+            $img = 'fa-solid fa-circle-info';
     }
 
     return $img;
@@ -3798,25 +3935,54 @@ function fm_get_file_mimes($extension)
  */
 function scan($dir = '', $filter = '')
 {
-    $path = FM_ROOT_PATH . '/' . $dir;
-    if ($path) {
-        $ite = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path));
-        $rii = new RegexIterator($ite, "/(" . $filter . ")/i");
+    $base = rtrim(str_replace('\\', '/', FM_ROOT_PATH), '/');
+    $path = $base . ($dir !== '' ? '/' . ltrim(str_replace('\\', '/', $dir), '/') : '');
+    $realBase = realpath($base);
+    $realPath = realpath($path);
+    if ($realBase === false || $realPath === false) {
+        return array();
+    }
+    $realBase = rtrim(str_replace('\\', '/', $realBase), '/');
+    $realPath = str_replace('\\', '/', $realPath);
+    if ($realPath !== $realBase && strpos($realPath, $realBase . '/') !== 0) {
+        return array();
+    }
+    if (!is_dir($realPath) || !is_readable($realPath)) {
+        return array();
+    }
 
-        $files = array();
-        foreach ($rii as $file) {
-            if (!$file->isDir()) {
-                $fileName = $file->getFilename();
-                $location = str_replace(FM_ROOT_PATH, '', $file->getPath());
-                $files[] = array(
-                    "name" => $fileName,
-                    "type" => "file",
-                    "path" => $location,
+    $files = array();
+    try {
+        $filterIterator = new RecursiveCallbackFilterIterator(
+            new RecursiveDirectoryIterator($realPath, FilesystemIterator::SKIP_DOTS),
+            function ($current) {
+                return fm_is_exclude_items(
+                    $current->getFilename(),
+                    str_replace('\\', '/', $current->getPathname())
                 );
             }
+        );
+
+        $ite = new RecursiveIteratorIterator($filterIterator);
+        $pattern = '/' . preg_quote($filter, '/') . '/i';
+        $rii = new RegexIterator($ite, $pattern);
+
+        foreach ($rii as $file) {
+            if ($file->isDir()) continue;
+            $fileName = $file->getFilename();
+            $fullPath = str_replace('\\', '/', $file->getPathname());
+            if (!fm_is_exclude_items($fileName, $fullPath)) continue;
+            $location = str_replace($realBase, '', str_replace('\\', '/', $file->getPath()));
+            $files[] = array(
+                "name" => $fileName,
+                "type" => "file",
+                "path" => $location,
+            );
         }
-        return $files;
+    } catch (Exception $e) {
+        return array();
     }
+    return $files;
 }
 
 /**
@@ -3899,7 +4065,27 @@ function fm_download_file($fileLocation, $fileName, $chunkSize  = 1024)
 
     return ((connection_status() == 0) and !connection_aborted());
 }
-
+function fm_link_icon($class = '') {
+    return '<i class="' . $class . '" aria-hidden="true" style="display:inline-flex; vertical-align:middle; align-items:center; justify-content:center; line-height:1;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16575.89 13233.55" style="width:1.5em; height:1.5em; fill:currentColor; stroke:currentColor; stroke-width:709.82; display:inline-block; vertical-align:middle;">
+            <path d="M9331.14 8725.36l0 0c-180.06,312.5 -73.07,711.12 238.13,891.19l2824.92 1631.02c312.5,180.06 711.12,73.07 891.19,-238.78l1304.82 -2260.59c180.06,-311.85 73.07,-711.12 -238.78,-890.54l-2824.92 -1631.02c-311.85,-180.06 -711.12,-73.07 -891.19,238.13l0 0 -1129.31 -652.41 326.2 -564.33c360.13,-624.36 1157.37,-838.34 1781.72,-477.56l3954.89 2283.42c624.36,360.78 837.69,1158.02 477.56,1782.37l-1957.23 3389.91c-360.78,624.36 -1158.02,838.34 -1782.37,477.56l-3954.89 -2283.42c-624.36,-360.78 -838.34,-1158.68 -477.56,-1783.03l326.2 -564.33 1130.61 652.41z"/>
+            <path d="M11112.86 8247.81c-180.06,312.5 -579.34,419.5 -891.19,238.78l-4519.88 -2609.63c-312.5,-180.06 -419.5,-579.34 -238.78,-891.19 180.72,-311.84 579.34,-419.5 891.19,-238.13l4519.88 2609.63c311.85,179.41 418.19,578.03 238.78,890.54z"/>
+            <path d="M4269.11 529.82l3954.89 2283.42c623.7,360.78 837.69,1158.02 476.91,1782.37l-326.2 564.33 -1129.31 -652.41c179.41,-311.85 73.07,-711.12 -238.78,-890.54l-2824.92 -1631.02c-312.5,-180.06 -711.12,-73.07 -891.19,238.13l-1304.82 2260.59c-180.06,312.5 -73.07,711.12 238.78,890.54l2824.92 1631.02c312.5,180.71 711.12,73.72 891.19,-238.13l1129.31 652.41 -326.2 564.33c-360.13,624.36 -1158.02,838.34 -1781.72,477.56l-3954.89 -2283.42c-624.36,-360.78 -837.69,-1158.02 -477.56,-1782.37l1957.23 -3389.26c360.13,-624.36 1158.02,-838.34 1782.37,-477.56l0 0.01z"/>
+        </svg>
+    </i>';
+}
+function fa_language($class = '') {
+    return '<i class="' . $class . '" aria-hidden="true" style="display:inline-flex; vertical-align:middle; align-items:center; justify-content:center; line-height:1;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2091.6 2428.7" style="width:1.2em; height:1.2em; fill:currentColor;">
+            <path d="M1554.3 2219c-19.7 10.4-38 21.1-56.8 32a716 716 0 0 1-124.8 57.8c-74.4 26.5-136 45.2-218.5 55.3-80.5 10-171.7 13.8-252.6 2-95.9-14.1-225-55.2-311-98.6-6.5-3.2-8.8-4-15.4-6.9l-75.6-40.3c-22.8-11.5-50.5-18.3-50.5 18.5 0 13.2 8.2 19.7 16.7 25.2 106 68.7 215.6 107.5 340 138.6 185.3 46.3 385.2 28 565-31.5a1063 1063 0 0 0 164.9-74.5c18.3-11 33.9-19.4 50.7-30.7l56.8 88.8c1.5-18 70.4-206.8 71.5-219.6-22.3 0-208.2-14.1-214.6-17.2.8 10.3 7 17 11.9 25 7.8 13 40 65.6 42.4 76.1z"/>
+            <path d="M671.4 1017.4c-1.3 15-78 163.2-90.5 188.4-42.4 84.7-159.6 250.6-226.4 336a448 448 0 0 1-31.7 37.5l-81.5 93.7c-6.2 7.4-13.8 10.4-16.5 20.4 40.4 0 50.5-1.5 73.4-22.8 53-49 75.2-83 114.7-124.6l22.7-26.7c7.4-9.5 14.3-17 21.1-25.7l121.9-166.8c5.4-8.1 16.5-22.2 18.7-30.6 13.8 1.2 91.3 66.2 105.7 76.9l75.3 45.7 41 20.6c15.8 7.7 71.3 32 91.4 32 0-28.1-2.2-31.1-8.5-53.2-9.8-35-12.5-27-71.5-51.8l-193.2-83.2c-7.3-3.2-16.2-7.6-22.9-9.2l88-148.8c27.5-51 53-106.5 79-158 5.6-11.1 8.4-14.8 10.8-28.6 10.4-60-3.7-43.4-54.8-25.1-18 6.5-35.7 17.1-53 25.8-65 32.5-43.8 23-112.3 45.7-61.9 20.5-248.7 89.2-308 89.2 0 100.2 140.8 64 151 44.9 2-3.8 4.3-24.8 4.4-30.1l62.7-16.2c22.6-6.4 43.2-11.2 63.5-18 20.6-7 40.2-14 61-20.4 13.7-4.2 50-16.6 64.5-17M439.4 830c-45.1 0-60.4-23.7-45.7 21 12.5 38.1 56.2 67.7 87.7 67.7 54.9 0 139.6-28.7 152.9-81.5 5.4-21.4-2.2-49.2-24.6-49.2-38.6 0-139.6 42-170.3 42"/>
+            <path d="m2091.6 656.3-1065-346.8-10 1458 1075 341.6zm-199.9 1020-144.4-45-48.1-184.3-284.8-89.7-63.7 150.2-134.2-42.5 290.7-722.7 135.5 38.5zM1655 1283l-66-226.8c-7-24.4-11.9-40-15.2-79.6h-6.3c-31.2 91.3-61.9 155.4-102.6 247.3z"/>
+            <path d="m1876.9 619.4-872-302.3 866.5-290.3z" stroke="currentColor" stroke-width="53.68" fill="none"/>
+            <path d="m53.7 649.5 973-340-15.2 1427.5-984.7 375.4z" stroke="currentColor" stroke-width="53.68" fill="none"/>
+            <path d="m257.2 578.4 769.5-268.9-779.6-286z"/>
+        </svg>
+    </i>';
+}
 /**
  * System-level archiving/unpacking abstraction layer.
  * Uses proc_open to call native system tools, avoiding PHP's memory/CPU overhead.
@@ -3907,9 +4093,6 @@ function fm_download_file($fileLocation, $fileName, $chunkSize  = 1024)
 class FM_SystemArchiver
 {
     private $type;
-    private $bin;
-    private $tmpDir;
-    private static $binCache = [];
 
     public function __construct(string $type = 'zip')
     {
@@ -3918,99 +4101,6 @@ class FM_SystemArchiver
             throw new InvalidArgumentException("Unsupported archive type: $type");
         }
         $this->type = $type;
-        $this->bin  = $this->detectBinary($type);
-        $this->tmpDir = sys_get_temp_dir();
-    }
-
-    /**
-     * Detect available system archiving program (with static cache).
-     */
-    private function detectBinary(string $type): string
-    {
-        if (isset(self::$binCache[$type])) {
-            return self::$binCache[$type];
-        }
-
-        $isWin = DIRECTORY_SEPARATOR === '\\';
-
-        if ($type === 'zip') {
-            $candidates = $isWin
-                ? ['C:\\Program Files\\7-Zip\\7z.exe', '7z.exe', 'zip.exe']
-                : ['/usr/bin/zip', '/bin/zip', '/usr/local/bin/zip', 'zip'];
-        } else {
-            $candidates = $isWin
-                ? ['tar.exe', 'C:\\Windows\\System32\\tar.exe']
-                : ['/bin/tar', '/usr/bin/tar', '/usr/local/bin/tar', 'tar'];
-        }
-
-        foreach ($candidates as $bin) {
-            if ($this->canExecute($bin)) {
-                self::$binCache[$type] = $bin;
-                return $bin;
-            }
-        }
-        throw new RuntimeException("No system '$type' binary found. Please install one (zip/tar/7-Zip).");
-    }
-
-    /**
-     * Check if the binary is executable (avoid misusing 2>NUL on Linux).
-     */
-    private function canExecute(string $bin): bool
-    {
-        if (strpos($bin, '/') !== false || strpos($bin, '\\') !== false) {
-            return @is_executable($bin);
-        }
-        $isWin = DIRECTORY_SEPARATOR === '\\';
-        $cmd   = $isWin ? 'where' : 'which';
-        $null  = $isWin ? 'NUL' : '/dev/null';
-
-        $fullCmd = $cmd . ' ' . escapeshellarg($bin) . ' 2>' . $null;
-
-        $descriptors = [
-            0 => ['pipe', 'r'],
-            1 => ['pipe', 'w'],
-            2 => ['pipe', 'w'],
-        ];
-        $proc = @proc_open($fullCmd, $descriptors, $pipes);
-        if (!is_resource($proc)) {
-            return false;
-        }
-        fclose($pipes[0]);
-        $out = '';
-        $start = microtime(true);
-        stream_set_blocking($pipes[1], false);
-        stream_set_blocking($pipes[2], false);
-        while (true) {
-            if (microtime(true) - $start > 3.0) {
-                @proc_terminate($proc, 9);
-                break;
-            }
-            $read = [$pipes[1], $pipes[2]];
-            $write = null;
-            $except = null;
-            $n = @stream_select($read, $write, $except, 0, 200000);
-            if ($n > 0) {
-                foreach ($read as $stream) {
-                    $chunk = fread($stream, 8192);
-                    if ($chunk !== false && $chunk !== '') {
-                        if ($stream === $pipes[1]) {
-                            $out .= $chunk;
-                        }
-                    }
-                }
-            }
-            $status = proc_get_status($proc);
-            if (!$status['running']) {
-                $out .= (string)@stream_get_contents($pipes[1]);
-                break;
-            }
-        }
-        fclose($pipes[1]);
-        fclose($pipes[2]);
-        @proc_close($proc);
-
-        $first = trim(strtok($out, "\n"));
-        return $first !== '' && @is_executable($first);
     }
 
     /**
@@ -4022,16 +4112,54 @@ class FM_SystemArchiver
         if (empty($files)) {
             return ['ok' => false, 'msg' => 'No files selected'];
         }
+
         if ($this->type === 'zip') {
-            $escapedFiles = implode(' ', array_map('escapeshellarg', $files));
-            $cmd = escapeshellarg($this->bin) . ' -r -q ' . escapeshellarg($zipname) . ' ' . $escapedFiles;
+            if (!class_exists('ZipArchive')) {
+                return ['ok' => false, 'msg' => 'PHP ZipArchive extension is not installed.'];
+            }
+            $zip = new ZipArchive();
+            $zipPath = $workDir . '/' . $zipname;
+            if ($zip->open($zipPath, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== true) {
+                return ['ok' => false, 'msg' => 'Failed to create ZIP file.'];
+            }
+            foreach ($files as $file) {
+                $filePath = $workDir . '/' . $file;
+                if (is_file($filePath)) {
+                    $zip->addFile($filePath, $file);
+                } elseif (is_dir($filePath)) {
+                    $filesIterator = new RecursiveIteratorIterator(
+                        new RecursiveDirectoryIterator($filePath, FilesystemIterator::SKIP_DOTS),
+                        RecursiveIteratorIterator::LEAVES_ONLY
+                    );
+                    foreach ($filesIterator as $name => $fileObj) {
+                        if (!$fileObj->isDir()) {
+                            $filePathLocal = $fileObj->getRealPath();
+                            $relativePath = substr($filePathLocal, strlen(realpath($workDir)) + 1);
+                            $zip->addFile($filePathLocal, str_replace('\\', '/', $relativePath));
+                        }
+                    }
+                }
+            }
+            $zip->close();
+            return ['ok' => true, 'msg' => ''];
         } else {
-            $escapedFiles = implode(' ', array_map('escapeshellarg', $files));
-            $cmd = escapeshellarg($this->bin)
-                 . ' -czf ' . escapeshellarg($zipname)
-                 . ' -C ' . escapeshellarg($workDir) . ' ' . $escapedFiles;
+            if (!class_exists('PharData')) {
+                return ['ok' => false, 'msg' => 'PHP PharData extension is not installed, cannot create tar.'];
+            }
+            $tarPath = $workDir . '/' . str_replace('.tar.gz', '.tar', $zipname);
+            $tar = new PharData($tarPath);
+            foreach ($files as $file) {
+                $filePath = $workDir . '/' . $file;
+                if (is_file($filePath)) {
+                    $tar->addFile($filePath, $file);
+                } elseif (is_dir($filePath)) {
+                    $tar->addFile($filePath, $file);
+                }
+            }
+            $tar->compress(Phar::GZ);
+            unlink($tarPath);
+            return ['ok' => true, 'msg' => ''];
         }
-        return $this->run($cmd, $workDir);
     }
 
     /**
@@ -4047,56 +4175,28 @@ class FM_SystemArchiver
         }
 
         if ($this->type === 'zip') {
-            $cmd = escapeshellarg($this->bin)
-                 . ' -o -q ' . escapeshellarg($archivePath)
-                 . ' -d ' . escapeshellarg($destDir);
+            if (!class_exists('ZipArchive')) {
+                return ['ok' => false, 'msg' => 'PHP ZipArchive extension is not installed.'];
+            }
+            $zip = new ZipArchive();
+            if ($zip->open($archivePath) === true) {
+                $zip->extractTo($destDir);
+                $zip->close();
+                return ['ok' => true, 'msg' => ''];
+            }
+            return ['ok' => false, 'msg' => 'Failed to open ZIP file.'];
         } else {
-            $cmd = escapeshellarg($this->bin)
-                 . ' -xf ' . escapeshellarg($archivePath)
-                 . ' -C ' . escapeshellarg($destDir);
+            if (!class_exists('PharData')) {
+                return ['ok' => false, 'msg' => 'PHP PharData extension is not installed.'];
+            }
+            try {
+                $phar = new PharData($archivePath);
+                $phar->extractTo($destDir, null, true);
+                return ['ok' => true, 'msg' => ''];
+            } catch (Exception $e) {
+                return ['ok' => false, 'msg' => $e->getMessage()];
+            }
         }
-        return $this->run($cmd, $destDir);
-    }
-
-    /**
-     * Execute command and wait for completion.
-     */
-    private function run(string $cmd, string $workDir): array
-    {
-        $logFile = @tempnam(sys_get_temp_dir(), 'fm_arc_');
-        if ($logFile) {
-            $cmd .= ' 2>' . escapeshellarg($logFile);
-        }
-
-        $descriptors = [
-            0 => ['pipe', 'r'],
-            1 => ['pipe', 'w'],
-            2 => ['file', DIRECTORY_SEPARATOR === '\\' ? 'NUL' : '/dev/null', 'w'],
-        ];
-
-        $proc = @proc_open($cmd, $descriptors, $pipes, $workDir);
-        if (!is_resource($proc)) {
-            if ($logFile) @unlink($logFile);
-            return ['ok' => false, 'msg' => "Failed to spawn: $cmd"];
-        }
-
-        fclose($pipes[0]);
-        $stdout = stream_get_contents($pipes[1]);
-        fclose($pipes[1]);
-
-        $exit = proc_close($proc);
-
-        $stderr = '';
-        if ($logFile) {
-            $stderr = (string)@file_get_contents($logFile);
-            @unlink($logFile);
-        }
-
-        if ($exit !== 0) {
-            $msg = trim($stderr) ?: trim($stdout) ?: "exit code $exit";
-            return ['ok' => false, 'msg' => $msg];
-        }
-        return ['ok' => true, 'msg' => trim($stdout)];
     }
 }
 
@@ -4171,7 +4271,7 @@ function fm_show_nav_path($path)
     $isStickyNavBar = $sticky_navbar ? 'fixed-top' : '';
 ?>
     <nav class="navbar navbar-expand-lg mb-4 main-nav <?php echo $isStickyNavBar ?> bg-body-tertiary" data-bs-theme="<?php echo FM_THEME; ?>">
-        <a class="navbar-brand"> <?php echo lng('AppTitle') ?> </a>
+        <a class="navbar-brand"> <i class="fa-solid fa-folder-open app-logo-icon" aria-hidden="true"></i> <?php echo lng('AppTitle') ?> </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -4179,7 +4279,7 @@ function fm_show_nav_path($path)
 
             <?php
             $path = fm_clean_path($path);
-            $root_url = "<a href='?p='><i class='fa fa-home' aria-hidden='true' title='" . lng('BackToHome') . "'></i></a>";
+            $root_url = "<a href='?p='><i class='fa-regular fa-house app-logo-icon' aria-hidden='true' title='" . lng('BackToHome') . "'></i></a>";
             $sep = '<i class="bread-crumb"> / </i>';
             if ($path != '') {
                 $exploded = explode('/', $path);
@@ -4204,14 +4304,14 @@ function fm_show_nav_path($path)
                     </li>
                     <li class="nav-item me-2">
                         <a href="javascript:void(0);" class="nav-link" data-bs-toggle="modal" data-bs-target="#langModal" title="<?php echo lng('PreferredLanguage'); ?>">
-                            <i class="fa fa-language"></i>
+                            <?php echo fa_language(); ?>
                         </a>
                     </li>
                     <li class="nav-item mr-2">
                         <div class="input-group input-group-sm mr-1" style="margin-top:4px;">
                             <input type="text" class="form-control" placeholder="<?php echo lng('FilterPlaceholderShort') ?>" title="<?php echo lng('SearchTooltip') ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="<?php echo lng('Search') ?>" aria-describedby="search-addon2" id="search-addon" name="search">
                             <div class="input-group-append">
-                                <span class="input-group-text brl-0 brr-0" id="search-addon2"><i class="fa fa-search"></i></span>
+                                <span class="input-group-text brl-0 brr-0" id="search-addon2"><i class="fa-solid fa-magnifying-glass"></i></span>
                             </div>
                             <div class="input-group-append btn-group">
                                 <span class="input-group-text dropdown-toggle brl-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
@@ -4223,31 +4323,31 @@ function fm_show_nav_path($path)
                     </li>
                     <?php if (!FM_READONLY): ?>
                         <li class="nav-item">
-                            <a title="<?php echo lng('Upload') ?>" class="nav-link" href="?p=<?php echo urlencode(FM_PATH) ?>&amp;upload"><i class="fa fa-cloud-upload" aria-hidden="true"></i> <?php echo lng('Upload') ?></a>
+                            <a title="<?php echo lng('Upload') ?>" class="nav-link" href="?p=<?php echo urlencode(FM_PATH) ?>&amp;upload"><i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i> <?php echo lng('Upload') ?></a>
                         </li>
                         <li class="nav-item">
-                            <a title="<?php echo lng('NewItem') ?>" class="nav-link" href="#createNewItem" data-bs-toggle="modal" data-bs-target="#createNewItem"><i class="fa fa-plus-square"></i> <?php echo lng('NewItem') ?></a>
+                            <a title="<?php echo lng('NewItem') ?>" class="nav-link" href="#createNewItem" data-bs-toggle="modal" data-bs-target="#createNewItem"><i class="fa-solid fa-square-plus"></i> <?php echo lng('NewItem') ?></a>
                         </li>
                     <?php endif; ?>
                     <?php if (FM_USE_AUTH): ?>
                         <li class="nav-item avatar dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-5" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa fa-user-circle"></i>
+                                <i class="fa-regular fa-circle-user"></i>
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-end text-small shadow" aria-labelledby="navbarDropdownMenuLink-5" data-bs-theme="<?php echo FM_THEME; ?>">
                                 <?php if (!FM_READONLY): ?>
-                                    <a title="<?php echo lng('Settings') ?>" class="dropdown-item nav-link" href="?p=<?php echo urlencode(FM_PATH) ?>&amp;settings=1"><i class="fa fa-cog" aria-hidden="true"></i> <?php echo lng('Settings') ?></a>
-                                    <a title="<?php echo lng('SiteIdentity') ?>" class="dropdown-item nav-link" href="?p=<?php echo urlencode(FM_PATH) ?>&amp;sitesettings=1"><i class="fa fa-id-card" aria-hidden="true"></i> <?php echo lng('SiteIdentity') ?></a>
+                                    <a title="<?php echo lng('Settings') ?>" class="dropdown-item nav-link" href="?p=<?php echo urlencode(FM_PATH) ?>&amp;settings=1"><i class="fa-solid fa-gear" aria-hidden="true"></i> <?php echo lng('Settings') ?></a>
+                                    <a title="<?php echo lng('SiteIdentity') ?>" class="dropdown-item nav-link" href="?p=<?php echo urlencode(FM_PATH) ?>&amp;sitesettings=1"><i class="fa-solid fa-id-card" aria-hidden="true"></i> <?php echo lng('SiteIdentity') ?></a>
                                 <?php endif ?>
-                                <a title="<?php echo lng('Help') ?>" class="dropdown-item nav-link" href="?p=<?php echo urlencode(FM_PATH) ?>&amp;help=2"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> <?php echo lng('Help') ?></a>
-                                <a title="<?php echo lng('Logout') ?>" class="dropdown-item nav-link" href="?logout=1"><i class="fa fa-sign-out" aria-hidden="true"></i> <?php echo lng('Logout') ?></a>
+                                <a title="<?php echo lng('Help') ?>" class="dropdown-item nav-link" href="?p=<?php echo urlencode(FM_PATH) ?>&amp;help=2"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i> <?php echo lng('Help') ?></a>
+                                <a title="<?php echo lng('Logout') ?>" class="dropdown-item nav-link" href="?logout=1"><i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i> <?php echo lng('Logout') ?></a>
                             </div>
                         </li>
                     <?php else: ?>
                         <?php if (!FM_READONLY): ?>
                             <li class="nav-item">
-                                <a title="<?php echo lng('Settings') ?>" class="dropdown-item nav-link" href="?p=<?php echo urlencode(FM_PATH) ?>&amp;settings=1"><i class="fa fa-cog" aria-hidden="true"></i> <?php echo lng('Settings') ?></a>
+                                <a title="<?php echo lng('Settings') ?>" class="dropdown-item nav-link" href="?p=<?php echo urlencode(FM_PATH) ?>&amp;settings=1"><i class="fa-solid fa-gear" aria-hidden="true"></i> <?php echo lng('Settings') ?></a>
                             </li>
                         <?php endif; ?>
                     <?php endif; ?>
@@ -4281,10 +4381,10 @@ function fm_show_message()
 }
 
 /**
- * 写入操作日志
- * @param string $action 操作类型（如 Delete, Move, Rename）
- * @param string $detail 详细信息
- */
+* Write operation log
+* @param string $action Type of operation (e.g., Delete, Move, Rename)
+* @param string $detail Details
+*/
 function fm_write_log($action, $detail) {
     $log_dir = __DIR__;
     $log_file = $log_dir . '/.audit.log';
@@ -4298,12 +4398,12 @@ function fm_write_log($action, $detail) {
 
 
 /**
- * 渲染偏好语言 Modal
+ * Render Preferred Language Modal
  */
 function fm_render_lang_modal()
 {
     global $lang_list, $lang;
-    $missingLangUrl = 'https://github.com/prasathmani/tinyfilemanager/issues/new?title=' . urlencode('Add language: ') . '&labels=translation';
+    $missingLangUrl = 'https://github.com/hestiacn/tinyfilemanager/issues/new?title=' . urlencode('Add language: ') . '&labels=translation';
     ?>
     <div class="modal fade" id="langModal" tabindex="-1" aria-hidden="true" data-bs-theme="<?php echo FM_THEME; ?>">
         <div class="modal-dialog modal-dialog-centered">
@@ -4338,7 +4438,7 @@ function fm_render_lang_modal()
 }
 
 /**
- * 输出公共 JS（主题、语言 Modal 初始化函数）
+ * Output public JS (theme, language modal initialization functions)
  */
 function fm_render_common_js()
 {
@@ -4414,8 +4514,15 @@ function fm_favicon_link($favicon_path)
         'gif'  => 'image/gif',
         'jpg'  => 'image/jpeg',
         'jpeg' => 'image/jpeg',
+        'jfif' => 'image/jpeg',
         'webp' => 'image/webp',
         'avif' => 'image/avif',
+        'tiff' => 'image/tiff',
+        'tif'  => 'image/tiff',
+        'apng' => 'image/apng',
+        'heic' => 'image/heic',
+        'heif' => 'image/heif',
+        'jxl'  => 'image/jxl',
     );
     $favicon_type = isset($mime_map[$ext]) ? $mime_map[$ext] : '';
     $type_attr = $favicon_type ? ' type="' . $favicon_type . '"' : '';
@@ -4460,16 +4567,44 @@ function fm_render_beian()
     <?php
 }
 
+/**
+ * Check Markdown content for dangerous scripts or PHP code (ignores code blocks)
+ */
+function fm_is_safe_markdown($content) {
+    $text = str_replace(array("\r\n", "\r"), "\n", $content);
+    $text = preg_replace('/```[\s\S]*?(```|$)/', '', $text);
+    $text = preg_replace('/~~~[\s\S]*?(~~~|$)/', '', $text);
+    $text = preg_replace('/`[^`\n]*`/', '', $text);
+    if (preg_match('/(<\s*script|<\?php)/i', $text, $matches)) {
+        return false;
+    }
+    return true;
+}
+
 function renderFooter(): string
 {
+    global $cfg;
+    
     $link = function (string $url, string $text): string {
         return '<a href="' . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . '"'
              . ' target="_blank" rel="nofollow noopener noreferrer">'
              . htmlspecialchars($text, ENT_QUOTES, 'UTF-8')
              . '</a>';
     };
+    
     $tpl = lng('FooterCopyright');
-    $year_text = '<span dir="ltr" style="unicode-bidi: isolate; display: inline-block;">© 2017-' . date('Y') . '</span>';
+    $currentYear = date('Y');
+    $startYear = isset($cfg->data['footer_start_year']) ? trim($cfg->data['footer_start_year']) : '2017';
+    if ($startYear === 'none' || $startYear === '') {
+        $year_text = '<span dir="ltr" style="unicode-bidi: isolate; display: inline-block;">© ' . $currentYear . '</span>';
+    } else {
+        if ($startYear == $currentYear) {
+            $year_text = '<span dir="ltr" style="unicode-bidi: isolate; display: inline-block;">© ' . $startYear . '</span>';
+        } else {
+            $year_text = '<span dir="ltr" style="unicode-bidi: isolate; display: inline-block;">© ' . $startYear . '-' . $currentYear . '</span>';
+        }
+    }
+
     $vars = [
         'year'        => $year_text,
         'appLink'     => $link('https://github.com/prasathmani/tinyfilemanager', lng('AppTitle')),
@@ -4502,7 +4637,7 @@ function fm_show_header_login()
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="<?php echo lng('MetaDescription'); ?>">
+        <meta name="description" content="<?php echo sprintf(lng('MetaDescription'), lng('AppName')); ?>">
         <meta name="author" content="CCP Programmers">
         <meta name="robots" content="noindex, nofollow">
         <meta name="googlebot" content="noindex">
@@ -4665,7 +4800,7 @@ function fm_show_header_login()
     <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="<?php echo lng('MetaDescription'); ?>">
+    <meta name="description" content="<?php echo sprintf(lng('MetaDescription'), lng('AppName')); ?>">
     <meta name="author" content="CCP Programmers">
     <meta name="robots" content="noindex, nofollow">
     <meta name="googlebot" content="noindex">
@@ -4686,794 +4821,278 @@ function fm_show_header_login()
         window.csrf = <?= json_encode($_SESSION['token'] ?? '', JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
     </script>
     <style>
-        html {
-            -moz-osx-font-smoothing: grayscale;
-            -webkit-font-smoothing: antialiased;
-            text-rendering: optimizeLegibility;
-            height: 100%;
-            scroll-behavior: smooth;
-        }
-
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-        }
-
-        body {
-            font-size: 15px;
-            color: #222;
-            background: #F7F7F7;
-        }
-
-        body.navbar-fixed {
-            margin-top: 55px;
-        }
-
-        a,
-        a:hover,
-        a:visited,
-        a:focus {
-            text-decoration: none !important;
-        }
-        .text-muted { color: #66b2ff !important; }
-        .filename,
-        td,
-        th {
-            white-space: nowrap
-        }
-
-        .navbar-brand {
-            font-weight: bold;
-        }
-
-        .nav-item.avatar a {
-            cursor: pointer;
-            text-transform: capitalize;
-        }
-
-        .nav-item.avatar a>i {
-            font-size: 15px;
-        }
-
-        .nav-item.avatar .dropdown-menu a {
-            font-size: 13px;
-        }
-
-        #search-addon {
-            font-size: 12px;
-            border-right-width: 0;
-        }
-
-        .brl-0 {
-            background: transparent;
-            border-left: 0;
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-        }
-
-        .brr-0 {
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
-        }
-
-        .bread-crumb {
-            color: #cccccc;
-            font-style: normal;
-        }
-
-        #main-table {
-            transition: transform .25s cubic-bezier(0.4, 0.5, 0, 1), width 0s .25s;
-        }
-
-        #main-table .filename a {
-            color: #222222;
-        }
-
-        .table td,
-        .table th {
-            vertical-align: middle !important;
-        }
-
-        .table .custom-checkbox-td .custom-control.custom-checkbox,
-        .table .custom-checkbox-header .custom-control.custom-checkbox {
-            min-width: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .table-sm td,
-        .table-sm th {
-            padding: .4rem;
-        }
-
-        .table-bordered td,
-        .table-bordered th {
-            border: 1px solid #f1f1f1;
-        }
-
-        .hidden {
-            display: none
-        }
-
-        pre.with-hljs {
-            padding: 0;
-            overflow: hidden;
-        }
-
-        pre.with-hljs code {
-            margin: 0;
-            border: 0;
-            overflow: scroll;
-        }
-
-        code.maxheight,
-        pre.maxheight {
-            max-height: 512px
-        }
-
-        .fa.fa-caret-right {
-            font-size: 1.2em;
-            margin: 0 4px;
-            vertical-align: middle;
-            color: #ececec
-        }
-
-        .fa.fa-home {
-            font-size: 1.3em;
-            vertical-align: bottom
-        }
-
-        .path {
-            margin-bottom: 10px
-        }
-
-        form.dropzone {
-            min-height: 200px;
-            border: 2px dashed #007bff;
-            line-height: 6rem;
-        }
-
-        .right {
-            text-align: right
-        }
-
-        .center,
-        .close,
-        .login-form,
-        .preview-img-container {
-            text-align: center
-        }
-
-        .message {
-            padding: 4px 7px;
-            border: 1px solid #ddd;
-            background-color: #fff
-        }
-
-        .message.ok {
-            border-color: green;
-            color: green
-        }
-
-        .message.error {
-            border-color: red;
-            color: red
-        }
-
-        .message.alert {
-            border-color: orange;
-            color: orange
-        }
-
-        .preview-img {
-            max-width: 100%;
-            max-height: 80vh;
-            cursor: zoom-in;
-            background-color: #fff;
-            background-image: 
-                linear-gradient(45deg, #eee 25%, transparent 25%), 
-                linear-gradient(-45deg, #eee 25%, transparent 25%), 
-                linear-gradient(45deg, transparent 75%, #eee 75%), 
-                linear-gradient(-45deg, transparent 75%, #eee 75%);
-            background-size: 16px 16px;
-            background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
-        }
-
-        .audio-player { max-width: 520px; margin: 0 auto; padding: 16px; border-radius: 12px; background: rgba(0,0,0,.04); }
-        [data-bs-theme="dark"] .audio-player { background: rgba(255,255,255,.06); }
-        .audio-visualizer { display: flex; align-items: flex-end; justify-content: center; gap: 3px; height: 60px; margin-bottom: 12px; }
-        .audio-visualizer span { width: 4px; height: 8px; border-radius: 2px; transition: height .08s ease; }
-        .audio-visualizer span:nth-child(12n+1)  { background: #ff4d4f; }
-        .audio-visualizer span:nth-child(12n+2)  { background: #ff7a45; }
-        .audio-visualizer span:nth-child(12n+3)  { background: #ffa940; }
-        .audio-visualizer span:nth-child(12n+4)  { background: #ffc53d; }
-        .audio-visualizer span:nth-child(12n+5)  { background: #bae637; }
-        .audio-visualizer span:nth-child(12n+6)  { background: #73d13d; }
-        .audio-visualizer span:nth-child(12n+7)  { background: #36cfc9; }
-        .audio-visualizer span:nth-child(12n+8)  { background: #40a9ff; }
-        .audio-visualizer span:nth-child(12n+9)  { background: #597ef7; }
-        .audio-visualizer span:nth-child(12n+10) { background: #9254de; }
-        .audio-visualizer span:nth-child(12n+11) { background: #f759ab; }
-        .audio-visualizer span:nth-child(12n+0)  { background: #ff85c0; }
-        .audio-controls { display: flex; align-items: center; gap: 10px; }
-        .audio-time { font-size: 12px; color: #6c757d; white-space: nowrap; }
-        .audio-seek { flex: 1; accent-color: #0d6efd; }
-
-
-        .inline-actions>a>i {
-            font-size: 1em;
-            margin-left: 5px;
-            background: #3785c1;
-            color: #fff;
-            padding: 3px 4px;
-            border-radius: 3px;
-        }
-
-        .preview-video {
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto 10px;
-            aspect-ratio: 16 / 9;
-            max-height: 80vh;
-        }
-
-        .preview-video video {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            left: 0;
-            top: 0;
-            background: #000;
-            object-fit: contain;
-        }
-
-        .compact-table {
-            border: 0;
-            width: auto
-        }
-
-        .compact-table td,
-        .compact-table th {
-            width: 100px;
-            border: 0;
-            text-align: center
-        }
-
-        .compact-table tr:hover td {
-            background-color: #fff
-        }
-
-        .filename {
-            overflow: hidden;
-            text-overflow: ellipsis
-        }
-
-        .break-word {
-            word-wrap: break-word;
-            margin-left: 30px
-        }
-
-        .break-word.float-left a {
-            color: #7d7d7d
-        }
-
-        .break-word+.float-right {
-            padding-right: 30px;
-            position: relative
-        }
-
-        .break-word+.float-right>a {
-            color: #7d7d7d;
-            font-size: 1.2em;
-            margin-right: 4px
-        }
-
-        #editor {
-            position: absolute;
-            right: 15px;
-            top: 100px;
-            bottom: 15px;
-            left: 15px
-        }
-
-        @media (max-width:481px) {
-            #editor {
-                top: 150px;
-            }
-        }
-
-        #normal-editor {
-            border-radius: 3px;
-            border-width: 2px;
-            padding: 10px;
-            outline: none;
-        }
-
-        .btn-2 {
-            padding: 4px 10px;
-            font-size: small;
-        }
-
-        li.file:before,
-        li.folder:before {
-            font: normal normal normal 14px/1 FontAwesome;
-            content: "\f016";
-            margin-right: 5px
-        }
-
-        li.folder:before {
-            content: "\f114"
-        }
-
-        i.fa.fa-folder-o {
-            color: #0157b3
-        }
-
-        i.fa.fa-picture-o {
-            color: #26b99a
-        }
-
-        i.fa.fa-file-archive-o {
-            color: #da7d7d
-        }
-
-        .btn-2 i.fa.fa-file-archive-o {
-            color: inherit
-        }
-
-        i.fa.fa-css3 {
-            color: #f36fa0
-        }
-
-        i.fa.fa-file-code-o {
-            color: #007bff
-        }
-
-        i.fa.fa-code {
-            color: #cc4b4c
-        }
-
-        i.fa.fa-file-text-o {
-            color: #0096e6
-        }
-
-        i.fa.fa-html5 {
-            color: #d75e72
-        }
-
-        i.fa.fa-file-excel-o {
-            color: #09c55d
-        }
-
-        i.fa.fa-file-powerpoint-o {
-            color: #f6712e
-        }
-
-        i.go-back {
-            font-size: 1.2em;
-            color: #007bff;
-        }
-
-        .main-nav {
-            padding: 0.2rem 1rem;
-            box-shadow: 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12), 0 2px 4px -1px rgba(0, 0, 0, .2);
-            background-color: #f8f9fa !important;
-        }
-
-        .dataTables_filter {
-            display: none;
-        }
-
-        table.dataTable thead .sorting::after {
-            content: ' ⇅';
-            font-size: 13px;
-            color: #c0c0c0;
-            margin-left: 4px;
-            font-family: sans-serif;
-        }
-        table.dataTable thead .sorting_asc::after {
-            content: ' ▲';
-            font-size: 13px;
-            color: #007bff;
-            margin-left: 4px;
-            font-family: sans-serif;
-        }
-        table.dataTable thead .sorting_desc::after {
-            content: ' ▼';
-            font-size: 13px;
-            color: #007bff;
-            margin-left: 4px;
-            font-family: sans-serif;
-        }
-        table.dataTable thead th {
-            user-select: none;
-        }
-
-        table.dataTable thead tr:first-child th.custom-checkbox-header:first-child {
-            background-image: none;
-        }
-
-        .footer-action li {
-            margin-bottom: 10px;
-        }
-
-        .app-v-title {
-            font-size: 24px;
-            font-weight: 300;
-            letter-spacing: -.5px;
-            text-transform: uppercase;
-        }
-
-        hr.custom-hr {
-            border-top: 1px dashed #8c8b8b;
-            border-bottom: 1px dashed #fff;
-        }
-
-        #snackbar {
-            visibility: hidden;
-            min-width: 250px;
-            margin-left: -125px;
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            border-radius: 2px;
-            padding: 16px;
-            position: fixed;
-            z-index: 1;
-            left: 50%;
-            bottom: 30px;
-            font-size: 17px;
-        }
-
-        #snackbar.show {
-            visibility: visible;
-            -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-            animation: fadein 0.5s, fadeout 0.5s 2.5s;
-        }
-
-        @-webkit-keyframes fadein {
-            from {
-                bottom: 0;
-                opacity: 0;
-            }
-
-            to {
-                bottom: 30px;
-                opacity: 1;
-            }
-        }
-
-        @keyframes fadein {
-            from {
-                bottom: 0;
-                opacity: 0;
-            }
-
-            to {
-                bottom: 30px;
-                opacity: 1;
-            }
-        }
-
-        @-webkit-keyframes fadeout {
-            from {
-                bottom: 30px;
-                opacity: 1;
-            }
-
-            to {
-                bottom: 0;
-                opacity: 0;
-            }
-        }
-
-        @keyframes fadeout {
-            from {
-                bottom: 30px;
-                opacity: 1;
-            }
-
-            to {
-                bottom: 0;
-                opacity: 0;
-            }
-        }
-
-        [dir="rtl"] .modal-header .btn-close { margin-right: 0 !important; margin-left: 0 !important; }
-        [dir="rtl"] .float-right { float: left !important; }
-        [dir="rtl"] .text-end { text-align: left !important; }
-        [dir="rtl"] .bread-crumb { display: inline-block; transform: scaleX(-1); }
-        [dir="rtl"] .bread-crumb a { transform: scaleX(-1); display: inline-block; }
-        [dir="rtl"] .dropdown-menu-end { right: auto !important; left: 0 !important; }
-        [dir="rtl"] .table td span[title$="bytes"] { direction: ltr; display: inline-block; }
-        [dir="rtl"] .navbar-nav { flex-direction: row-reverse; }
-        [dir="rtl"] .col-sm-5 { text-align: right; }
-        [dir="rtl"] .navbar-brand { margin-left: 1rem; margin-right: 0; }
-        [dir="rtl"] .input-group { flex-wrap: nowrap; width: auto; min-width: 180px; }
-        .tooltip { --bs-tooltip-bg: #fff; --bs-tooltip-color: #333; --bs-tooltip-opacity: 1; }
-        [data-bs-theme="dark"] .tooltip, .theme-dark .tooltip { --bs-tooltip-bg: #212529; --bs-tooltip-color: #f8f9fa; }
-        #preview-image-plugin-overlay { position: absolute; display: none; padding: 5px; background-color: #fff; border: 1px solid #cccccc; border-radius: 4px; z-index: 9999; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
-        #preview-image-plugin-overlay img.c-preview-img { max-width: 200px; max-height: 200px; display: block; border-radius: 4px; }
-        #preview-image-plugin-overlay object.c-preview-img { width: 200px; height: 200px; display: block; border-radius: 4px; pointer-events: none; }
-        .loading-dots { display: inline-block; width: 1.5em; text-align: left; }
-        .loading-dots::after { content: ""; animation: dots 1.5s steps(4, end) infinite; }
-        @keyframes dots { 0%, 20% { content: ""; } 40% { content: "."; } 60% { content: ".."; } 80%, 100% { content: "..."; } }
-        .audio-loading-mask { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255, 255, 255, 0.85); display: flex; align-items: center; justify-content: center; z-index: 10; border-radius: 12px; font-size: 14px; color: #0d6efd; transition: opacity 0.3s ease; }
-        [data-bs-theme="dark"] .audio-loading-mask { background: rgba(30, 30, 30, 0.85); color: #66b2ff; }
-        .audio-loading-mask.hidden { opacity: 0; pointer-events: none; }
-        .dataTables_paginate { display: flex; justify-content: flex-end; align-items: center; margin-top: 10px; margin-bottom: 20px; }
-        .dataTables_paginate > span { display: flex; border: none !important; margin: 0 4px; gap: 4px; }
-        .dataTables_paginate .paginate_button { display: inline-flex; align-items: center; justify-content: center; padding: 6px 12px; border: 1px solid #dee2e6; background-color: #fff; color: #212529 !important; border-radius: 4px; cursor: pointer; user-select: none; text-decoration: none; font-size: 14px; transition: background-color 0.15s ease-in-out; line-height: 1.5; }
-        .dataTables_paginate .paginate_button:hover:not(.disabled):not(.current) { background-color: #e9ecef; border-color: #dee2e6; }
-        .dataTables_paginate .paginate_button.current { background-color: #0d6efd; border-color: #0d6efd; color: #fff !important; font-weight: bold; }
-        .dataTables_paginate .paginate_button.disabled { color: #adb5bd !important; background-color: #f8f9fa; border-color: #dee2e6; cursor: not-allowed; pointer-events: none; }
-        
-        .fm-dots { display: flex; align-items: center; gap: 6px; height: 20px; animation: fm-dots-cycle 3.2s ease-in-out infinite; }
-        .fm-dots span { width: var(--dot-size); height: var(--dot-size); border-radius: 50%; background: #198754; transform: scale(0); opacity: 0; animation: fm-dot-pop 1.6s ease-in-out infinite; }
-        .fm-dots span:nth-child(1)  { --dot-size: 4px;  animation-delay: 0s;    }
-        .fm-dots span:nth-child(2)  { --dot-size: 5px;  animation-delay: 0.12s; }
-        .fm-dots span:nth-child(3)  { --dot-size: 6px;  animation-delay: 0.24s; }
-        .fm-dots span:nth-child(4)  { --dot-size: 7px;  animation-delay: 0.36s; }
-        .fm-dots span:nth-child(5)  { --dot-size: 8px;  animation-delay: 0.48s; }
-        .fm-dots span:nth-child(6)  { --dot-size: 9px;  animation-delay: 0.60s; }
-        .fm-dots span:nth-child(7)  { --dot-size: 10px; animation-delay: 0.72s; }
-        .fm-dots span:nth-child(8)  { --dot-size: 11px; animation-delay: 0.84s; }
-        .fm-dots span:nth-child(9)  { --dot-size: 12px; animation-delay: 0.96s; }
-        .fm-dots span:nth-child(10) { --dot-size: 13px; animation-delay: 1.08s; }
-        @keyframes fm-dot-pop { 0% { transform: scale(0); opacity: 0; } 15% { transform: scale(1.1); opacity: 1; } 30% { transform: scale(1); opacity: 1; } 70% { transform: scale(1); opacity: 1; } 100% { transform: scale(0); opacity: 0; } }
-        @keyframes fm-dots-cycle { 0%, 10% { opacity: 1; } 70%, 100% { opacity: 1; } }
-
-        #main-table span.badge {
-            border-bottom: 2px solid #f8f9fa
-        }
-
-        #main-table span.badge:nth-child(1) {
-            border-color: #df4227
-        }
-
-        #main-table span.badge:nth-child(2) {
-            border-color: #f8b600
-        }
-
-        #main-table span.badge:nth-child(3) {
-            border-color: #00bd60
-        }
-
-        #main-table span.badge:nth-child(4) {
-            border-color: #4581ff
-        }
-
-        #main-table span.badge:nth-child(5) {
-            border-color: #ac68fc
-        }
-
-        #main-table span.badge:nth-child(6) {
-            border-color: #45c3d2
-        }
-
-        @media only screen and (min-device-width:768px) and (max-device-width:1024px) and (orientation:landscape) and (-webkit-min-device-pixel-ratio:2) {
-            .navbar-collapse .col-xs-6 {
-                padding: 0;
-            }
-        }
-
-        .btn.active.focus,
-        .btn.active:focus,
-        .btn.focus,
-        .btn.focus:active,
-        .btn:active:focus,
-        .btn:focus {
-            outline: 0 !important;
-            outline-offset: 0 !important;
-            background-image: none !important;
-            -webkit-box-shadow: none !important;
-            box-shadow: none !important
-        }
-
-        .lds-facebook {
-            display: none;
-            position: relative;
-            width: 64px;
-            height: 64px
-        }
-
-        .lds-facebook div,
-        .lds-facebook.show-me {
-            display: inline-block
-        }
-
-        .lds-facebook div {
-            position: absolute;
-            left: 6px;
-            width: 13px;
-            background: #007bff;
-            animation: lds-facebook 1.2s cubic-bezier(0, .5, .5, 1) infinite
-        }
-
-        .lds-facebook div:nth-child(1) {
-            left: 6px;
-            animation-delay: -.24s
-        }
-
-        .lds-facebook div:nth-child(2) {
-            left: 26px;
-            animation-delay: -.12s
-        }
-
-        .lds-facebook div:nth-child(3) {
-            left: 45px;
-            animation-delay: 0s
-        }
-
-        @keyframes lds-facebook {
-            0% {
-                top: 6px;
-                height: 51px
-            }
-
-            100%,
-            50% {
-                top: 19px;
-                height: 26px
-            }
-        }
-
-        ul#search-wrapper {
-            padding-left: 0;
-            border: 1px solid #ecececcc;
-        }
-
-        ul#search-wrapper li {
-            list-style: none;
-            padding: 5px;
-            border-bottom: 1px solid #ecececcc;
-        }
-
-
-        .c-preview-img {
-            max-width: 300px;
-        }
-
-        .border-radius-0 {
-            border-radius: 0;
-        }
-
-        .float-right {
-            float: right;
-        }
-
-        .table-hover>tbody>tr:hover>td:first-child {
-            border-left: 1px solid #1b77fd;
-        }
-
-        .filename>a>i {
-            margin-right: 3px;
-        }
-
-        .fs-7 {
-            font-size: 14px;
-        }
+    /* 1. Global Basic Reset */
+    html {
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        height: 100%;
+        scroll-behavior: smooth;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    body { font-size: 15px; color: #222; background: #F7F7F7; }
+    body.navbar-fixed { margin-top: 55px; }
+    a, a:hover, a:visited, a:focus { text-decoration: none !important; }
+    .hidden { display: none; }
+    .text-muted { color: #66b2ff !important; }
+    .filename, td, th { white-space: nowrap; }
+    .float-right { float: right; }
+    .fs-7 { font-size: 14px; }
+    .border-radius-0 { border-radius: 0; }
+
+    /* 2. Navigation and Breadcrumbs */
+    .navbar-brand { font-weight: bold; }
+    .nav-item.avatar a { cursor: pointer; text-transform: capitalize; }
+    .nav-item.avatar a > i { font-size: 15px; }
+    .nav-item.avatar .dropdown-menu a { font-size: 13px; }
+    .navbar-nav i, .navbar-nav .nav-link, .navbar-nav .dropdown-toggle, .break-word { color: #000; }
+    .bread-crumb { color: #cccccc; font-style: normal; }
+    .app-logo-icon { color: #007bff; margin-right: 8px; font-size: 1.1em; }
+    .main-nav { padding: 0.2rem 1rem; box-shadow: 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12), 0 2px 4px -1px rgba(0, 0, 0, .2); background-color: #f8f9fa !important; }
+
+    /* 3. Search Box and Input Group */
+    #search-addon { font-size: 12px; border-right-width: 0; }
+    .brl-0 { background: transparent; border-left: 0; border-top-left-radius: 0; border-bottom-left-radius: 0; }
+    .brr-0 { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+
+    /* 4. Table Layout and Interaction */
+    #main-table { transition: transform .25s cubic-bezier(0.4, 0.5, 0, 1), width 0s .25s; }
+    #main-table .filename a { color: #222222; }
+    .table td, .table th { vertical-align: middle !important; }
+    .table .custom-checkbox-td .custom-control.custom-checkbox,
+    .table .custom-checkbox-header .custom-control.custom-checkbox { min-width: 18px; display: flex; align-items: center; justify-content: center; }
+    .table-sm td, .table-sm th { padding: .4rem; }
+    .table-bordered td, .table-bordered th { border: 1px solid #f1f1f1; }
+    .table-hover > tbody > tr:hover > td:first-child { border-left: 1px solid #1b77fd; }
+
+    /* DataTables Plugin Customization */
+    .dataTables_filter { display: none; }
+    table.dataTable thead th { user-select: none; }
+    table.dataTable thead tr:first-child th.custom-checkbox-header:first-child { background-image: none; }
+    table.dataTable thead .sorting::after { content: ' ⇅'; font-size: 13px; color: #c0c0c0; margin-left: 4px; font-family: sans-serif; }
+    table.dataTable thead .sorting_asc::after { content: ' ▲'; font-size: 13px; color: #007bff; margin-left: 4px; font-family: sans-serif; }
+    table.dataTable thead .sorting_desc::after { content: ' ▼'; font-size: 13px; color: #007bff; margin-left: 4px; font-family: sans-serif; }
+    .dataTables_paginate { display: flex; justify-content: flex-end; align-items: center; margin-top: 10px; margin-bottom: 20px; }
+    .dataTables_paginate > span { display: flex; border: none !important; margin: 0 4px; gap: 4px; }
+    .dataTables_paginate .paginate_button { display: inline-flex; align-items: center; justify-content: center; padding: 6px 12px; border: 1px solid #dee2e6; background-color: #fff; color: #212529 !important; border-radius: 4px; cursor: pointer; user-select: none; text-decoration: none; font-size: 14px; transition: background-color 0.15s ease-in-out; line-height: 1.5; }
+    .dataTables_paginate .paginate_button:hover:not(.disabled):not(.current) { background-color: #e9ecef; border-color: #dee2e6; }
+    .dataTables_paginate .paginate_button.current { background-color: #0d6efd; border-color: #0d6efd; color: #fff !important; font-weight: bold; }
+    .dataTables_paginate .paginate_button.disabled { color: #adb5bd !important; background-color: #f8f9fa; border-color: #dee2e6; cursor: not-allowed; pointer-events: none; }
+    #main-table span.badge { border-bottom: 2px solid #f8f9fa; }
+    #main-table span.badge:nth-child(1) { border-color: #df4227; }
+    #main-table span.badge:nth-child(2) { border-color: #f8b600; }
+    #main-table span.badge:nth-child(3) { border-color: #00bd60; }
+    #main-table span.badge:nth-child(4) { border-color: #4581ff; }
+    #main-table span.badge:nth-child(5) { border-color: #ac68fc; }
+    #main-table span.badge:nth-child(6) { border-color: #45c3d2; }
+
+    /* 5. Code Blocks and Editor Preview */
+    pre.with-hljs { padding: 0; overflow: hidden; }
+    pre.with-hljs code { margin: 0; border: 0; overflow: scroll; }
+    code.maxheight, pre.maxheight { max-height: 512px; }
+    #normal-editor { border-radius: 3px; border-width: 2px; padding: 10px; outline: none; }
+    #editor { position: absolute; right: 15px; top: 100px; bottom: 15px; left: 15px; }
+    @media (max-width:481px) { #editor { top: 150px; } }
+
+    /* 6. Pop-up Tips and Upload/Preview */
+    .message { padding: 4px 7px; border: 1px solid #ddd; background-color: #fff; }
+    .message.ok { border-color: green; color: green; }
+    .message.error { border-color: red; color: red; }
+    .message.alert { border-color: orange; color: orange; }
+    form.dropzone { min-height: 200px; border: 2px dashed #007bff; line-height: 6rem; }
+    .preview-img { max-width: 100%; max-height: 80vh; cursor: zoom-in; background-color: #fff; background-image: linear-gradient(45deg, #eee 25%, transparent 25%), linear-gradient(-45deg, #eee 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #eee 75%), linear-gradient(-45deg, transparent 75%, #eee 75%); background-size: 16px 16px; background-position: 0 0, 0 8px, 8px -8px, -8px 0px; }
+    .preview-video { position: relative; max-width: 800px; margin: 0 auto 10px; aspect-ratio: 16 / 9; max-height: 80vh; }
+    .preview-video video { position: absolute; width: 100%; height: 100%; left: 0; top: 0; background: #000; object-fit: contain; }
+    .c-preview-img { max-width: 300px; }
+    #preview-image-plugin-overlay { position: absolute; display: none; padding: 5px; background-color: #fff; border: 1px solid #cccccc; border-radius: 4px; z-index: 9999; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+    #preview-image-plugin-overlay img.c-preview-img { max-width: 200px; max-height: 200px; display: block; border-radius: 4px; }
+    #preview-image-plugin-overlay object.c-preview-img { width: 200px; height: 200px; display: block; border-radius: 4px; pointer-events: none; }
+
+    /* 7. Audio Player */
+    .audio-player { max-width: 520px; margin: 0 auto; padding: 16px; border-radius: 12px; background: rgba(0,0,0,.04); }
+    .audio-visualizer { display: flex; align-items: flex-end; justify-content: center; gap: 3px; height: 60px; margin-bottom: 12px; }
+    .audio-visualizer span { width: 4px; height: 8px; border-radius: 2px; transition: height .08s ease; }
+    .audio-visualizer span:nth-child(12n+1) { background: #ff4d4f; } .audio-visualizer span:nth-child(12n+2) { background: #ff7a45; } .audio-visualizer span:nth-child(12n+3) { background: #ffa940; }
+    .audio-visualizer span:nth-child(12n+4) { background: #ffc53d; } .audio-visualizer span:nth-child(12n+5) { background: #bae637; } .audio-visualizer span:nth-child(12n+6) { background: #73d13d; }
+    .audio-visualizer span:nth-child(12n+7) { background: #36cfc9; } .audio-visualizer span:nth-child(12n+8) { background: #40a9ff; } .audio-visualizer span:nth-child(12n+9) { background: #597ef7; }
+    .audio-visualizer span:nth-child(12n+10) { background: #9254de; } .audio-visualizer span:nth-child(12n+11) { background: #f759ab; } .audio-visualizer span:nth-child(12n+0) { background: #ff85c0; }
+    .audio-controls { display: flex; align-items: center; gap: 10px; }
+    .audio-time { font-size: 12px; color: #6c757d; white-space: nowrap; }
+    .audio-seek { flex: 1; accent-color: #0d6efd; }
+    .audio-loading-mask { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255, 255, 255, 0.85); display: flex; align-items: center; justify-content: center; z-index: 10; border-radius: 12px; font-size: 14px; color: #0d6efd; transition: opacity 0.3s ease; }
+    .audio-loading-mask.hidden { opacity: 0; pointer-events: none; }
+
+    /* 8. File Icon Custom Color */
+    li.file:before, li.folder:before { font-family: "Font Awesome 7 Free", "Font Awesome 6 Free", sans-serif; font-weight: 900; content: "\f15c"; margin-right: 5px; }
+    li.folder:before { content: "\f07b"; }
+    i.fa-folder, i.fa-folder-open { color: #0157b3; }
+    i.fa-image { color: #26b99a; }
+    i.fa-file-zipper { color: #da7d7d; }
+    .btn-2 i.fa-file-zipper { color: inherit; }
+    i.fa-css3, i.fa-css3-alt { color: #f36fa0; }
+    i.fa-file-code { color: #007bff; }
+    i.fa-code { color: #cc4b4c; }
+    i.fa-file-lines, i.fa-file-text { color: #0096e6; }
+    i.fa-html5 { color: #d75e72; }
+    i.fa-file-excel { color: #09c55d; }
+    i.fa-file-powerpoint { color: #f6712e; }
+    i.fa-music, i.fa-headphones, i.fa-compact-disc { color: #d63384; }
+    i.fa-file-video, i.fa-video { color: #fd7e14; }
+    i.go-back { font-size: 1.2em; color: #007bff; }
+    .filename > a > i { margin-right: 3px; }
+
+    /* 9. Colorize toolbar icons (daytime) */
+    .inline-actions > a > i { width: 28px !important; height: 28px !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; border-radius: 6px; font-size: 14px; transition: all 0.2s ease-in-out; vertical-align: middle !important; margin: 0 3px; }
+    .action-delete > i { color: #dc3545 !important; background-color: rgba(220, 53, 69, 0.12) !important; }
+    .action-delete:hover > i { background-color: transparent !important; color: #a71d2a !important; }
+    .action-rename > i { color: #f59e0b !important; background-color: rgba(245, 158, 11, 0.12) !important; }
+    .action-rename:hover > i { background-color: transparent !important; color: #b45309 !important; }
+    .action-copy > i { color: #198754 !important; background-color: rgba(25, 135, 84, 0.12) !important; }
+    .action-copy:hover > i { background-color: transparent !important; color: #146c43 !important; }
+    .action-link > i { color: #0d6efd !important; background-color: rgba(13, 110, 253, 0.12) !important; }
+    .action-link:hover > i { background-color: transparent !important; color: #0a58ca !important; }
+    .action-download > i { color: #0aa2c0 !important; background-color: rgba(13, 202, 240, 0.12) !important; }
+    .action-download:hover > i { background-color: transparent !important; color: #087990 !important; }
+    #search-addon3 i { color: #333 !important; }
+
+    /* 10. Markdown Rendering */
+    #markdown-content h1, #markdown-content h2, #markdown-content h3 { margin-top: 1.2em; margin-bottom: .6em; font-weight: 600; }
+    #markdown-content h1, #markdown-content h2 { border-bottom: 1px solid #eaecef; padding-bottom: .3em; }
+    #markdown-content p { line-height: 1.7; margin-bottom: 1em; }
+    #markdown-content img { max-width: 100%; }
+    #markdown-content a { color: #0366d6; }
+    #markdown-content blockquote { border-left: 4px solid #dfe2e5; color: #6a737d; padding: 0 1em; margin: 1em 0; }
+    #markdown-content.card { width: fit-content; min-width: 50%; max-width: 100%; margin: 0 auto 1em auto; }
+    #markdown-content pre { position: relative !important; padding-top: 2.5em !important; width: fit-content; max-width: 100%; overflow-x: auto; background: #f6f8fa; padding: 12px; border-radius: 6px; margin-bottom: 1em; box-sizing: border-box; }
+    #markdown-content pre code { display: block; overflow-x: visible !important; white-space: pre; background: transparent !important; padding: 0 !important; margin: 0 !important; border: 0 !important; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    #markdown-content :not(pre) > code { background: #f6f8fa; padding: 2px 6px; border-radius: 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    #markdown-content table { width: fit-content !important; max-width: 100%; display: table !important; border-collapse: collapse; margin: 1em 0; }
+    #markdown-content table th, #markdown-content table td { border: 1px solid #dfe2e5; padding: 6px 13px; white-space: normal; word-break: break-word; }
+    #markdown-content table th { background: #f6f8fa; }
+    #markdown-content th[align="left"], #markdown-content td[align="left"] { text-align: left !important; }
+    #markdown-content th[align="center"], #markdown-content td[align="center"] { text-align: center !important; }
+    #markdown-content th[align="right"], #markdown-content td[align="right"] { text-align: right !important; }
+    .copy-code-btn { position: absolute; top: 8px; right: 8px; padding: 4px 8px; font-size: 12px; color: #57606a; background-color: #ffffff; border: 1px solid #d0d7de; border-radius: 4px; cursor: pointer; opacity: 0; transition: all 0.2s ease-in-out; z-index: 10; }
+    #markdown-content pre:hover .copy-code-btn { opacity: 1; }
+    .copy-code-btn:hover { background-color: #f3f4f6; color: #0366d6; border-color: #0366d6; }
+    .copy-code-btn.copied { color: #198754; border-color: #198754; background-color: #e8f5e9; }
+
+    /* 11. Animation and Effects */
+    .fm-dots { display: flex; align-items: center; gap: 6px; height: 20px; animation: fm-dots-cycle 3.2s ease-in-out infinite; }
+    .fm-dots span { width: var(--dot-size); height: var(--dot-size); border-radius: 50%; background: #198754; transform: scale(0); opacity: 0; animation: fm-dot-pop 1.6s ease-in-out infinite; }
+    .fm-dots span:nth-child(1) { --dot-size: 4px; animation-delay: 0s; } .fm-dots span:nth-child(2) { --dot-size: 5px; animation-delay: 0.12s; } .fm-dots span:nth-child(3) { --dot-size: 6px; animation-delay: 0.24s; }
+    .fm-dots span:nth-child(4) { --dot-size: 7px; animation-delay: 0.36s; } .fm-dots span:nth-child(5) { --dot-size: 8px; animation-delay: 0.48s; } .fm-dots span:nth-child(6) { --dot-size: 9px; animation-delay: 0.60s; }
+    .fm-dots span:nth-child(7) { --dot-size: 10px; animation-delay: 0.72s; } .fm-dots span:nth-child(8) { --dot-size: 11px; animation-delay: 0.84s; } .fm-dots span:nth-child(9) { --dot-size: 12px; animation-delay: 0.96s; } .fm-dots span:nth-child(10) { --dot-size: 13px; animation-delay: 1.08s; }
+    @keyframes fm-dot-pop { 0% { transform: scale(0); opacity: 0; } 15% { transform: scale(1.1); opacity: 1; } 30% { transform: scale(1); opacity: 1; } 70% { transform: scale(1); opacity: 1; } 100% { transform: scale(0); opacity: 0; } }
+    @keyframes fm-dots-cycle { 0%, 10% { opacity: 1; } 70%, 100% { opacity: 1; } }
+    .loading-dots { display: inline-block; width: 1.5em; text-align: left; }
+    .loading-dots::after { content: ""; animation: dots 1.5s steps(4, end) infinite; }
+    @keyframes dots { 0%, 20% { content: ""; } 40% { content: "."; } 60% { content: ".."; } 80%, 100% { content: "..."; } }
+    .lds-facebook { display: none; position: relative; width: 64px; height: 64px; }
+    .lds-facebook div, .lds-facebook.show-me { display: inline-block; }
+    .lds-facebook div { position: absolute; left: 6px; width: 13px; background: #007bff; animation: lds-facebook 1.2s cubic-bezier(0, .5, .5, 1) infinite; }
+    .lds-facebook div:nth-child(1) { left: 6px; animation-delay: -.24s; } .lds-facebook div:nth-child(2) { left: 26px; animation-delay: -.12s; } .lds-facebook div:nth-child(3) { left: 45px; animation-delay: 0s; }
+    @keyframes lds-facebook { 0% { top: 6px; height: 51px; } 100%, 50% { top: 19px; height: 26px; } }
+    #snackbar { visibility: hidden; min-width: 250px; margin-left: -125px; background-color: #333; color: #fff; text-align: center; border-radius: 2px; padding: 16px; position: fixed; z-index: 1; left: 50%; bottom: 30px; font-size: 17px; }
+    #snackbar.show { visibility: visible; -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+    @keyframes fadein { from { bottom: 0; opacity: 0; } to { bottom: 30px; opacity: 1; } }
+    @keyframes fadeout { from { bottom: 30px; opacity: 1; } to { bottom: 0; opacity: 0; } }
+    ul#search-wrapper { padding-left: 0; border: 1px solid #ecececcc; }
+    ul#search-wrapper li { list-style: none; padding: 5px; border-bottom: 1px solid #ecececcc; }
+
+    /* 12. Direction and Base Components (RTL) */
+    :root { --bg-color: #f3daa6; --bs-dark-rgb: 28, 36, 41 !important; }
+    [dir="rtl"] .modal-header .btn-close { margin-right: 0 !important; margin-left: 0 !important; }
+    [dir="rtl"] .float-right { float: left !important; }
+    [dir="rtl"] .text-end { text-align: left !important; }
+    [dir="rtl"] .bread-crumb { display: inline-block; transform: scaleX(-1); }
+    [dir="rtl"] .bread-crumb a { transform: scaleX(-1); display: inline-block; }
+    [dir="rtl"] .dropdown-menu-end { right: auto !important; left: 0 !important; }
+    [dir="rtl"] .table td span[title$="bytes"] { direction: ltr; display: inline-block; }
+    [dir="rtl"] .navbar-nav { flex-direction: row-reverse; }
+    [dir="rtl"] .col-sm-5 { text-align: right; }
+    [dir="rtl"] .navbar-brand { margin-left: 1rem; margin-right: 0; }
+    [dir="rtl"] .input-group { flex-wrap: nowrap; width: auto; min-width: 180px; }
+    .tooltip { --bs-tooltip-bg: #fff; --bs-tooltip-color: #333; --bs-tooltip-opacity: 1; }
+    .btn.active.focus, .btn.active:focus, .btn.focus, .btn.focus:active, .btn:active:focus, .btn:focus { outline: 0 !important; outline-offset: 0 !important; background-image: none !important; box-shadow: none !important; }
+    .btn-2 { padding: 4px 10px; font-size: small; }
+
+    /* 13. Dark Mode Collection */
+    body.theme-dark { background-image: linear-gradient(90deg, #1c2429, #263238); color: #CFD8DC; }
+    body.theme-dark .main-nav { background-color: #1c2429 !important; }
+    .theme-dark a { color: #66b2ff; }
+    .theme-dark a:hover { color: #fff; }
+    .theme-dark .text-muted { color: #66b2ff !important; }
+    .theme-dark .app-logo-icon { color: var(--bg-color); }
+    .theme-dark .hover-bg:hover { background-color: rgba(255, 255, 255, 0.08) !important; color: #66b2ff !important; }
+    .theme-dark i.fa-folder, .theme-dark i.go-back { color: var(--bg-color) !important; }
+    .theme-dark .table { color: #CFD8DC; }
+    .theme-dark .table td, .theme-dark .table th { border-color: #343434; }
+    .theme-dark .table-hover>tbody>tr:hover { background-color: rgba(255, 255, 255, 0.05); }
+    .theme-dark .table-hover>tbody>tr:hover>td { color: #CFD8DC !important; background-color: rgba(255, 255, 255, 0.08) !important; }
+    .theme-dark #main-table .filename a { color: #CFD8DC; }
+    .theme-dark #main-table .filename a:hover { color: var(--bg-color); }
+    .theme-dark .main-nav .navbar-brand { color: #ffffff !important; }
+    .theme-dark .navbar-nav i, .theme-dark .navbar-nav .nav-link, .theme-dark .navbar-nav .dropdown-toggle, .theme-dark .break-word { color: #FFF; }
+    .theme-dark .bread-crumb { color: #6c757d; }
+    .theme-dark #search-addon3 i { color: #ffffff !important; }
+    .theme-dark #search-addon, .theme-dark #search-addon2, .theme-dark .input-group-text.dropdown-toggle { background-color: #101518 !important; color: #CFD8DC !important; border-color: #343434 !important; }
+    .theme-dark #search-addon::placeholder { color: #8892a0 !important; }
+    .theme-dark .dropdown-menu { background-color: #1c2429 !important; border-color: #343434 !important; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
+    .theme-dark .dropdown-item { color: #CFD8DC !important; }
+    .theme-dark .dropdown-item:hover { background-color: #2d3740 !important; color: #fff !important; }
+    .theme-dark .card { background-color: #1c2429 !important; border-color: #343434 !important; color: #CFD8DC !important; }
+    .theme-dark .card-header { background-color: #263238 !important; border-color: #343434 !important; color: #CFD8DC !important; }
+    .theme-dark .card-body { color: #CFD8DC !important; }
+    .theme-dark .list-group-item { background-color: #1c2429 !important; color: #CFD8DC !important; border-color: #343434 !important; }
+    .theme-dark .list-group-item a { color: #66b2ff !important; }
+    .theme-dark .list-group-item a:hover { color: #fff !important; }
+    .theme-dark .form-control, .theme-dark .form-select { background-color: #101518 !important; color: #CFD8DC !important; border-color: #343434 !important; }
+    .theme-dark .form-control::placeholder { color: #8892a0 !important; }
+    .theme-dark .form-select option { background-color: #1c2429 !important; color: #CFD8DC !important; }
+    .theme-dark .col-form-label { color: #CFD8DC !important; }
+    .theme-dark .text-body-secondary { color: #8892a0 !important; }
+    .theme-dark .text-danger { color: #f87171 !important; }
+    .theme-dark .modal-content { background-color: #1c2429 !important; color: #CFD8DC !important; border-color: #343434 !important; }
+    .theme-dark .modal-header, .theme-dark .modal-footer { border-color: #343434 !important; }
+    .theme-dark .modal-title { color: #CFD8DC !important; }
+    .theme-dark .btn-close { filter: invert(1) !important; }
+    .theme-dark .btn-link { color: #66b2ff !important; }
+    .theme-dark .btn-link:hover { color: #fff !important; }
+    .theme-dark td.gray, .theme-dark .fs-7 { color: #adb5bd !important; }
+    .theme-dark .badge.text-bg-light { background-color: #2d3740 !important; color: #CFD8DC !important; border: 1px solid #495057 !important; }
+    table.dataTable thead .sorting::after { color: #6c757d; }
+    table.dataTable thead .sorting_asc::after, table.dataTable thead .sorting_desc::after { color: #66b2ff; }
+    .theme-dark .message { background-color: #212529; color: #CFD8DC; }
+    .theme-dark .message.ok { color: #4ade80; border-color: #4ade80; }
+    .theme-dark .message.error { color: #f87171; border-color: #f87171; }
+    .theme-dark .message.alert { color: #fbbf24; border-color: #fbbf24; }
+    .theme-dark .dropzone { background: transparent; border-color: #79755e; }
+    .theme-dark #markdown-content { background: #1c2429 !important; color: #CFD8DC; }
+    .theme-dark #markdown-content pre, .theme-dark #markdown-content :not(pre) > code { background: #101518; }
+    .theme-dark #markdown-content table th { background: #263238; }
+    .theme-dark #markdown-content table th, .theme-dark #markdown-content table td { border-color: #343434; }
+    .theme-dark #markdown-content blockquote { border-left-color: #495057; color: #adb5bd; }
+    .theme-dark #markdown-content pre code.hljs { background: #101518 !important; }
+    .theme-dark .copy-code-btn { background-color: #21262d; color: #c9d1d9; border-color: #30363d; }
+    .theme-dark .copy-code-btn:hover { background-color: #30363d; border-color: #8b949e; }
+    .theme-dark .copy-code-btn.copied { background-color: #1b4721; color: #3fb950; border-color: #2ea043; }
+    [data-bs-theme="dark"] .audio-player, .theme-dark .audio-player { background: rgba(255,255,255,.06); }
+    [data-bs-theme="dark"] .audio-loading-mask, .theme-dark .audio-loading-mask { background: rgba(30, 30, 30, 0.85); color: #66b2ff; }
+    [data-bs-theme="dark"] .tooltip, .theme-dark .tooltip { --bs-tooltip-bg: #212529; --bs-tooltip-color: #f8f9fa; }
+
+    /* Colorize icons in the dark action bar */
+    .theme-dark .action-delete > i { color: #ff6b6b !important; background-color: rgba(220, 53, 69, 0.2) !important; }
+    .theme-dark .action-delete:hover > i { background-color: transparent !important; color: #ff4d4d !important; }
+    .theme-dark .action-rename > i { color: #fbbf24 !important; background-color: rgba(245, 158, 11, 0.2) !important; }
+    .theme-dark .action-rename:hover > i { background-color: transparent !important; color: #fcd34d !important; }
+    .theme-dark .action-copy > i { color: #75b798 !important; background-color: rgba(25, 135, 84, 0.2) !important; }
+    .theme-dark .action-copy:hover > i { background-color: transparent !important; color: #a3cfbb !important; }
+    .theme-dark .action-link > i { color: #6ea8fe !important; background-color: rgba(13, 110, 253, 0.2) !important; }
+    .theme-dark .action-link:hover > i { background-color: transparent !important; color: #9ec5fe !important; }
+    .theme-dark .action-download > i { color: #6edff6 !important; background-color: rgba(13, 202, 240, 0.2) !important; }
+    .theme-dark .action-download:hover > i { background-color: transparent !important; color: #9eeaf9 !important; }
     </style>
-    <style>
-        :root {
-            --bs-bg-opacity: 1;
-            --bg-color: #f3daa6;
-            --bs-dark-rgb: 28, 36, 41 !important;
-            --bs-bg-opacity: 1;
-        }
-
-        body.theme-dark { background-image: linear-gradient(90deg, #1c2429, #263238); color: #CFD8DC; }
-        body.theme-dark .main-nav { background-color: #1c2429 !important; }
-        .theme-dark a { color: #66b2ff; }
-        .theme-dark a:hover { color: #fff; }
-
-        .theme-dark .table { color: #CFD8DC; }
-        .theme-dark .table td, .theme-dark .table th { border-color: #343434; }
-        .theme-dark .table-hover>tbody>tr:hover {
-            background-color: rgba(255, 255, 255, 0.05);
-        }
-        .theme-dark .table-hover>tbody>tr:hover>td {
-            color: #CFD8DC !important;
-            background-color: rgba(255, 255, 255, 0.08) !important;
-        }
-        .theme-dark #main-table .filename a { color: #CFD8DC; }
-        .theme-dark #main-table .filename a:hover { color: var(--bg-color); }
-        .theme-dark .main-nav .navbar-brand { color: #ffffff !important; }
-        .theme-dark .navbar-nav i,
-        .theme-dark .navbar-nav .nav-link,
-        .theme-dark .navbar-nav .dropdown-toggle,
-        .theme-dark .break-word { color: #CFD8DC; }
-        .theme-dark .bread-crumb { color: #6c757d; }
-        .theme-dark i.fa.fa-folder-o,
-        .theme-dark i.go-back { color: var(--bg-color); }
-        .theme-dark .text-muted { color: #66b2ff !important; }
-        .theme-dark #search-addon,
-        .theme-dark #search-addon2,
-        .theme-dark .input-group-text.dropdown-toggle {
-            background-color: #101518 !important;
-            color: #CFD8DC !important;
-            border-color: #343434 !important;
-        }
-        .theme-dark #search-addon::placeholder { color: #8892a0 !important; }
-
-        .theme-dark .dropdown-menu {
-            background-color: #1c2429 !important;
-            border-color: #343434 !important;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-        }
-        .theme-dark .dropdown-item { color: #CFD8DC !important; }
-        .theme-dark .dropdown-item:hover {
-            background-color: #2d3740 !important;
-            color: #fff !important;
-        }
-
-        .theme-dark .card {
-            background-color: #1c2429 !important;
-            border-color: #343434 !important;
-            color: #CFD8DC !important;
-        }
-        .theme-dark .card-header {
-            background-color: #263238 !important;
-            border-color: #343434 !important;
-            color: #CFD8DC !important;
-        }
-        .theme-dark .card-body { color: #CFD8DC !important; }
-        .theme-dark .list-group-item {
-            background-color: #1c2429 !important;
-            color: #CFD8DC !important;
-            border-color: #343434 !important;
-        }
-        .theme-dark .list-group-item a { color: #66b2ff !important; }
-        .theme-dark .list-group-item a:hover { color: #fff !important; }
-
-        .theme-dark .form-control,
-        .theme-dark .form-select {
-            background-color: #101518 !important;
-            color: #CFD8DC !important;
-            border-color: #343434 !important;
-        }
-        .theme-dark .form-control::placeholder { color: #8892a0 !important; }
-        .theme-dark .form-select option {
-            background-color: #1c2429 !important;
-            color: #CFD8DC !important;
-        }
-        .theme-dark .col-form-label { color: #CFD8DC !important; }
-        .theme-dark .text-body-secondary { color: #8892a0 !important; }
-        .theme-dark .text-danger { color: #f87171 !important; }
-
-        .theme-dark .modal-content {
-            background-color: #1c2429 !important;
-            color: #CFD8DC !important;
-            border-color: #343434 !important;
-        }
-        .theme-dark .modal-header,
-        .theme-dark .modal-footer { border-color: #343434 !important; }
-        .theme-dark .modal-title { color: #CFD8DC !important; }
-        .theme-dark .btn-close { filter: invert(1) !important; }
-        .theme-dark .btn-link { color: #66b2ff !important; }
-        .theme-dark .btn-link:hover { color: #fff !important; }
-
-        .theme-dark td.gray, .theme-dark .fs-7 { color: #adb5bd !important; }
-        .theme-dark .badge.text-bg-light {
-            background-color: #2d3740 !important;
-            color: #CFD8DC !important;
-            border: 1px solid #495057 !important;
-        }
-
-        table.dataTable thead .sorting::after { color: #6c757d; }
-        table.dataTable thead .sorting_asc::after,
-        table.dataTable thead .sorting_desc::after { color: #66b2ff; }
-
-        .theme-dark .message { background-color: #212529; color: #CFD8DC; }
-        .theme-dark .message.ok { color: #4ade80; border-color: #4ade80; }
-        .theme-dark .message.error { color: #f87171; border-color: #f87171; }
-        .theme-dark .message.alert { color: #fbbf24; border-color: #fbbf24; }
-
-        .theme-dark .dropzone { background: transparent; border-color: #79755e; }
-        .theme-dark .inline-actions>a>i { background: #79755e; color: #fff; }
-        </style>
         <script>
         (function () {
             var saved = localStorage.getItem('fm-theme');
@@ -5495,7 +5114,7 @@ function fm_show_header_login()
                 <div class="modal-dialog" role="document">
                     <form class="modal-content" method="post">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="newItemModalLabel"><i class="fa fa-plus-square fa-fw"></i><?php echo lng('CreateNewItem') ?></h5>
+                            <h5 class="modal-title" id="newItemModalLabel"><i class="fa-solid fa-square-plus fa-fw"></i><?php echo lng('CreateNewItem') ?></h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -5516,8 +5135,8 @@ function fm_show_header_login()
                         </div>
                         <div class="modal-footer">
                             <input type="hidden" name="token" value="<?php echo $_SESSION['token']; ?>">
-                            <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal"><i class="fa fa-times-circle"></i> <?php echo lng('Cancel') ?></button>
-                            <button type="submit" class="btn btn-success"><i class="fa fa-check-circle"></i> <?php echo lng('CreateNow') ?></button>
+                            <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal"><i class="fa-solid fa-circle-xmark"></i> <?php echo lng('Cancel') ?></button>
+                            <button type="submit" class="btn btn-success"><i class="fa-solid fa-circle-check"></i> <?php echo lng('CreateNow') ?></button>
                         </div>
                     </form>
                 </div>
@@ -5532,11 +5151,11 @@ function fm_show_header_login()
                                 <div class="input-group flex-grow-1">
                                     <input type="text" class="form-control" placeholder="<?php echo lng('SearchPlaceholder') ?>" aria-label="<?php echo lng('Search') ?>" id="advanced-search" name="search" autofocus required>
                                 </div>
-                                <button class="btn btn-outline-secondary d-none" type="button" id="js-search-clear" title="<?php echo lng('Clear') ?>">
-                                    <i class="fa fa-times"></i>
+                                <button class="btn btn-outline-danger d-none" type="button" id="js-search-clear" title="<?php echo lng('Clear') ?>">
+                                    <i class="fa-solid fa-square-xmark"></i>
                                 </button>
-                                <button class="btn btn-primary" type="button" id="search-addon3" title="<?php echo lng('Search') ?>">
-                                    <i class="fa fa-search"></i>
+                                <button class="btn btn-outline-secondary text-white" type="button" id="search-addon3" title="<?php echo lng('Search') ?>">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
                                 </button>
                             </div>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -5606,18 +5225,110 @@ function fm_show_header_login()
     function fm_show_footer()
     {
         global $ext_language, $cfg;
+        $isMarkdownView = isset($_GET['view']) && in_array(strtolower(pathinfo($_GET['view'], PATHINFO_EXTENSION)), ['md', 'markdown']);
         ?>
         </div>
         <?php print_external('js-jquery'); ?>
         <?php print_external('js-bootstrap'); ?>
         <?php print_external('js-jquery-datatables'); ?>
         <?php fm_render_lang_modal(); ?>
+        
+        <script>
+            function initCodeCopy() {
+                var textCopy = '<?php echo lng("Copy"); ?>';
+                var textCopied = '<?php echo lng("Copied"); ?>';
+                var textFailed = '<?php echo lng("Copy failed"); ?>';
+
+                var pres = document.querySelectorAll('#markdown-content pre');
+                pres.forEach(function(pre) {
+                    if (pre.querySelector('.copy-code-btn')) return;
+                    
+                    var btn = document.createElement('button');
+                    btn.className = 'copy-code-btn';
+                    btn.textContent = textCopy;
+                    
+                    btn.addEventListener('click', function() {
+                        var code = pre.querySelector('code');
+                        if (!code) return;
+                        var textToCopy = code.innerText;
+                        
+                        function doSuccess() {
+                            btn.textContent = textCopied;
+                            btn.classList.add('copied');
+                            setTimeout(function() { 
+                                btn.textContent = textCopy; 
+                                btn.classList.remove('copied'); 
+                            }, 2000);
+                        }
+                        
+                        function doFail() {
+                            btn.textContent = textFailed;
+                            setTimeout(function() { 
+                                btn.textContent = textCopy; 
+                            }, 2000);
+                        }
+
+                        navigator.clipboard.writeText(textToCopy).then(function() {
+                            doSuccess();
+                        }).catch(function(err) {
+                            var textArea = document.createElement("textarea");
+                            textArea.value = textToCopy;
+                            textArea.style.position = "fixed";
+                            document.body.appendChild(textArea);
+                            textArea.select();
+                            try {
+                                document.execCommand('copy');
+                                doSuccess();
+                            } catch (err) {
+                                doFail();
+                            }
+                            document.body.removeChild(textArea);
+                        });
+                    });
+                    pre.appendChild(btn);
+                });
+            }
+        </script>
+        
         <?php if (FM_USE_HIGHLIGHTJS && isset($_GET['view'])): ?>
-            <?php print_external('js-highlightjs'); ?>
-            <script>
-                hljs.highlightAll();
-                var isHighlightingEnabled = true;
-            </script>
+        <?php print_external('js-highlightjs'); ?>
+        <script>
+            var isHighlightingEnabled = true;
+        </script>
+        <?php endif; ?>
+        <?php if ($isMarkdownView): ?>
+        <?php print_external('js-marked'); ?>
+        <script>
+            (function () {
+                function setup() {
+                    if (typeof marked === 'undefined') return false;
+                    if (marked.setOptions) {
+                        marked.setOptions({ breaks: true, gfm: true });
+                    }
+                    var el = document.getElementById('markdown-content');
+                    if (el && typeof window.rawMarkdown !== 'undefined') {
+                        el.innerHTML = marked.parse(window.rawMarkdown);
+                        setTimeout(function(){
+                            if (typeof hljs !== 'undefined') {
+                                hljs.highlightAll();
+                            }
+                            initCodeCopy();
+                        }, 50);
+                    }
+                    return true;
+                }
+                if (!setup()) {
+                    var timer = setInterval(function () {
+                        if (setup()) clearInterval(timer);
+                    }, 100);
+                }
+            })();
+        </script>
+        <?php endif; ?>
+        <?php if (FM_USE_HIGHLIGHTJS && isset($_GET['view']) && !$isMarkdownView): ?>
+        <script>
+            hljs.highlightAll();
+        </script>
         <?php endif; ?>
         <?php if (isset($_GET['view']) && strtolower(pathinfo($_GET['view'], PATHINFO_EXTENSION)) === 'swf'): ?>
         <script src="https://unpkg.com/@ruffle-rs/ruffle@latest/ruffle.js"></script>
@@ -5645,7 +5356,7 @@ function fm_show_header_login()
             player.addEventListener('error', function(e) {
                 console.error("Ruffle Error:", e);
                 if (swfMask) {
-                    swfMask.innerHTML = '<i class="fa fa-exclamation-triangle text-danger me-2"></i><span class="text-danger">' + i18nSwfError + '</span>';
+                    swfMask.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-danger me-2"></i><span class="text-danger">' + i18nSwfError + '</span>';
                 }
             });
 
@@ -5740,7 +5451,7 @@ function fm_show_header_login()
 
             audio.addEventListener('error', function() {
                 loadingMask.classList.remove('hidden');
-                loadingMask.innerHTML = '<i class="fa fa-exclamation-triangle text-danger me-2"></i><span class="text-danger">' + i18nAudioError + '</span>';
+                loadingMask.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-danger me-2"></i><span class="text-danger">' + i18nAudioError + '</span>';
             });
 
             toggle.addEventListener('click', function () {
@@ -5754,11 +5465,11 @@ function fm_show_header_login()
                     
                     audio.play().catch(function(e) { console.log(e); });
                     draw();
-                    toggle.innerHTML = '<i class="fa fa-pause"></i>';
+                    toggle.innerHTML = '<i class="fa-solid fa-pause"></i>';
                 } else {
                     audio.pause();
                     stopDraw();
-                    toggle.innerHTML = '<i class="fa fa-play"></i>';
+                    toggle.innerHTML = '<i class="fa-solid fa-circle-play"></i>';
                 }
             });
 
@@ -5780,7 +5491,7 @@ function fm_show_header_login()
             });
 
             audio.addEventListener('ended', function () {
-                toggle.innerHTML = '<i class="fa fa-play"></i>';
+                toggle.innerHTML = '<i class="fa-solid fa-circle-play"></i>';
                 stopDraw();
                 seek.value = 0;
             });
@@ -6235,6 +5946,7 @@ function fm_show_header_login()
                 url: form.attr('action'),
                 data: form.serialize() + "&token=" + window.csrf + "&ajax=" + true,
                 beforeSend: function() {
+                    resultWrapper.empty();
                     form.find("input[name=uploadurl]").attr("disabled", "disabled");
                     form.find("button").hide();
                     form.find(".lds-facebook").addClass('show-me');
@@ -6243,10 +5955,10 @@ function fm_show_header_login()
                     if (data) {
                         data = JSON.parse(data);
                         if (data.done) {
-                            resultWrapper.append('<div class="alert alert-success row"><?php echo lng("Uploaded Successful"); ?>: ' + data.done.name + '</div>');
+                            resultWrapper.append('<div class="alert alert-success d-inline-block w-auto mb-2"><?php echo lng("Uploaded Successful"); ?>: ' + data.done.name + '</div>');
                             form.find("input[name=uploadurl]").val('');
                         } else if (data['fail']) {
-                            resultWrapper.append('<div class="alert alert-danger row"><?php echo lng("Error"); ?>: ' + data.fail.message + '</div>');
+                            resultWrapper.append('<div class="alert alert-danger d-inline-block w-auto mb-2"><?php echo lng("Error"); ?>: ' + data.fail.message + '</div>');
                         }
                         form.find("input[name=uploadurl]").removeAttr("disabled");
                         form.find("button").show();
@@ -6554,34 +6266,44 @@ function fm_show_header_login()
                                 "bright": {
                                     "chrome": "Chrome",
                                     "clouds": "Clouds",
+                                    "cloud9_day": "Cloud9 Day",
                                     "crimson_editor": "Crimson Editor",
                                     "dawn": "Dawn",
                                     "dreamweaver": "Dreamweaver",
                                     "eclipse": "Eclipse",
                                     "github": "GitHub",
+                                    "github_light_default": "GitHub Light Default",
+                                    "gruvbox_light_hard": "Gruvbox Light Hard",
                                     "iplastic": "IPlastic",
+                                    "katzenmilch": "KatzenMilch",
+                                    "kuroir": "Kuroir",
                                     "solarized_light": "Solarized Light",
+                                    "sqlserver": "SQL Server",
                                     "textmate": "TextMate",
                                     "tomorrow": "Tomorrow",
-                                    "xcode": "XCode",
-                                    "kuroir": "Kuroir",
-                                    "katzenmilch": "KatzenMilch",
-                                    "sqlserver": "SQL Server"
+                                    "xcode": "XCode"
                                 },
                                 "dark": {
                                     "ambiance": "Ambiance",
                                     "chaos": "Chaos",
+                                    "cloud_editor_dark": "Cloud Editor Dark",
+                                    "cloud9_night": "Cloud9 Night",
+                                    "cloud9_night_low_color": "Cloud9 Night Low Color",
                                     "clouds_midnight": "Clouds Midnight",
-                                    "dracula": "Dracula",
                                     "cobalt": "Cobalt",
-                                    "gruvbox": "Gruvbox",
+                                    "dracula": "Dracula",
+                                    "github_dark": "GitHub Dark",
                                     "gob": "Green on Black",
+                                    "gruvbox": "Gruvbox",
+                                    "gruvbox_dark_hard": "Gruvbox Dark Hard",
                                     "idle_fingers": "idle Fingers",
                                     "kr_theme": "krTheme",
                                     "merbivore": "Merbivore",
                                     "merbivore_soft": "Merbivore Soft",
                                     "mono_industrial": "Mono Industrial",
                                     "monokai": "Monokai",
+                                    "nord_dark": "Nord Dark",
+                                    "one_dark": "One Dark",
                                     "pastel_on_dark": "Pastel on dark",
                                     "solarized_dark": "Solarized Dark",
                                     "terminal": "Terminal",
@@ -6599,30 +6321,44 @@ function fm_show_header_login()
                                 "abc": "ABC",
                                 "actionscript": "ActionScript",
                                 "ada": "ADA",
+                                "alda": "Alda",
                                 "apache_conf": "Apache Conf",
+                                "apex": "Apex",
+                                "applescript": "AppleScript",
+                                "aql": "AQL",
                                 "asciidoc": "AsciiDoc",
                                 "asl": "ASL",
+                                "assembly_arm32": "Assembly ARM32",
                                 "assembly_x86": "Assembly x86",
+                                "astro": "Astro",
                                 "autohotkey": "AutoHotKey",
-                                "apex": "Apex",
+                                "basic": "Basic",
                                 "batchfile": "BatchFile",
-                                "bro": "Bro",
+                                "bibtex": "BibTeX",
                                 "c_cpp": "C and C++",
                                 "c9search": "C9Search",
+                                "cedar": "Cedar",
+                                "cedarschema": "CedarSchema",
                                 "cirru": "Cirru",
                                 "clojure": "Clojure",
+                                "clue": "Clue",
                                 "cobol": "Cobol",
                                 "coffee": "CoffeeScript",
                                 "coldfusion": "ColdFusion",
+                                "crystal": "Crystal",
                                 "csharp": "C#",
                                 "csound_document": "Csound Document",
                                 "csound_orchestra": "Csound",
                                 "csound_score": "Csound Score",
+                                "csp": "CSP",
                                 "css": "CSS",
+                                "csv": "CSV",
                                 "curly": "Curly",
+                                "cuttlefish": "Cuttlefish",
                                 "d": "D",
                                 "dart": "Dart",
                                 "diff": "Diff",
+                                "django": "Django",
                                 "dockerfile": "Dockerfile",
                                 "dot": "Dot",
                                 "drools": "Drools",
@@ -6632,12 +6368,16 @@ function fm_show_header_login()
                                 "elixir": "Elixir",
                                 "elm": "Elm",
                                 "erlang": "Erlang",
+                                "flix": "Flix",
                                 "forth": "Forth",
                                 "fortran": "Fortran",
                                 "fsharp": "FSharp",
                                 "fsl": "FSL",
                                 "ftl": "FreeMarker",
                                 "gcode": "Gcode",
+                                "gdresource": "GDResource",
+                                "gdscript": "GDScript",
+                                "gdshader": "GDShader",
                                 "gherkin": "Gherkin",
                                 "gitignore": "Gitignore",
                                 "glsl": "Glsl",
@@ -6645,6 +6385,7 @@ function fm_show_header_login()
                                 "golang": "Go",
                                 "graphqlschema": "GraphQLSchema",
                                 "groovy": "Groovy",
+                                "groq": "Groq",
                                 "haml": "HAML",
                                 "handlebars": "Handlebars",
                                 "haskell": "Haskell",
@@ -6656,10 +6397,14 @@ function fm_show_header_login()
                                 "html_ruby": "HTML (Ruby)",
                                 "ini": "INI",
                                 "io": "Io",
+                                "ion": "Ion",
                                 "jack": "Jack",
                                 "jade": "Jade",
                                 "java": "Java",
+                                "javascript": "JavaScript",
+                                "jexl": "JEXL",
                                 "json": "JSON",
+                                "json5": "JSON5",
                                 "jsoniq": "JSONiq",
                                 "jsp": "JSP",
                                 "jssm": "JSSM",
@@ -6667,62 +6412,84 @@ function fm_show_header_login()
                                 "julia": "Julia",
                                 "kotlin": "Kotlin",
                                 "latex": "LaTeX",
+                                "latte": "Latte",
                                 "less": "LESS",
                                 "liquid": "Liquid",
                                 "lisp": "Lisp",
                                 "livescript": "LiveScript",
                                 "logiql": "LogiQL",
+                                "logtalk": "Logtalk",
                                 "lsl": "LSL",
                                 "lua": "Lua",
                                 "luapage": "LuaPage",
                                 "lucene": "Lucene",
                                 "makefile": "Makefile",
+                                "mariadb": "MariaDB",
                                 "markdown": "Markdown",
                                 "mask": "Mask",
                                 "matlab": "MATLAB",
                                 "maze": "Maze",
+                                "mediawiki": "MediaWiki",
                                 "mel": "MEL",
+                                "mips": "MIPS",
                                 "mixal": "MIXAL",
                                 "mushcode": "MUSHCode",
                                 "mysql": "MySQL",
+                                "nasal": "Nasal",
+                                "nginx": "Nginx",
+                                "nim": "Nim",
                                 "nix": "Nix",
                                 "nsis": "NSIS",
+                                "nunjucks": "Nunjucks",
                                 "objectivec": "Objective-C",
                                 "ocaml": "OCaml",
+                                "odin": "Odin",
+                                "partiql": "PartiQL",
                                 "pascal": "Pascal",
                                 "perl": "Perl",
-                                "perl6": "Perl 6",
                                 "pgsql": "pgSQL",
-                                "php_laravel_blade": "PHP (Blade Template)",
                                 "php": "PHP",
-                                "puppet": "Puppet",
+                                "php_laravel_blade": "PHP (Blade Template)",
                                 "pig": "Pig",
+                                "plain_text": "Plain Text",
+                                "plsql": "PLSQL",
                                 "powershell": "Powershell",
                                 "praat": "Praat",
+                                "prisma": "Prisma",
                                 "prolog": "Prolog",
                                 "properties": "Properties",
                                 "protobuf": "Protobuf",
+                                "prql": "PRQL",
+                                "puppet": "Puppet",
                                 "python": "Python",
+                                "qml": "QML",
                                 "r": "R",
+                                "raku": "Raku",
                                 "razor": "Razor",
                                 "rdoc": "RDoc",
                                 "red": "Red",
+                                "redshift": "Redshift",
                                 "rhtml": "RHTML",
+                                "robot": "Robot",
                                 "rst": "RST",
                                 "ruby": "Ruby",
                                 "rust": "Rust",
+                                "sac": "SAC",
                                 "sass": "SASS",
                                 "scad": "SCAD",
                                 "scala": "Scala",
                                 "scheme": "Scheme",
+                                "scrypt": "Scrypt",
                                 "scss": "SCSS",
                                 "sh": "SH",
                                 "sjs": "SJS",
                                 "slim": "Slim",
                                 "smarty": "Smarty",
-                                "snippets": "snippets",
+                                "smithy": "Smithy",
+                                "snippets": "Snippets",
                                 "soy_template": "Soy Template",
                                 "space": "Space",
+                                "sparql": "SPARQL",
                                 "sql": "SQL",
                                 "sqlserver": "SQLServer",
                                 "stylus": "Stylus",
@@ -6734,7 +6501,9 @@ function fm_show_header_login()
                                 "text": "Text",
                                 "textile": "Textile",
                                 "toml": "Toml",
+                                "tsv": "TSV",
                                 "tsx": "TSX",
+                                "turtle": "Turtle",
                                 "twig": "Twig",
                                 "typescript": "Typescript",
                                 "vala": "Vala",
@@ -6743,11 +6512,13 @@ function fm_show_header_login()
                                 "verilog": "Verilog",
                                 "vhdl": "VHDL",
                                 "visualforce": "Visualforce",
+                                "vue": "Vue",
                                 "wollok": "Wollok",
                                 "xml": "XML",
                                 "xquery": "XQuery",
                                 "yaml": "YAML",
-                                "django": "Django"
+                                "zeek": "Zeek",
+                                "zig": "Zig"
                             },
                             "fontSize": {
                                 8: 8,
@@ -6923,7 +6694,11 @@ function fm_show_header_login()
         $tr['en']['Create archive?']    = 'Create archive?';
         $tr['en']['Invalid file or folder name']    = 'Invalid file or folder name';
         $tr['en']['Archive unpacked']   = 'Archive unpacked';
-        $tr['en']['File extension is not allowed']  = 'File extension is not allowed';
+        $tr['en']['Error'] = 'Error';
+        $tr['en']['File extension is not allowed'] = 'File extension is not allowed! Supported formats: %s';
+        $tr['en']['Upload extension config missing'] = 'Upload failed: Administrator has not configured allowed file extensions.';
+        $tr['en']['URL is not allowed'] = 'URL is not allowed';
+        $tr['en']['Invalid url parameter'] = 'Invalid url parameter';
         $tr['en']['Root path']          = 'Root path';
         $tr['en']['Error while renaming from']  = 'Error while renaming from';
         $tr['en']['File not found']     = 'File not found';
@@ -7067,8 +6842,9 @@ function fm_show_header_login()
         $tr['en']['DropzoneUploadCanceled'] = 'Upload canceled.';
         $tr['en']['DropzoneCancelUploadConfirmation'] = 'Are you sure you want to cancel this upload?';
         $tr['en']['DropzoneRemoveFile'] = 'Remove file';
-        $tr['en']['DropzoneMaxFilesExceeded'] = 'You can not upload any more files.';
-        $tr['en']['MetaDescription'] = 'Web based File Manager in PHP, Manage your files efficiently and easily with Tiny File Manager';
+        $tr['en']['DropzoneThumbnailError'] = 'Failed to load the image. The file may be corrupted.';
+        $tr['en']['DropzoneMaxFilesExceeded'] = 'You cannot upload any more files.';
+        $tr['en']['MetaDescription'] = 'Web based File Manager in PHP, Manage your files efficiently and easily with %s';
         $tr['en']['SiteIdentity'] = 'Site Identity & Filing';
         $tr['en']['SiteTitle'] = 'Site Title';
         $tr['en']['SiteTitlePlaceholder'] = 'e.g. Enterprise Cloud, Team Workspace, Open Source Library...';
@@ -7079,11 +6855,17 @@ function fm_show_header_login()
         $tr['en']['AudioError'] = 'Audio failed to load, file might be corrupted';
         $tr['en']['SwfLoading'] = 'SWF file is loading, please wait';
         $tr['en']['SwfError'] = 'Failed to load, file might be corrupted or format error';
-        $tr['en']['SiteIdentityHelp'] = 'Browser icon and login logo accept local files or external URLs in svg/png/jpg/gif/webp/ico/avif. Fill in filing info as needed for your site, or leave it empty.';
+        $tr['en']['SiteIdentityHelp'] = 'Browser icon and login logo accept local files or external URLs in %s. Fill in filing info as needed for your site, or leave it empty.';
         $tr['en']['LogoPath'] = 'Login Page Logo';
-        $tr['en']['LogoPathPlaceholder'] = 'Local: /assets/icons/logo.svg  URL: {url}';
+        $tr['en']['LogoPathPlaceholder'] = 'Local: %s  URL: {url}';
         $tr['en']['FaviconPath'] = 'Browser Icon (Favicon)';
-        $tr['en']['FaviconPathPlaceholder']= 'Local: /assets/icons/favicon.svg  URL: {url}';
+        $tr['en']['FaviconPathPlaceholder']= 'Local: %s  URL: {url}';
+        $tr['en']['FooterStartYear'] = 'Footer Start Year';
+        $tr['en']['FooterStartYearPlaceholder'] = 'Leave empty or enter "none" to show only current year';
+        $tr['en']['FooterStartYearHelp'] = 'Modify the copyright start year. Enter %s or leave empty to show only the current year.';
+        $tr['en']['Backup created'] = 'Backup %s created. Time: %s';
+        $tr['en']['Could not copy file'] = 'Could not copy file %s, please check permissions';
+        $tr['en']['File not found name'] = 'File %s not found';
         $tr['en']['ShowBeian'] = 'Enable Filing Info';
         $tr['en']['ICPNumber'] = 'ICP License Number';
         $tr['en']['ICPNumberPlaceholder'] = 'e.g. ICP License No. 12345678';

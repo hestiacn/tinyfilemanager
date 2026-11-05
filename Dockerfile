@@ -20,5 +20,6 @@ COPY index.php /var/www/html/index.php
 COPY translation.json /var/www/html/translation.json
 COPY assets/ /var/www/html/assets/
 COPY root/ /var/www/html/root/
-RUN mkdir -p /var/www/html/root/user /var/www/html/root/guest
+RUN mkdir -p /var/www/html/root/user /var/www/html/root/guest && chown -R www-data:www-data /var/www/html
+USER www-data:www-data
 CMD ["php", "-S", "0.0.0.0:80"]
