@@ -161,23 +161,37 @@ $ip_blacklist = array(
 
 // extension => language for advanced editor
 $ext_language = array(
-    'js' => 'javascript',
-    'ts' => 'typescript',
-    'py' => 'python',
-    'c' => 'c_cpp',
-    'h' => 'c_cpp',
-    'cpp' => 'c_cpp',
-    'hpp' => 'c_cpp',
-    'rs' => 'rust',
-    'yml' => 'yaml',
-    'bat' => 'batchfile',
-    'go' => 'golang',
-    'md' => 'markdown',
-    'hbs' => 'handlebars',
-    'cs' => 'csharp',
-    'ps1' => 'powershell',
-    'htm' => 'html',
-    'htaccess' => 'apache_conf',
+    // Web
+    'html' => 'html', 'htm' => 'html', 'xhtml' => 'html', 'khtml' => 'html', 'css' => 'css', 'scss' => 'scss', 'sass' => 'sass', 'less' => 'less', 'styl' => 'stylus',
+    'js' => 'javascript', 'mjs' => 'javascript', 'jsx' => 'jsx', 'ts' => 'typescript', 'tsx' => 'tsx', 'vue' => 'vue', 'svelte' => 'html',
+    'json' => 'json', 'json5' => 'json5', 'jsoniq' => 'jsoniq', 'hjson' => 'hjson', 'xml' => 'xml', 'xsl' => 'xml', 'svg' => 'svg',
+    'yaml' => 'yaml', 'yml' => 'yaml', 'toml' => 'toml', 'ini' => 'ini', 'conf' => 'ini', 'htaccess' => 'apache_conf', 'htpasswd' => 'apache_conf', 'nginx' => 'nginx', 'properties' => 'properties',
+    // Shell
+    'sh' => 'sh', 'bash' => 'sh', 'zsh' => 'sh', 'ksh' => 'sh', 'bat' => 'batchfile', 'cmd' => 'batchfile', 'ps1' => 'powershell', 'psm1' => 'powershell',
+    // Scripting
+    'py' => 'python', 'pyw' => 'python', 'rb' => 'ruby', 'pl' => 'perl', 'php' => 'php', 'php4' => 'php', 'php5' => 'php', 'phtml' => 'php', 'phps' => 'php',
+    'lua' => 'lua', 'r' => 'r', 'tcl' => 'tcl', 'scala' => 'scala', 'sc' => 'scala', 'groovy' => 'groovy', 'gradle' => 'groovy', 'coffee' => 'coffee',
+    // Compiled
+    'c' => 'c_cpp', 'h' => 'c_cpp', 'cpp' => 'c_cpp', 'hpp' => 'c_cpp', 'cc' => 'c_cpp', 'cxx' => 'c_cpp',
+    'cs' => 'csharp', 'java' => 'java', 'go' => 'golang', 'rs' => 'rust', 'swift' => 'swift', 'kt' => 'kotlin', 'kts' => 'kotlin',
+    'dart' => 'dart', 'f90' => 'fortran', 'f' => 'fortran', 'for' => 'fortran', 'pas' => 'pascal', 'pp' => 'pascal',
+    'd' => 'd', 'nim' => 'nim', 'zig' => 'zig', 'jl' => 'julia', 'm' => 'objectivec', 'mm' => 'objectivec',
+    'hs' => 'haskell', 'lhs' => 'haskell', 'erl' => 'erlang', 'hrl' => 'erlang', 'ex' => 'elixir', 'exs' => 'elixir', 'clj' => 'clojure', 'cljs' => 'clojure',
+    'lisp' => 'lisp', 'el' => 'lisp', 'scm' => 'scheme', 'rkt' => 'scheme', 'ml' => 'ocaml', 'mli' => 'ocaml',
+    // Data / Config / Docs
+    'md' => 'markdown', 'markdown' => 'markdown', 'rst' => 'rst', 'tex' => 'latex', 'latex' => 'latex',
+    'txt' => 'text', 'log' => 'text', 'csv' => 'csv', 'tsv' => 'tsv', 'sql' => 'sql', 'mysql' => 'mysql', 'pgsql' => 'pgsql', 'plsql' => 'plsql',
+    'graphql' => 'graphqlschema', 'gql' => 'graphqlschema', 'proto' => 'protobuf', 'dockerfile' => 'dockerfile', 'makefile' => 'makefile', 'mk' => 'makefile', 'cmake' => 'text',
+    'gitignore' => 'gitignore', 'gitattributes' => 'gitignore', 'editorconfig' => 'ini', 'env' => 'ini', 'lock' => 'text', 'diff' => 'diff', 'patch' => 'diff',
+    // Templates
+    'hbs' => 'handlebars', 'handlebars' => 'handlebars', 'mustache' => 'handlebars', 'twig' => 'twig', 'liquid' => 'liquid', 'njk' => 'nunjucks',
+    'j2' => 'django', 'jinja' => 'django', 'jinja2' => 'django', 'tpl' => 'smarty', 'smarty' => 'smarty', 'ejs' => 'ejs',
+    'pug' => 'jade', 'jade' => 'jade', 'haml' => 'haml', 'slim' => 'slim', 'erb' => 'html_ruby', 'rhtml' => 'rhtml',
+    // Others
+    'asm' => 'assembly_x86', 's' => 'assembly_x86', 'vim' => 'text', 'swf' => 'text', 'actionscript' => 'actionscript', 'as' => 'actionscript', 'mxml' => 'xml',
+    'applescript' => 'applescript', 'scpt' => 'applescript', 'ahk' => 'autohotkey', 'ahkl' => 'autohotkey', 'vbs' => 'vbscript', 'vba' => 'vbscript', 'vb' => 'vbscript',
+    'verilog' => 'verilog', 'v' => 'verilog', 'sv' => 'verilog', 'svh' => 'verilog', 'vh' => 'verilog', 'vhd' => 'vhdl', 'vhdl' => 'vhdl',
+    'sol' => 'text', 'prisma' => 'prisma', 'tf' => 'terraform', 'tfvars' => 'terraform', 'hcl' => 'terraform'
 );
 
 // if User has the external config file, try to use it to override the default config above [config.php]
@@ -761,99 +775,133 @@ if ((isset($_SESSION[FM_SESSION_ID]['logged'], $auth_users[$_SESSION[FM_SESSION_
             $path .= '/' . FM_PATH;
         }
 
-        function event_callback($message)
-        {
-            global $callback;
+        $event_callback = function ($message) {
             echo json_encode($message);
-        }
+            exit();
+        };
 
         $url = !empty($_REQUEST["uploadurl"]) && preg_match("|^http(s)?://.+$|", stripslashes($_REQUEST["uploadurl"])) ? stripslashes($_REQUEST["uploadurl"]) : null;
 
-        //prevent 127.* domain and known ports
+        if (!$url) {
+            $event_callback(['fail' => ['message' => lng('Invalid url parameter')]]);
+        }
+        
         $domain = parse_url($url, PHP_URL_HOST);
         $port = parse_url($url, PHP_URL_PORT);
         $knownPorts = [22, 23, 25, 3306];
 
         if (preg_match("/^localhost$|^127(?:\.[0-9]+){0,2}\.[0-9]+$|^(?:0*\:)*?:?0*1$/i", $domain) || in_array($port, $knownPorts)) {
-            $err = array("message" => lng('URL is not allowed'));
-            event_callback(array("fail" => $err));
-            exit();
+            $event_callback(['fail' => ['message' => lng('URL is not allowed')]]);
         }
 
-        $use_curl = false;
         $temp_file = tempnam(sys_get_temp_dir(), "upload-");
         $fileinfo = new stdClass();
         $clean_url = strtok($url, '?#');
-        $fileinfo->name = trim(urldecode(basename($clean_url)), ".\x00..\x20");
+        $fileinfo->name = preg_replace('/[.\x00-\x20]+$/', '', urldecode(basename($clean_url)));
+        if ($fileinfo->name === '' || $fileinfo->name === '.' || $fileinfo->name === '..') {
+            @unlink($temp_file);
+            $event_callback(['fail' => ['message' => lng('Invalid url parameter')]]);
+        }
 
         $allowed = (FM_UPLOAD_EXTENSION) ? explode(',', FM_UPLOAD_EXTENSION) : false;
         if (empty($allowed)) {
-            $err = array("message" => lng('Upload extension config missing'));
-            event_callback(array("fail" => $err));
-            exit();
+            @unlink($temp_file);
+            $event_callback(['fail' => ['message' => lng('Upload extension config missing')]]);
         }
 
         $ext = strtolower(pathinfo($fileinfo->name, PATHINFO_EXTENSION));
         $isFileAllowed = in_array($ext, $allowed);
 
-        $err = false;
-
         if (!$isFileAllowed) {
+            @unlink($temp_file);
             $allowed_exts = implode(', ', $allowed);
-            $err_msg = sprintf(lng('File extension is not allowed'), $allowed_exts);
-            $err = array("message" => $err_msg);
-            event_callback(array("fail" => $err));
-            exit();
+            $event_callback(['fail' => ['message' => sprintf(lng('File extension is not allowed'), $allowed_exts)]]);
         }
 
-        if (!$url) {
-            $success = false;
-        } else if ($use_curl) {
+        $err = false;
+        $success = false;
+
+        if (extension_loaded('curl')) {
             $fp = fopen($temp_file, "w");
             $ch = curl_init($url);
             curl_setopt($ch, CURLOPT_NOPROGRESS, false);
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
             curl_setopt($ch, CURLOPT_FILE, $fp);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 120);
+            curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0');
             $success = curl_exec($ch);
+            $http_code = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
             $curl_info = curl_getinfo($ch);
             if (!$success) {
-                $err = array("message" => curl_error($ch));
+                $err = ['message' => curl_error($ch)];
+            } elseif ($http_code !== 200) {
+                $success = false;
+                $err = ['message' => 'HTTP ' . $http_code];
             }
-            curl_close($ch);
+            if (PHP_VERSION_ID < 80500) { curl_close($ch); }
             fclose($fp);
-            $fileinfo->size = $curl_info["size_download"];
-            $fileinfo->type = $curl_info["content_type"];
+            if ($success && filesize($temp_file) === 0) {
+                $success = false;
+                $err = ['message' => 'Downloaded file is empty'];
+            }
+            if ($success) {
+                $fileinfo->size = $curl_info["size_download"] ?: 0;
+                $fileinfo->type = $curl_info["content_type"] ?: 'application/octet-stream';
+            }
         } else {
             $ctx = stream_context_create([
                 'http' => [
                     'timeout' => 120,
                     'follow_location' => 1,
-                    'user_agent' => 'Mozilla/5.0'
+                    'user_agent' => 'Mozilla/5.0',
+                    'ignore_errors' => true,
                 ]
             ]);
-            $success = copy($url, $temp_file, $ctx);
-            if (!$success) {
-                $err = error_get_last();
+            $success = @copy($url, $temp_file, $ctx);
+            if ($success) {
+                $headers = $http_response_header ?? [];
+                $status = 0;
+                if (!empty($headers) && preg_match('#^HTTP/\S+\s+(\d{3})#', $headers[0], $m)) {
+                    $status = (int) $m[1];
+                }
+                if ($status !== 200) {
+                    $success = false;
+                    $err = ['message' => 'HTTP ' . $status];
+                }
+            } else {
+                $last = error_get_last();
+                $err = ['message' => $last['message'] ?? 'Download failed'];
+            }
+            if ($success && filesize($temp_file) === 0) {
+                $success = false;
+                $err = ['message' => 'Downloaded file is empty'];
+            }
+            if ($success) {
+                $fileinfo->size = @filesize($temp_file) ?: 0;
+                $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                $fileinfo->type = finfo_file($finfo, $temp_file) ?: 'application/octet-stream';
+                finfo_close($finfo);
             }
         }
 
         if ($success) {
             $target_file = $path . '/' . $fileinfo->name;
-            $success = rename($temp_file, $target_file);
-            
+            $success = @rename($temp_file, $target_file);
             if ($success) {
-                chmod($target_file, 0644);
+                @chmod($target_file, 0644);
+            } else {
+                $err = ['message' => 'Failed to move downloaded file'];
             }
         }
 
         if ($success) {
-            event_callback(array("done" => $fileinfo));
+            $event_callback(["done" => $fileinfo]);
         } else {
-            unlink($temp_file);
+            @unlink($temp_file);
             if (!$err) {
-                $err = array("message" => lng('Invalid url parameter'));
+                $err = ['message' => lng('Invalid url parameter')];
             }
-            event_callback(array("fail" => $err));
+            $event_callback(['fail' => $err]);
         }
     }
     exit();
@@ -1401,7 +1449,7 @@ if (isset($_POST['group'], $_POST['token']) && (isset($_POST['zip']) || isset($_
         }
 
         try {
-            $archiver = new FM_SystemArchiver($type);
+            $archiver = new FM_Archiver($type);
             $res = $archiver->create($zipname, $files, $path);
 
             if ($res['ok']) {
@@ -1474,7 +1522,7 @@ if (isset($_POST['unzip'], $_POST['token']) && !FM_READONLY) {
     }
 
     try {
-        $archiver = new FM_SystemArchiver($type);
+        $archiver = new FM_Archiver($type);
         $res = $archiver->unzip($zip_path, $destDir);
 
         if ($res['ok']) {
@@ -2734,7 +2782,7 @@ $all_files_size = 0;
                             <a class="action-rename" title="<?php echo lng('Rename') ?>" href="#" onclick="rename('<?php echo fm_enc(addslashes(FM_PATH)) ?>', '<?php echo fm_enc(addslashes($f)) ?>');return false;"><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i></a>
                             <a class="action-copy" title="<?php echo lng('CopyTo') ?>..." href="?p=&amp;copy=<?php echo urlencode(trim(FM_PATH . '/' . $f, '/')) ?>"><i class="fa-regular fa-copy" aria-hidden="true"></i></a>
                         <?php endif; ?>
-                        <a class="action-link" title="<?php echo lng('DirectLink') ?>" href="<?php echo fm_enc(FM_ROOT_URL . (FM_PATH != '' ? '/' . FM_PATH : '') . '/' . $f . '/') ?>" target="_blank"><?php echo fm_link_icon(); ?></a>
+                        <a class="action-link" title="<?php echo lng('Copy') . ' ' . lng('DirectLink') ?>" href="javascript:void(0);" data-copy-url="<?php echo fm_enc(FM_ROOT_URL . (FM_PATH != '' ? '/' . FM_PATH : '') . '/' . $f . '/') ?>" onclick="copyText(this.getAttribute('data-copy-url'), function(){toast('<?php echo lng('Copied') ?>');}, function(){toast('<?php echo lng('Copy failed') ?>');});return false;"><?php echo fm_link_icon(); ?></a>
                     </td>
                 </tr>
             <?php
@@ -2812,7 +2860,7 @@ $all_files_size = 0;
                             <a class="action-copy" title="<?php echo lng('CopyTo') ?>..." href="?p=<?php echo urlencode(FM_PATH) ?>&amp;copy=<?php echo urlencode(trim(FM_PATH . '/' . $f, '/')) ?>"><i class="fa-regular fa-copy"></i></a>
                         <?php endif; ?>
                         <?php $isSwfFile = strtolower(pathinfo($f, PATHINFO_EXTENSION)) === 'swf'; ?>
-                        <a class="action-link" title="<?php echo lng('DirectLink') ?>" href="<?php echo $isSwfFile ? '?p=' . urlencode(FM_PATH) . '&amp;view=' . urlencode($f) : fm_enc(FM_ROOT_URL . (FM_PATH != '' ? '/' . FM_PATH : '') . '/' . $f) ?>" target="_blank"><?php echo fm_link_icon(); ?></a>
+                        <a class="action-link" title="<?php echo lng('Copy') . ' ' . lng('DirectLink') ?>" href="javascript:void(0);" data-copy-url="<?php echo $isSwfFile ? fm_enc(FM_SELF_URL . '?p=' . urlencode(FM_PATH) . '&view=' . urlencode($f)) : fm_enc(FM_ROOT_URL . (FM_PATH != '' ? '/' . FM_PATH : '') . '/' . $f) ?>" onclick="copyText(this.getAttribute('data-copy-url'), function(){toast('<?php echo lng('Copied') ?>');}, function(){toast('<?php echo lng('Copy failed') ?>');});return false;"><?php echo fm_link_icon(); ?></a>
                         <a class="action-download" title="<?php echo lng('Download') ?>" href="?p=<?php echo urlencode(FM_PATH) ?>&amp;dl=<?php echo urlencode($f) ?>" onclick="confirmDialog(event, 1211, '<?php echo lng('Download'); ?>','<?php echo urlencode($f); ?>', this.href);"><i class="fa-solid fa-download"></i></a>
                     </td>
                 </tr>
@@ -3559,7 +3607,6 @@ function fm_get_file_icon_class($path)
         case 'top':
         case 'bot':
         case 'dat':
-        case 'bak':
         case 'htpasswd':
         case 'pl':
             $img = 'fa-regular fa-file-lines';
@@ -4087,10 +4134,10 @@ function fa_language($class = '') {
     </i>';
 }
 /**
- * System-level archiving/unpacking abstraction layer.
- * Uses proc_open to call native system tools, avoiding PHP's memory/CPU overhead.
+ * Archive abstraction layer.
+ * Uses PHP's ZipArchive / PharData extensions for maximum compatibility.
  */
-class FM_SystemArchiver
+class FM_Archiver
 {
     private $type;
 
@@ -4146,19 +4193,41 @@ class FM_SystemArchiver
             if (!class_exists('PharData')) {
                 return ['ok' => false, 'msg' => 'PHP PharData extension is not installed, cannot create tar.'];
             }
-            $tarPath = $workDir . '/' . str_replace('.tar.gz', '.tar', $zipname);
-            $tar = new PharData($tarPath);
-            foreach ($files as $file) {
-                $filePath = $workDir . '/' . $file;
-                if (is_file($filePath)) {
-                    $tar->addFile($filePath, $file);
-                } elseif (is_dir($filePath)) {
-                    $tar->addFile($filePath, $file);
+            
+            $tarName = str_replace('.tar.gz', '.tar', $zipname);
+            $oldCwd = getcwd();
+            chdir($workDir);
+            
+            try {
+                $tar = new PharData($tarName);
+                foreach ($files as $file) {
+                    if (is_file($file)) {
+                        $tar->addFile($file, $file);
+                    } elseif (is_dir($file)) {
+                        $iterator = new RecursiveIteratorIterator(
+                            new RecursiveDirectoryIterator($file, FilesystemIterator::SKIP_DOTS),
+                            RecursiveIteratorIterator::LEAVES_ONLY
+                        );
+                        foreach ($iterator as $item) {
+                            if ($item->isDir()) continue;
+                            $realPath = str_replace('\\', '/', $item->getPathname());
+                            $relPath = substr($realPath, strlen($workDir) + 1);
+                            if (empty($relPath)) {
+                                $relPath = basename($realPath);
+                            }
+                            $tar->addFile($realPath, $relPath);
+                        }
+                    }
                 }
+                $tar->compress(Phar::GZ);
+                unlink($tarName);
+                chdir($oldCwd);
+                return ['ok' => true, 'msg' => ''];
+            } catch (Exception $e) {
+                chdir($oldCwd);
+                if (file_exists($tarName)) @unlink($tarName);
+                return ['ok' => false, 'msg' => $e->getMessage()];
             }
-            $tar->compress(Phar::GZ);
-            unlink($tarPath);
-            return ['ok' => true, 'msg' => ''];
         }
     }
 
@@ -4584,29 +4653,33 @@ function fm_is_safe_markdown($content) {
 function renderFooter(): string
 {
     global $cfg;
-    
+
     $link = function (string $url, string $text): string {
         return '<a href="' . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . '"'
              . ' target="_blank" rel="nofollow noopener noreferrer">'
              . htmlspecialchars($text, ENT_QUOTES, 'UTF-8')
              . '</a>';
     };
-    
+
     $tpl = lng('FooterCopyright');
     $currentYear = date('Y');
+    $currentYearInt = (int)$currentYear;
     $startYear = isset($cfg->data['footer_start_year']) ? trim($cfg->data['footer_start_year']) : '2017';
+
     if ($startYear === 'none' || $startYear === '') {
-        $year_text = '<span dir="ltr" style="unicode-bidi: isolate; display: inline-block;">© ' . $currentYear . '</span>';
+        $yearText = '© ' . $currentYear;
     } else {
-        if ($startYear == $currentYear) {
-            $year_text = '<span dir="ltr" style="unicode-bidi: isolate; display: inline-block;">© ' . $startYear . '</span>';
+        $startYearInt = ctype_digit($startYear) ? (int)$startYear : 0;
+        if ($startYearInt > 0 && $startYearInt < $currentYearInt) {
+            $yearText = '© ' . $startYearInt . '-' . $currentYearInt;
         } else {
-            $year_text = '<span dir="ltr" style="unicode-bidi: isolate; display: inline-block;">© ' . $startYear . '-' . $currentYear . '</span>';
+            $yearText = '© ' . $currentYear;
         }
     }
+    $yearText = '<span dir="ltr" style="unicode-bidi: isolate; display: inline-block;">' . $yearText . '</span>';
 
     $vars = [
-        'year'        => $year_text,
+        'year'        => $yearText,
         'appLink'     => $link('https://github.com/prasathmani/tinyfilemanager', lng('AppTitle')),
         'licenseLink' => $link('https://www.gnu.org/licenses/gpl-3.0.html', 'GNU GPL v3'),
         'authorLink'  => $link('https://github.com/prasathmani', 'Prasath Mani'),
@@ -4962,7 +5035,7 @@ function fm_show_header_login()
     #markdown-content img { max-width: 100%; }
     #markdown-content a { color: #0366d6; }
     #markdown-content blockquote { border-left: 4px solid #dfe2e5; color: #6a737d; padding: 0 1em; margin: 1em 0; }
-    #markdown-content.card { width: fit-content; min-width: 50%; max-width: 100%; margin: 0 auto 1em auto; }
+    #markdown-content.card { width: fit-content; min-width: 50%; max-width: 80vw; margin: 0 auto 1em auto; }
     #markdown-content pre { position: relative !important; padding-top: 2.5em !important; width: fit-content; max-width: 100%; overflow-x: auto; background: #f6f8fa; padding: 12px; border-radius: 6px; margin-bottom: 1em; box-sizing: border-box; }
     #markdown-content pre code { display: block; overflow-x: visible !important; white-space: pre; background: transparent !important; padding: 0 !important; margin: 0 !important; border: 0 !important; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
     #markdown-content :not(pre) > code { background: #f6f8fa; padding: 2px 6px; border-radius: 4px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
@@ -4976,6 +5049,7 @@ function fm_show_header_login()
     #markdown-content pre:hover .copy-code-btn { opacity: 1; }
     .copy-code-btn:hover { background-color: #f3f4f6; color: #0366d6; border-color: #0366d6; }
     .copy-code-btn.copied { color: #198754; border-color: #198754; background-color: #e8f5e9; }
+    .ace_search.left { right: auto !important; left: 0 !important; border-radius: 0 0 5px 0 !important; border-left: 0 none !important; border-right: 1px solid #cbcbcb !important; }
 
     /* 11. Animation and Effects */
     .fm-dots { display: flex; align-items: center; gap: 6px; height: 20px; animation: fm-dots-cycle 3.2s ease-in-out infinite; }
@@ -4993,8 +5067,9 @@ function fm_show_header_login()
     .lds-facebook div { position: absolute; left: 6px; width: 13px; background: #007bff; animation: lds-facebook 1.2s cubic-bezier(0, .5, .5, 1) infinite; }
     .lds-facebook div:nth-child(1) { left: 6px; animation-delay: -.24s; } .lds-facebook div:nth-child(2) { left: 26px; animation-delay: -.12s; } .lds-facebook div:nth-child(3) { left: 45px; animation-delay: 0s; }
     @keyframes lds-facebook { 0% { top: 6px; height: 51px; } 100%, 50% { top: 19px; height: 26px; } }
-    #snackbar { visibility: hidden; min-width: 250px; margin-left: -125px; background-color: #333; color: #fff; text-align: center; border-radius: 2px; padding: 16px; position: fixed; z-index: 1; left: 50%; bottom: 30px; font-size: 17px; }
+    #snackbar { visibility: hidden; width: max-content; max-width: 80vw; margin-left: 0; transform: translateX(-50%); background-color: #e9ecef; color: #212529; text-align: center; border-radius: 4px; padding: 12px 20px; position: fixed; z-index: 10000; left: 50%; bottom: 30px; font-size: 15px; box-shadow: 0 4px 12px rgba(0,0,0,.2); white-space: nowrap; }
     #snackbar.show { visibility: visible; -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+    .theme-dark #snackbar { background-color: #333; color: #fff; box-shadow: 0 4px 12px rgba(0,0,0,.5); }
     @keyframes fadein { from { bottom: 0; opacity: 0; } to { bottom: 30px; opacity: 1; } }
     @keyframes fadeout { from { bottom: 30px; opacity: 1; } to { bottom: 0; opacity: 0; } }
     ul#search-wrapper { padding-left: 0; border: 1px solid #ecececcc; }
@@ -5002,7 +5077,7 @@ function fm_show_header_login()
 
     /* 12. Direction and Base Components (RTL) */
     :root { --bg-color: #f3daa6; --bs-dark-rgb: 28, 36, 41 !important; }
-    [dir="rtl"] .modal-header .btn-close { margin-right: 0 !important; margin-left: 0 !important; }
+    [dir="rtl"] .modal-header .btn-close { margin-right: auto !important; margin-left: 0 !important; }
     [dir="rtl"] .float-right { float: left !important; }
     [dir="rtl"] .text-end { text-align: left !important; }
     [dir="rtl"] .bread-crumb { display: inline-block; transform: scaleX(-1); }
@@ -5234,6 +5309,30 @@ function fm_show_header_login()
         <?php fm_render_lang_modal(); ?>
         
         <script>
+            function copyText(text, onSuccess, onFail) {
+                function ok() { onSuccess && onSuccess(); }
+                function fail() {
+                    var ta = document.createElement('textarea');
+                    ta.value = text;
+                    ta.style.position = 'fixed';
+                    ta.style.opacity = '0';
+                    document.body.appendChild(ta);
+                    ta.select();
+                    try {
+                        document.execCommand('copy') ? ok() : (onFail && onFail());
+                    } catch (e) {
+                        onFail && onFail();
+                    } finally {
+                        document.body.removeChild(ta);
+                    }
+                }
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(ok).catch(fail);
+                } else {
+                    fail();
+                }
+            }
+
             function initCodeCopy() {
                 var textCopy = '<?php echo lng("Copy"); ?>';
                 var textCopied = '<?php echo lng("Copied"); ?>';
@@ -5242,48 +5341,28 @@ function fm_show_header_login()
                 var pres = document.querySelectorAll('#markdown-content pre');
                 pres.forEach(function(pre) {
                     if (pre.querySelector('.copy-code-btn')) return;
-                    
+
                     var btn = document.createElement('button');
                     btn.className = 'copy-code-btn';
                     btn.textContent = textCopy;
-                    
+
                     btn.addEventListener('click', function() {
                         var code = pre.querySelector('code');
                         if (!code) return;
-                        var textToCopy = code.innerText;
-                        
-                        function doSuccess() {
-                            btn.textContent = textCopied;
-                            btn.classList.add('copied');
-                            setTimeout(function() { 
-                                btn.textContent = textCopy; 
-                                btn.classList.remove('copied'); 
-                            }, 2000);
-                        }
-                        
-                        function doFail() {
-                            btn.textContent = textFailed;
-                            setTimeout(function() { 
-                                btn.textContent = textCopy; 
-                            }, 2000);
-                        }
-
-                        navigator.clipboard.writeText(textToCopy).then(function() {
-                            doSuccess();
-                        }).catch(function(err) {
-                            var textArea = document.createElement("textarea");
-                            textArea.value = textToCopy;
-                            textArea.style.position = "fixed";
-                            document.body.appendChild(textArea);
-                            textArea.select();
-                            try {
-                                document.execCommand('copy');
-                                doSuccess();
-                            } catch (err) {
-                                doFail();
+                        copyText(code.innerText,
+                            function() {
+                                btn.textContent = textCopied;
+                                btn.classList.add('copied');
+                                setTimeout(function() {
+                                    btn.textContent = textCopy;
+                                    btn.classList.remove('copied');
+                                }, 2000);
+                            },
+                            function() {
+                                btn.textContent = textFailed;
+                                setTimeout(function() { btn.textContent = textCopy; }, 2000);
                             }
-                            document.body.removeChild(textArea);
-                        });
+                        );
                     });
                     pre.appendChild(btn);
                 });
@@ -5331,7 +5410,7 @@ function fm_show_header_login()
         </script>
         <?php endif; ?>
         <?php if (isset($_GET['view']) && strtolower(pathinfo($_GET['view'], PATHINFO_EXTENSION)) === 'swf'): ?>
-        <script src="https://unpkg.com/@ruffle-rs/ruffle@latest/ruffle.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@ruffle-rs/ruffle@0.7.1/ruffle.min.js"></script>
         <script>
         var i18nSwfError = <?php echo json_encode(lng('SwfError')); ?>;
         window.addEventListener("DOMContentLoaded", function () {
@@ -6225,20 +6304,101 @@ function fm_show_header_login()
 
         <?php if (isset($_GET['edit']) && isset($_GET['env']) && FM_EDIT_FILE && !FM_READONLY):
             $ext = pathinfo($_GET["edit"], PATHINFO_EXTENSION);
-            $ext =  isset($ext_language[$ext]) ? $ext_language[$ext] :  $ext;
+            $ext = isset($ext_language[$ext]) ? $ext_language[$ext] : ($ext ?: 'text');
         ?>
             <?php print_external('js-ace'); ?>
             <script>
+                ace.config.nls = function(key, fallback, args) {
+                    var map = {
+                        "search-box.find.placeholder": "<?php echo lng('Search for') ?>",
+                        "search-box.replace.placeholder": "<?php echo lng('Replace with') ?>",
+                        "search-box.find-all.text": "<?php echo lng('All') ?>",
+                        "search-box.replace-next.text": "<?php echo lng('Replace') ?>",
+                        "search-box.replace-all.text": "<?php echo lng('All') ?>",
+                        "search-box.toggle-replace.title": "<?php echo lng('Toggle Replace mode') ?>",
+                        "search-box.toggle-regexp.title": "<?php echo lng('RegExp Search') ?>",
+                        "search-box.toggle-case.title": "<?php echo lng('CaseSensitive Search') ?>",
+                        "search-box.toggle-whole-word.title": "<?php echo lng('Whole Word Search') ?>",
+                        "search-box.toggle-in-selection.title": "<?php echo lng('Search In Selection') ?>",
+                        "search-box.search-counter": "<?php echo lng('$0 of $1') ?>"
+                    };
+                    var val = map[key] !== undefined ? map[key] : fallback;
+                    if (args && Array.isArray(args)) {
+                        args.forEach(function(arg, i) {
+                            val = val.replace(new RegExp('\\$' + i, 'g'), function () { return arg; });
+                        });
+                    }
+                    return val;
+                };
+
                 var editor = ace.edit("editor");
+                window.editor = editor;
                 editor.getSession().setMode({
                     path: "ace/mode/<?php echo $ext; ?>",
                     inline: true
                 });
-                editor.setTheme("ace/theme/<?php echo ACE_THEME; ?>"); // Dark Theme
-                editor.setShowPrintMargin(false); // Hide the vertical ruler
+                editor.setTheme("ace/theme/<?php echo ACE_THEME; ?>");
+                editor.setShowPrintMargin(false);
+
+                (function() {
+                    function adaptAceSearchBox() {
+                        var sb = document.querySelector('.ace_search');
+                        if (!sb) return;
+
+                        var isRTL = document.documentElement.getAttribute('dir') === 'rtl';
+
+                        if (isRTL) {
+                            if (sb.classList.contains('right')) {
+                                sb.classList.remove('right');
+                                sb.classList.add('left');
+                            }
+                        } else {
+                            if (sb.classList.contains('left')) {
+                                sb.classList.remove('left');
+                                sb.classList.add('right');
+                            }
+                        }
+
+                        var toggleBtn = sb.querySelector('[action="toggleReplace"]');
+                        if (toggleBtn) {
+                            toggleBtn.style.float = isRTL ? 'right' : 'left';
+                            toggleBtn.style.marginLeft = '0';
+                            toggleBtn.style.marginRight = '4px';
+                        }
+
+                        sb.querySelectorAll('.ace_search_field').forEach(function(input) {
+                            if (input.dataset.adapted) return;
+
+                            var span = document.createElement('span');
+                            var styles = window.getComputedStyle(input);
+                            span.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;' +
+                                'font-family:' + styles.fontFamily + ';' +
+                                'font-size:' + styles.fontSize + ';' +
+                                'font-weight:' + styles.fontWeight + ';';
+                            span.textContent = input.getAttribute('placeholder') || '';
+
+                            document.body.appendChild(span);
+                            var w = Math.max(80, span.offsetWidth + 64);
+                            document.body.removeChild(span);
+
+                            input.style.minWidth = w + 'px';
+                            input.dataset.adapted = '1';
+                        });
+                    }
+
+                    var debounceTimer;
+                    var observer = new MutationObserver(function() {
+                        clearTimeout(debounceTimer);
+                        debounceTimer = setTimeout(adaptAceSearchBox, 50);
+                    });
+                    observer.observe(document.body, { childList: true, subtree: true });
+                    adaptAceSearchBox();
+                })();
+
                 function ace_commend(cmd) {
                     editor.commands.exec(cmd, editor);
                 }
+
                 editor.commands.addCommands([{
                     name: 'save',
                     bindKey: {
@@ -6246,7 +6406,7 @@ function fm_show_header_login()
                         mac: 'Command-S'
                     },
                     exec: function(editor) {
-                        edit_save(this, 'ace');
+                        edit_save(editor, 'ace');
                     }
                 }]);
 
@@ -6264,278 +6424,17 @@ function fm_show_header_login()
                         _data = {
                             "aceTheme": {
                                 "bright": {
-                                    "chrome": "Chrome",
-                                    "clouds": "Clouds",
-                                    "cloud9_day": "Cloud9 Day",
-                                    "crimson_editor": "Crimson Editor",
-                                    "dawn": "Dawn",
-                                    "dreamweaver": "Dreamweaver",
-                                    "eclipse": "Eclipse",
-                                    "github": "GitHub",
-                                    "github_light_default": "GitHub Light Default",
-                                    "gruvbox_light_hard": "Gruvbox Light Hard",
-                                    "iplastic": "IPlastic",
-                                    "katzenmilch": "KatzenMilch",
-                                    "kuroir": "Kuroir",
-                                    "solarized_light": "Solarized Light",
-                                    "sqlserver": "SQL Server",
-                                    "textmate": "TextMate",
-                                    "tomorrow": "Tomorrow",
-                                    "xcode": "XCode"
+                                    "chrome": "Chrome", "clouds": "Clouds", "cloud9_day": "Cloud9 Day", "crimson_editor": "Crimson Editor", "dawn": "Dawn", "dreamweaver": "Dreamweaver", "eclipse": "Eclipse", "github": "GitHub", "github_light_default": "GitHub Light Default", "gruvbox_light_hard": "Gruvbox Light Hard", "iplastic": "IPlastic", "katzenmilch": "KatzenMilch", "kuroir": "Kuroir", "solarized_light": "Solarized Light", "sqlserver": "SQL Server", "textmate": "TextMate", "tomorrow": "Tomorrow", "xcode": "XCode"
                                 },
                                 "dark": {
-                                    "ambiance": "Ambiance",
-                                    "chaos": "Chaos",
-                                    "cloud_editor_dark": "Cloud Editor Dark",
-                                    "cloud9_night": "Cloud9 Night",
-                                    "cloud9_night_low_color": "Cloud9 Night Low Color",
-                                    "clouds_midnight": "Clouds Midnight",
-                                    "cobalt": "Cobalt",
-                                    "dracula": "Dracula",
-                                    "github_dark": "GitHub Dark",
-                                    "gob": "Green on Black",
-                                    "gruvbox": "Gruvbox",
-                                    "gruvbox_dark_hard": "Gruvbox Dark Hard",
-                                    "idle_fingers": "idle Fingers",
-                                    "kr_theme": "krTheme",
-                                    "merbivore": "Merbivore",
-                                    "merbivore_soft": "Merbivore Soft",
-                                    "mono_industrial": "Mono Industrial",
-                                    "monokai": "Monokai",
-                                    "nord_dark": "Nord Dark",
-                                    "one_dark": "One Dark",
-                                    "pastel_on_dark": "Pastel on dark",
-                                    "solarized_dark": "Solarized Dark",
-                                    "terminal": "Terminal",
-                                    "tomorrow_night": "Tomorrow Night",
-                                    "tomorrow_night_blue": "Tomorrow Night Blue",
-                                    "tomorrow_night_bright": "Tomorrow Night Bright",
-                                    "tomorrow_night_eighties": "Tomorrow Night 80s",
-                                    "twilight": "Twilight",
-                                    "vibrant_ink": "Vibrant Ink"
+                                    "ambiance": "Ambiance", "chaos": "Chaos", "cloud_editor_dark": "Cloud Editor Dark", "cloud9_night": "Cloud9 Night", "cloud9_night_low_color": "Cloud9 Night Low Color", "clouds_midnight": "Clouds Midnight", "cobalt": "Cobalt", "dracula": "Dracula", "github_dark": "GitHub Dark", "gob": "Green on Black", "gruvbox": "Gruvbox", "gruvbox_dark_hard": "Gruvbox Dark Hard", "idle_fingers": "idle Fingers", "kr_theme": "krTheme", "merbivore": "Merbivore", "merbivore_soft": "Merbivore Soft", "mono_industrial": "Mono Industrial", "monokai": "Monokai", "nord_dark": "Nord Dark", "one_dark": "One Dark", "pastel_on_dark": "Pastel on dark", "solarized_dark": "Solarized Dark", "terminal": "Terminal", "tomorrow_night": "Tomorrow Night", "tomorrow_night_blue": "Tomorrow Night Blue", "tomorrow_night_bright": "Tomorrow Night Bright", "tomorrow_night_eighties": "Tomorrow Night 80s", "twilight": "Twilight", "vibrant_ink": "Vibrant Ink"
                                 }
                             },
                             "aceMode": {
-                                "javascript": "JavaScript",
-                                "abap": "ABAP",
-                                "abc": "ABC",
-                                "actionscript": "ActionScript",
-                                "ada": "ADA",
-                                "alda": "Alda",
-                                "apache_conf": "Apache Conf",
-                                "apex": "Apex",
-                                "applescript": "AppleScript",
-                                "aql": "AQL",
-                                "asciidoc": "AsciiDoc",
-                                "asl": "ASL",
-                                "assembly_arm32": "Assembly ARM32",
-                                "assembly_x86": "Assembly x86",
-                                "astro": "Astro",
-                                "autohotkey": "AutoHotKey",
-                                "basic": "Basic",
-                                "batchfile": "BatchFile",
-                                "bibtex": "BibTeX",
-                                "c_cpp": "C and C++",
-                                "c9search": "C9Search",
-                                "cedar": "Cedar",
-                                "cedarschema": "CedarSchema",
-                                "cirru": "Cirru",
-                                "clojure": "Clojure",
-                                "clue": "Clue",
-                                "cobol": "Cobol",
-                                "coffee": "CoffeeScript",
-                                "coldfusion": "ColdFusion",
-                                "crystal": "Crystal",
-                                "csharp": "C#",
-                                "csound_document": "Csound Document",
-                                "csound_orchestra": "Csound",
-                                "csound_score": "Csound Score",
-                                "csp": "CSP",
-                                "css": "CSS",
-                                "csv": "CSV",
-                                "curly": "Curly",
-                                "cuttlefish": "Cuttlefish",
-                                "d": "D",
-                                "dart": "Dart",
-                                "diff": "Diff",
-                                "django": "Django",
-                                "dockerfile": "Dockerfile",
-                                "dot": "Dot",
-                                "drools": "Drools",
-                                "edifact": "Edifact",
-                                "eiffel": "Eiffel",
-                                "ejs": "EJS",
-                                "elixir": "Elixir",
-                                "elm": "Elm",
-                                "erlang": "Erlang",
-                                "flix": "Flix",
-                                "forth": "Forth",
-                                "fortran": "Fortran",
-                                "fsharp": "FSharp",
-                                "fsl": "FSL",
-                                "ftl": "FreeMarker",
-                                "gcode": "Gcode",
-                                "gdresource": "GDResource",
-                                "gdscript": "GDScript",
-                                "gdshader": "GDShader",
-                                "gherkin": "Gherkin",
-                                "gitignore": "Gitignore",
-                                "glsl": "Glsl",
-                                "gobstones": "Gobstones",
-                                "golang": "Go",
-                                "graphqlschema": "GraphQLSchema",
-                                "groovy": "Groovy",
-                                "groq": "Groq",
-                                "haml": "HAML",
-                                "handlebars": "Handlebars",
-                                "haskell": "Haskell",
-                                "haskell_cabal": "Haskell Cabal",
-                                "haxe": "haXe",
-                                "hjson": "Hjson",
-                                "html": "HTML",
-                                "html_elixir": "HTML (Elixir)",
-                                "html_ruby": "HTML (Ruby)",
-                                "ini": "INI",
-                                "io": "Io",
-                                "ion": "Ion",
-                                "jack": "Jack",
-                                "jade": "Jade",
-                                "java": "Java",
-                                "javascript": "JavaScript",
-                                "jexl": "JEXL",
-                                "json": "JSON",
-                                "json5": "JSON5",
-                                "jsoniq": "JSONiq",
-                                "jsp": "JSP",
-                                "jssm": "JSSM",
-                                "jsx": "JSX",
-                                "julia": "Julia",
-                                "kotlin": "Kotlin",
-                                "latex": "LaTeX",
-                                "latte": "Latte",
-                                "less": "LESS",
-                                "liquid": "Liquid",
-                                "lisp": "Lisp",
-                                "livescript": "LiveScript",
-                                "logiql": "LogiQL",
-                                "logtalk": "Logtalk",
-                                "lsl": "LSL",
-                                "lua": "Lua",
-                                "luapage": "LuaPage",
-                                "lucene": "Lucene",
-                                "makefile": "Makefile",
-                                "mariadb": "MariaDB",
-                                "markdown": "Markdown",
-                                "mask": "Mask",
-                                "matlab": "MATLAB",
-                                "maze": "Maze",
-                                "mediawiki": "MediaWiki",
-                                "mel": "MEL",
-                                "mips": "MIPS",
-                                "mixal": "MIXAL",
-                                "mushcode": "MUSHCode",
-                                "mysql": "MySQL",
-                                "nasal": "Nasal",
-                                "nginx": "Nginx",
-                                "nim": "Nim",
-                                "nix": "Nix",
-                                "nsis": "NSIS",
-                                "nunjucks": "Nunjucks",
-                                "objectivec": "Objective-C",
-                                "ocaml": "OCaml",
-                                "odin": "Odin",
-                                "partiql": "PartiQL",
-                                "pascal": "Pascal",
-                                "perl": "Perl",
-                                "pgsql": "pgSQL",
-                                "php": "PHP",
-                                "php_laravel_blade": "PHP (Blade Template)",
-                                "pig": "Pig",
-                                "plain_text": "Plain Text",
-                                "plsql": "PLSQL",
-                                "powershell": "Powershell",
-                                "praat": "Praat",
-                                "prisma": "Prisma",
-                                "prolog": "Prolog",
-                                "properties": "Properties",
-                                "protobuf": "Protobuf",
-                                "prql": "PRQL",
-                                "puppet": "Puppet",
-                                "python": "Python",
-                                "qml": "QML",
-                                "r": "R",
-                                "raku": "Raku",
-                                "razor": "Razor",
-                                "rdoc": "RDoc",
-                                "red": "Red",
-                                "redshift": "Redshift",
-                                "rhtml": "RHTML",
-                                "robot": "Robot",
-                                "rst": "RST",
-                                "ruby": "Ruby",
-                                "rust": "Rust",
-                                "sac": "SAC",
-                                "sass": "SASS",
-                                "scad": "SCAD",
-                                "scala": "Scala",
-                                "scheme": "Scheme",
-                                "scrypt": "Scrypt",
-                                "scss": "SCSS",
-                                "sh": "SH",
-                                "sjs": "SJS",
-                                "slim": "Slim",
-                                "smarty": "Smarty",
-                                "smithy": "Smithy",
-                                "snippets": "Snippets",
-                                "soy_template": "Soy Template",
-                                "space": "Space",
-                                "sparql": "SPARQL",
-                                "sql": "SQL",
-                                "sqlserver": "SQLServer",
-                                "stylus": "Stylus",
-                                "svg": "SVG",
-                                "swift": "Swift",
-                                "tcl": "Tcl",
-                                "terraform": "Terraform",
-                                "tex": "Tex",
-                                "text": "Text",
-                                "textile": "Textile",
-                                "toml": "Toml",
-                                "tsv": "TSV",
-                                "tsx": "TSX",
-                                "turtle": "Turtle",
-                                "twig": "Twig",
-                                "typescript": "Typescript",
-                                "vala": "Vala",
-                                "vbscript": "VBScript",
-                                "velocity": "Velocity",
-                                "verilog": "Verilog",
-                                "vhdl": "VHDL",
-                                "visualforce": "Visualforce",
-                                "vue": "Vue",
-                                "wollok": "Wollok",
-                                "xml": "XML",
-                                "xquery": "XQuery",
-                                "yaml": "YAML",
-                                "zeek": "Zeek",
-                                "zig": "Zig"
+                                "javascript": "JavaScript", "abap": "ABAP", "abc": "ABC", "actionscript": "ActionScript", "ada": "ADA", "alda": "Alda", "apache_conf": "Apache Conf", "apex": "Apex", "applescript": "AppleScript", "aql": "AQL", "asciidoc": "AsciiDoc", "asl": "ASL", "assembly_arm32": "Assembly ARM32", "assembly_x86": "Assembly x86", "astro": "Astro", "autohotkey": "AutoHotKey", "basic": "Basic", "batchfile": "BatchFile", "bibtex": "BibTeX", "c_cpp": "C and C++", "c9search": "C9Search", "cedar": "Cedar", "cedarschema": "CedarSchema", "cirru": "Cirru", "clojure": "Clojure", "clue": "Clue", "cobol": "Cobol", "coffee": "CoffeeScript", "coldfusion": "ColdFusion", "crystal": "Crystal", "csharp": "C#", "csound_document": "Csound Document", "csound_orchestra": "Csound", "csound_score": "Csound Score", "csp": "CSP", "css": "CSS", "csv": "CSV", "curly": "Curly", "cuttlefish": "Cuttlefish", "d": "D", "dart": "Dart", "diff": "Diff", "django": "Django", "dockerfile": "Dockerfile", "dot": "Dot", "drools": "Drools", "edifact": "Edifact", "eiffel": "Eiffel", "ejs": "EJS", "elixir": "Elixir", "elm": "Elm", "erlang": "Erlang", "flix": "Flix", "forth": "Forth", "fortran": "Fortran", "fsharp": "FSharp", "fsl": "FSL", "ftl": "FreeMarker", "gcode": "Gcode", "gdresource": "GDResource", "gdscript": "GDScript", "gdshader": "GDShader", "gherkin": "Gherkin", "gitignore": "Gitignore", "glsl": "Glsl", "gobstones": "Gobstones", "golang": "Go", "graphqlschema": "GraphQLSchema", "groovy": "Groovy", "groq": "Groq", "haml": "HAML", "handlebars": "Handlebars", "haskell": "Haskell", "haskell_cabal": "Haskell Cabal", "haxe": "haXe", "hjson": "Hjson", "html": "HTML", "html_elixir": "HTML (Elixir)", "html_ruby": "HTML (Ruby)", "ini": "INI", "io": "Io", "ion": "Ion", "jack": "Jack", "jade": "Jade", "java": "Java", "javascript": "JavaScript", "jexl": "JEXL", "json": "JSON", "json5": "JSON5", "jsoniq": "JSONiq", "jsp": "JSP", "jssm": "JSSM", "jsx": "JSX", "julia": "Julia", "kotlin": "Kotlin", "latex": "LaTeX", "latte": "Latte", "less": "LESS", "liquid": "Liquid", "lisp": "Lisp", "livescript": "LiveScript", "logiql": "LogiQL", "logtalk": "Logtalk", "lsl": "LSL", "lua": "Lua", "luapage": "LuaPage", "lucene": "Lucene", "makefile": "Makefile", "mariadb": "MariaDB", "markdown": "Markdown", "mask": "Mask", "matlab": "MATLAB", "maze": "Maze", "mediawiki": "MediaWiki", "mel": "MEL", "mips": "MIPS", "mixal": "MIXAL", "mushcode": "MUSHCode", "mysql": "MySQL", "nasal": "Nasal", "nginx": "Nginx", "nim": "Nim", "nix": "Nix", "nsis": "NSIS", "nunjucks": "Nunjucks", "objectivec": "Objective-C", "ocaml": "OCaml", "odin": "Odin", "partiql": "PartiQL", "pascal": "Pascal", "perl": "Perl", "pgsql": "pgSQL", "php": "PHP", "php_laravel_blade": "PHP (Blade Template)", "pig": "Pig", "plain_text": "Plain Text", "plsql": "PLSQL", "powershell": "Powershell", "praat": "Praat", "prisma": "Prisma", "prolog": "Prolog", "properties": "Properties", "protobuf": "Protobuf", "prql": "PRQL", "puppet": "Puppet", "python": "Python", "qml": "QML", "r": "R", "raku": "Raku", "razor": "Razor", "rdoc": "RDoc", "red": "Red", "redshift": "Redshift", "rhtml": "RHTML", "robot": "Robot", "rst": "RST", "ruby": "Ruby", "rust": "Rust", "sac": "SAC", "sass": "SASS", "scad": "SCAD", "scala": "Scala", "scheme": "Scheme", "scrypt": "Scrypt", "scss": "SCSS", "sh": "SH", "sjs": "SJS", "slim": "Slim", "smarty": "Smarty", "smithy": "Smithy", "snippets": "Snippets", "soy_template": "Soy Template", "space": "Space", "sparql": "SPARQL", "sql": "SQL", "sqlserver": "SQLServer", "stylus": "Stylus", "svg": "SVG", "swift": "Swift", "tcl": "Tcl", "terraform": "Terraform", "tex": "Tex", "text": "Text", "textile": "Textile", "toml": "Toml", "tsv": "TSV", "tsx": "TSX", "turtle": "Turtle", "twig": "Twig", "typescript": "Typescript", "vala": "Vala", "vbscript": "VBScript", "velocity": "Velocity", "verilog": "Verilog", "vhdl": "VHDL", "visualforce": "Visualforce", "vue": "Vue", "wollok": "Wollok", "xml": "XML", "xquery": "XQuery", "yaml": "YAML", "zeek": "Zeek", "zig": "Zig"
                             },
                             "fontSize": {
-                                8: 8,
-                                10: 10,
-                                11: 11,
-                                12: 12,
-                                13: 13,
-                                14: 14,
-                                15: 15,
-                                16: 16,
-                                17: 17,
-                                18: 18,
-                                20: 20,
-                                22: 22,
-                                24: 24,
-                                26: 26,
-                                30: 30
+                                8: 8, 10: 10, 11: 11, 12: 12, 13: 13, 14: 14, 15: 15, 16: 16, 17: 17, 18: 18, 20: 20, 22: 22, 24: 24, 26: 26, 30: 30
                             }
                         };
                     if (_data && _data.aceMode) {
@@ -6855,6 +6754,16 @@ function fm_show_header_login()
         $tr['en']['AudioError'] = 'Audio failed to load, file might be corrupted';
         $tr['en']['SwfLoading'] = 'SWF file is loading, please wait';
         $tr['en']['SwfError'] = 'Failed to load, file might be corrupted or format error';
+        $tr['en']['Search for'] = 'Search for';
+        $tr['en']['Replace with'] = 'Replace with';
+        $tr['en']['All'] = 'All';
+        $tr['en']['Replace'] = 'Replace';
+        $tr['en']['Toggle Replace mode'] = 'Toggle Replace mode';
+        $tr['en']['RegExp Search'] = 'RegExp Search';
+        $tr['en']['CaseSensitive Search'] = 'CaseSensitive Search';
+        $tr['en']['Whole Word Search'] = 'Whole Word Search';
+        $tr['en']['Search In Selection'] = 'Search In Selection';
+        $tr['en']['$0 of $1'] = '$0 of $1';
         $tr['en']['SiteIdentityHelp'] = 'Browser icon and login logo accept local files or external URLs in %s. Fill in filing info as needed for your site, or leave it empty.';
         $tr['en']['LogoPath'] = 'Login Page Logo';
         $tr['en']['LogoPathPlaceholder'] = 'Local: %s  URL: {url}';

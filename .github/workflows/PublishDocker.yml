@@ -1,12 +1,13 @@
 name: Publish Docker
 
 on:
-  push:
-    tags:
-      - 'v*'
+  workflow_run:
+    workflows: ["Build and Release"]
+    types: [completed]
 
 jobs:
   docker:
+    if: github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -16,24 +17,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.workflow_run.head_branch }}
+
       - name: Download and Extract Offline Package
         run: |
-          LATEST_OFFLINE_URL=$(curl -s https://api.github.com/repos/${{ github.repository }}/releases/latest | jq -r '.assets[] | select(.name | endswith("-offline.tar.gz")) | .browser_download_url')
+          TAG="${{ github.event.workflow_run.head_branch }}"
+          URL="https://github.com/${{ github.repository }}/releases/download/${TAG}/tinyfilemanager-${TAG}-offline.tar.gz"
+          wget -qO- "$URL" | tar -zxv --strip-components=1
 
-          wget -qO- "$LATEST_OFFLINE_URL" | tar -zxv --strip-components=1
-          
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v6
         with:
-          images: |
-            ghcr.io/${{ github.repository_owner }}/tinyfilemanager
+          images: ghcr.io/${{ github.repository_owner }}/tinyfilemanager
           tags: |
-            type=ref,event=branch
-            type=ref,event=pr
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=semver,pattern={{major}}
+            type=semver,pattern={{version}},value=${{ github.event.workflow_run.head_branch }}
+            type=semver,pattern={{major}}.{{minor}},value=${{ github.event.workflow_run.head_branch }}
+            type=semver,pattern={{major}},value=${{ github.event.workflow_run.head_branch }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v4
