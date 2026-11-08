@@ -1,5 +1,38 @@
 # 📝 Changelog
 
+## [2.6.3] - 2026-11-09
+
+This update, building on 2.6.2, focuses on hardening session and upload security, fixes a path traversal vulnerability in chunked uploads, improves text encoding compatibility, and optimizes file size reading performance on 64-bit PHP along with mobile page layout.
+
+### ✨ Features
+- **text encoding conversion**: Files created or edited on Windows (which default to ANSI/GBK encoding) often displayed garbled text or even question marks after being uploaded and viewed or edited. The system now automatically detects and converts such files to UTF-8 before display, prioritizing GB18030 (which is compatible with GBK), then falling back to common encodings such as BIG5, ISO-8859-1, and Windows-1252; if `mbstring` is not installed on the server, `iconv` is used as a fallback. The "Charset" field on the file details page now clearly indicates whether the content is UTF-8 or "Converted from GBK/ANSI".
+- **Folder upload support**: Dropzone initialization now includes `clickable: true`, and the upload path is determined via `file.webkitRelativePath || file.fullPath || file.name` and submitted through `formData.append("fullpath", _path)`, enabling folder uploads that preserve directory structure.
+
+### 🔒 Security
+- **Secure session cookie attributes**: On PHP ≥ 7.3, `session_set_cookie_params()` is used to set `HttpOnly` and `SameSite=Lax`, and `secure` is automatically enabled based on `$is_https`.
+- **Session regeneration after login**: `session_regenerate_id(true)` is called after successful login verification to prevent session fixation attacks.
+- **Path traversal fix in chunked uploads**: `fullpath` is now read from the POST form and validated segment by segment (rejecting `.`, `..`, and invalid filenames), with `realpath()` used to verify that the target directory resides within `FM_ROOT_PATH`; any out-of-bounds attempt immediately returns `Path traversal attempt detected`.
+- **Upload extension whitelist parsing**: `array_map('trim', ...)` is now applied after `explode(',', FM_UPLOAD_EXTENSION)`, preventing whitespace in the configuration from invalidating the whitelist.
+- **Markdown link security filtering**: `marked.use()` overrides the `link` renderer to block dangerous protocol links such as `javascript:`, allowing only `http(s)://`, `mailto:`, relative paths, and anchors.
+- **Removal of hidden fullpath field from upload form**: The `<input name="fullpath">` that pre-filled `FM_PATH` on the `?upload=` page has been removed; the frontend now submits the actual path per file instead, preventing path forgery.
+
+### 🚀 Improvements
+- **Faster file size reading on 64-bit PHP**: `fm_get_size()` now returns `filesize()` directly when `PHP_INT_SIZE >= 8`, eliminating the need to spawn `stat` or external processes for each file and significantly improving performance when listing large directories.
+- **Language list initialization order fix**: `$lang_list` is now defined before `fm_get_translations([])`, eliminating the risk of undefined variables.
+- **Chunked upload flow cleanup**: Redundant `success` assignments after intermediate chunk appends have been removed; success is now returned only by the final merge branch, preventing intermediate chunks from falsely reporting success. Additionally, the target directory for automatic renaming of same-name files has been changed from `$path` to the validated `$folder`, ensuring that renamed files remain in the subdirectory where the file actually resides (`$folder` is the result of `dirname($fullPath)`).
+- **`fullpath` fallback for empty values**: `dzchunkindex`/`dztotalchunkcount` now use `??` defaults, and when `fullpath` is missing or fails validation, it falls back to `fm_clean_path($filename)`.
+
+### 🎨 Visual & UI/UX
+- **Responsive layout for Settings / Site Identity / Help pages**: Changed from fixed `col-md-8 offset-md-2` to `row justify-content-center` + `col-md-8 col-11` to fix container centering issues in RTL language modes.
+- **Adaptive Dropzone error messages**: Error messages now use `width: max-content`, wrap automatically, and are center-aligned, so long error messages no longer overflow.
+- **Enhanced RTL support**: Dropzone previews and error messages are now right-aligned in RTL; the `.go-back` icon is horizontally flipped; password input fields and hash result fields are forced to `dir="ltr"` and left-aligned to prevent password display issues in RTL environments.
+
+### 🔧 Bug Fixes
+- **Password generator layout on Help page**: The input group has been changed to a `dir="rtl"` container with a `dir="ltr"` input field, so the random password button and generate button retain their original layout in RTL mode.
+- **`fm_get_size` 64-bit performance optimization**: On 64-bit PHP (`PHP_INT_SIZE >= 8`), `filesize()` is now used directly to obtain file size, avoiding an `exec`/`stat` external process for every file; the original `exec`/COM fallback is only used when `filesize()` fails. Listing large directories is noticeably faster, and environments where `exec` is disabled also skip the initial detection step.
+
+---
+
 ## [2.6.2] - 2026-11-07
 
 This update builds on 2.6.1 by adding one-click copy for direct links, localization of the Ace editor search box and RTL adaptation, unifying the archive/unarchive class implementation, and improving the robustness of URL upload while fixing the issue where invalid URLs were still reported as successfully uploaded.
@@ -91,6 +124,7 @@ This is a milestone release. It fully refactors multilingual support (adding RTL
 - **Recycle bin mechanism**: Deleted files are no longer physically removed but automatically moved to the `.trash` directory with a timestamp, providing a buffer period to prevent accidental loss from mistaken deletion.
 - **Strong password generator**: Added strength detection with real-time evaluation and optimization suggestions.
 - **Audio and Flash media enhancements**: Hand-wrote an audio player with spectrum animation and introduced the Ruffle engine to support `.swf` playback, giving the classics a new life.
+- **File List Pagination**: Added pagination support for the file list, displaying 50 records per page by default. Site administrators can easily enable or disable this feature in the settings page (`EnablePaging`). A detailed help tooltip (`PagingInfoHelp`) is also provided to ensure a good balance between performance and usability when handling massive amounts of files.
 
 ### 🚀 Improvements & Experience
 - **Standardized language codes**: Fully corrected the language code naming convention (using the standard BCP 47 format). Legacy non-standard abbreviations (e.g. `gr`, `cz`) have been corrected to `el`, `cs`, and underscore formats (e.g. `pt_BR`, `mn_MN`) have been unified to hyphenated formats (`pt-BR`, `mn-MN`), greatly improving the accuracy of native browser API language detection.

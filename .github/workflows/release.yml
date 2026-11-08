@@ -96,7 +96,7 @@ jobs:
           EOT;
 
           $content = preg_replace('/\$external\s*=\s*array\s*\(.*?\);/s', trim($local_external), $content);
-          $content = str_replace('https://unpkg.com/@ruffle-rs/ruffle@latest/ruffle.js', '/assets/ruffle/ruffle.js', $content);
+          $content = str_replace('https://cdn.jsdelivr.net/npm/@ruffle-rs/ruffle@0.7.1/ruffle.min.js', '/assets/ruffle/ruffle.js', $content);
           file_put_contents($file, $content);
           EOF
 

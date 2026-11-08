@@ -1,5 +1,38 @@
 # 📝 更新日志 (Changelog)
 
+## [2.6.3] - 2026-11-09
+
+本次更新在 2.6.2 基础上重点加固了会话与上传安全，修复了分块上传路径穿越隐患，增强了文本编码兼容性，并优化了 64 位 PHP 下的文件大小读取性能与移动端页面布局。
+
+### ✨ 新增功能 (Features)
+- **文本编码转换**：在 Windows 上创建或编辑的文件（默认 ANSI/GBK 编码）上传后，查看或编辑时经常显示乱码甚至问号。现在会自动识别并把这类文件转换成 UTF-8 再显示，优先按 GB18030（兼容 GBK）转换，不行再尝试 BIG5、ISO-8859-1、Windows-1252 等常见编码；服务器没装 mbstring 时也会用 iconv 兜底。文件详情页的「字符集」也会明确显示是 UTF-8 还是「已从 GBK/ANSI 转换」。
+- **文件夹上传支持**：Dropzone 初始化新增 `clickable: true`，上传路径改为 `file.webkitRelativePath || file.fullPath || file.name` 并通过 `formData.append("fullpath", _path)` 提交，支持保留目录结构的文件夹上传。
+
+### 🔒 安全加固 (Security)
+- **会话 Cookie 安全属性**：PHP ≥ 7.3 时通过 `session_set_cookie_params()` 设置 `HttpOnly`、`SameSite=Lax`，并按 `$is_https` 自动启用 `secure`。
+- **登录后会话重建**：登录校验成功后调用 `session_regenerate_id(true)`，防止会话固定（Session Fixation）攻击。
+- **分块上传路径穿越修复**：`fullpath` 改为从 POST 表单读取，逐段校验（拒绝 `.`、`..` 及非法文件名），并用 `realpath()` 校验目标目录必须位于 `FM_ROOT_PATH` 之内，越界直接返回 `Path traversal attempt detected`。
+- **上传扩展名白名单解析**：`explode(',', FM_UPLOAD_EXTENSION)` 后追加 `array_map('trim', ...)`，避免配置中带空格导致白名单失效。
+- **Markdown 链接安全过滤**：`marked.use()` 覆写 `link` 渲染器，拦截 `javascript:` 等危险协议链接，仅放行 `http(s)://`、`mailto:`、相对路径与锚点。
+- **上传表单移除隐藏 fullpath**：删除 `?upload=` 页面中预填 `FM_PATH` 的 `<input name="fullpath">`，改由前端按文件实际路径逐次提交，避免路径被伪造。
+
+### 🚀 优化与改进 (Improvements)
+- **64 位 PHP 文件大小读取加速**：`fm_get_size()` 在 `PHP_INT_SIZE >= 8` 时直接返回 `filesize()`，不再为每个文件启动 `stat`/外部进程，大目录列表性能明显提升。
+- **语言列表初始化顺序修正**：`$lang_list` 移至 `fm_get_translations([])` 之前定义，消除未定义变量风险。
+- **分块上传流程清理**：移除中间分块追加后冗余的 `success` 赋值，仅由最终合并分支返回成功，避免中间块误报；同时将同名文件自动重命名的目标目录由 `$path` 改为已校验的 `$folder`，确保重命名落在文件实际所在子目录内（`$folder` 即 `dirname($fullPath)` 的结果）。
+- **`fullpath` 空值兜底**：`dzchunkindex`/`dztotalchunkcount` 使用 `??` 默认值，`fullpath` 缺失或校验失败时回退为 `fm_clean_path($filename)`。
+
+### 🎨 视觉与 UI/UX (UI/UX)
+- **设置/站点标识/帮助页响应式布局**：由固定 `col-md-8 offset-md-2` 改为 `row justify-content-center` + `col-md-8 col-11`，以修复 RTL 语言模式下容器不居中问题。
+- **Dropzone 错误提示自适应**：错误消息改为 `width: max-content`、自动换行、居中对齐，长错误信息不再溢出。
+- **RTL 适配增强**：Dropzone 预览/错误提示在 RTL 下贴右显示，`.go-back` 返回图标水平翻转；密码输入框与哈希结果框强制 `dir="ltr"` 左对齐，避免 RTL 环境下密码显示错乱。
+
+### 🔧 修复 (Bug Fixes)
+- **帮助页密码生成器布局**：输入组改为 `dir="rtl"` 容器 + 输入框 `dir="ltr"`，随机密码按钮与生成按钮在 RTL 模式下依然按照原格式显示。
+- **`fm_get_size` 64 位性能优化**：在 64 位 PHP（PHP_INT_SIZE >= 8）下优先直接使用 filesize() 获取文件大小，避免为每个文件尝试启动 exec/stat 外部进程；仅在 filesize() 失败时回退到原有的 exec/COM 兜底逻辑。大目录列表性能明显提升，且在 exec 被禁用的环境下也省去了首次调用的探测步骤。
+
+---
+
 ## [2.6.2] - 2026-11-07
 
 本次更新在 2.6.1 基础上补充了直链一键复制、Ace 编辑器搜索框本地化与 RTL 适配，并统一了打包/解包类实现，同时增强了 URL 上传的健壮性并修复了错误地址仍显示成功上传的问题。
@@ -11,7 +44,7 @@
 
 ### 🎨 视觉与 UI/UX 升级 (UI/UX)
 - **Ace 搜索框 RTL 适配**：新增 `adaptAceSearchBox()`，RTL 下自动切换 `.ace_search.left/.right`、调整替换按钮浮动方向，实现多语言自适应文本。
-- **Markdown 内容区宽度收口**：`#markdown-content.card` 最大宽度由 `100%` 改为 `80vw`，让md文档阅读更舒适。
+- **Markdown 内容区宽度收口**：`#markdown-content.card` 最大宽度由 `100%` 改为 `80vw`，让 md 文档阅读更舒适。
 - **RTL 模态框关闭按钮修正**：`[dir="rtl"] .modal-header .btn-close` 的 `margin-right` 由 `0` 改为 `auto`，关闭按钮正确贴左。
 - **Ace 搜索框左对齐样式**：新增 `.ace_search.left` 样式，RTL 下搜索框贴左显示且边框方向正确。
 
@@ -20,7 +53,6 @@
 - **`event_callback` 改为闭包**：由全局函数改为 `$event_callback` 闭包，内部直接 `exit()`，避免遗漏 `exit` 导致继续执行。
 - **打包/解包类合并重构**：`FM_SystemArchiver` 更名为 `FM_Archiver`，统一 `create()/unzip()` 返回 `['ok', 'msg']`；tar 分支改用 `chdir($workDir)` + `RecursiveIteratorIterator` 递归添加目录，`.tar.gz` 压缩后清理临时 `.tar`，异常时恢复工作目录并清理残留文件。
 - **页脚年份逻辑简化**：`renderFooter()` 中起始年份校验改为 `ctype_digit` + 数值比较，起始年大于等于当前年或非法时仅显示当前年；`<span dir="ltr">` 包裹逻辑统一到分支外。
-
 
 ### 🌐 多语言与本地化 (i18n & Localization)
 - **语言翻译扩充至 55 种**：在原有 34 种语言基础上新增 20 种（`az`、`bg`、`et`、`fil`、`ha`、`hi`、`hr`、`jv`、`kk`、`lt`、`lv`、`ms`、`my`、`sr`、`sw`、`ta`、`te`、`uk`、`ur`、`uz`），浏览器语言自动匹配覆盖范围进一步扩大。
@@ -34,7 +66,7 @@
   - 所有失败分支统一 `@unlink($temp_file)` 并返回明确错误（`HTTP 状态码`、`Downloaded file is empty`、`Failed to move downloaded file` 等），不再静默“成功”。
   - 成功写入后 `@chmod($target_file, 0644)`，修复此前权限为 `600` 导致图片等文件无法加载的问题。
   - 强制要求 `$allowed_upload_extensions` 非空，未配置时直接拦截并提示（见 Breaking Changes）。
-  
+
 ### ⚠️ 破坏性变更 (Breaking Changes)
 - **`FM_SystemArchiver` 更名为 `FM_Archiver`**：如有二次开发直接引用旧类名，需同步修改；返回结构仍为 `['ok' => bool, 'msg' => string]`，调用方无需调整。
 - **直链行为变更**：文件/文件夹的「直链」按钮不再新窗口打开，而是复制到剪贴板；如需预览，请进入文件详情页点击「打开」。其中 `.md`、`.json`、`.sh`、`.css`、`.js`、`.py`、`.txt`、`.log` 等以及首行为 `#!/bin/bash`、`#!/bin/sh` 的脚本会走 `?raw=` 输出，其余文件仍直接打开静态地址。
@@ -92,6 +124,7 @@
 - **回收站机制**：删除文件不再直接物理删除，而是自动移动到 `.trash` 目录并附带时间戳。为文件删除做个缓冲期，防止错误删除导致不必要的损失。
 - **强密码生成器**：添加了强度检测，实时评估密码并给出优化建议。
 - **音频与 Flash 媒体增强**：手写了带频谱动画的音频播放器，并引入了 Ruffle 引擎以支持 `.swf` 格式的播放，让经典焕发新生。
+- **文件列表分页功能**：新增了列表分页支持，默认每页展示 50 条记录。站点管理员可在设置页面中自由开启或关闭（`EnablePaging`），并提供了详细的说明提示（`PagingInfoHelp`），以便在处理海量文件时，兼顾性能与易用性。
 
 ### 🚀 优化与体验 (Improvements)
 - **标准化语言代码**：全面修正了语言代码的命名规范（使用标准的 BCP 47 格式）。将旧版的非标准缩写（如 `gr`、`cz`）修正为 `el`、`cs`，并将下划线格式（如 `pt_BR`、`mn_MN`）统一改为连字符格式（`pt-BR`、`mn-MN`），大幅提升了浏览器原生 API 对多语言环境的识别准确度。
